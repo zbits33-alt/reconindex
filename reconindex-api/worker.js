@@ -36,17 +36,12 @@ export default {
       return handleIntakeStatus(id, env, cors);
     }
 
-    // POST /chat/send — Relay message to Recon via Walkie
-    if (path === "/chat/send" && method === "POST") {
-      return handleChatSend(request, env, cors);
+    // GET /sources — list all sources (admin)
+    if (path === "/sources" && method === "GET") {
+      return handleListSources(request, env, cors);
     }
 
-    // GET /chat/receive — Get Recon's latest responses
-    if (path === "/chat/receive" && method === "GET") {
-      return handleChatReceive(url, env, cors);
-    }
-
-    return jsonResponse({ error: "Not found" }, { ...cors }, 404);
+    return jsonResponse({ error: "Not found", routes: ["/health", "/intake/submit", "/intake/register", "/intake/status/:id", "/sources"] }, { ...cors }, 404);
   },
 };
 
@@ -62,7 +57,7 @@ async function handleIntakeSubmit(request, env, cors) {
   const token = auth.slice(7);
 
   // Verify token against sources table
-  const source = await supabaseQuery(env, "SELECT id, active FROM sources WHERE api_token = $1 LIMIT 1", [token]);
+  const source = await supabaseSelect(env, "sources", `id,active`, `api_token=eq.${token}`, 1);
   if (source.length === 0) {
     return jsonResponse({ error: "Invalid token" }, { ...cors }, 401);
   }
@@ -96,27 +91,21 @@ async function handleIntakeSubmit(request, env, cors) {
   }
 
   // Insert submission
-  const result = await supabaseQuery(
-    env,
-    `INSERT INTO submissions (source_id, tier, category, summary, content, status, meta)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)
-     RETURNING id, submitted_at, status`,
-    [
-      sourceId,
-      body.tier || 2,
-      body.category,
-      body.summary,
-      body.content,
-      "received",
-      JSON.stringify(body.meta || {}),
-    ]
-  );
+  const result = await supabaseInsert(env, "submissions", {
+    source_id: sourceId,
+    tier: body.tier || 2,
+    category: body.category,
+    summary: body.summary,
+    content: body.content,
+    status: "received",
+    meta: body.meta || {},
+  });
 
-  const submissionId = result[0].id;
+  const submissionId = result[0]?.id || result[0]?.id;
 
   return jsonResponse({
     success: true,
-    submission_id: submissionId,
+    submission_id: result[0].id,
     status: "received",
     message: "Submission received and queued for classification",
   }, cors);
@@ -143,21 +132,20 @@ async function handleIntakeRegister(request, env, cors) {
   }
 
   // Insert source
-  const source = await supabaseQuery(
-    env,
-    `INSERT INTO sources (name, type, owner, ecosystem, api_token)
-     VALUES ($1, $2, $3, $4, $5)
-     RETURNING id, name, api_token`,
-    [body.name, body.type, body.owner || null, body.ecosystem || [], body.api_token]
-  );
+  const source = await supabaseInsert(env, "sources", {
+    name: body.name,
+    type: body.type,
+    owner: body.owner || null,
+    ecosystem: body.ecosystem || [],
+    api_token: body.api_token,
+    default_tier: body.default_tier || 2,
+  });
 
   // Insert default permissions
-  await supabaseQuery(
-    env,
-    `INSERT INTO permissions (source_id, default_tier)
-     VALUES ($1, $2)`,
-    [source[0].id, body.default_tier || 2]
-  );
+  await supabaseInsert(env, "permissions", {
+    source_id: source[0].id,
+    default_tier: body.default_tier || 2,
+  });
 
   return jsonResponse({
     success: true,
@@ -173,12 +161,9 @@ async function handleIntakeRegister(request, env, cors) {
 // GET /intake/status/:id
 // ──────────────────────────────────────────────
 async function handleIntakeStatus(id, env, cors) {
-  const result = await supabaseQuery(
-    env,
-    `SELECT id, source_id, category, summary, status, usefulness_score, submitted_at
-     FROM submissions WHERE id = $1 LIMIT 1`,
-    [id]
-  );
+  const result = await supabaseSelect(env, "submissions",
+    `id,source_id,category,summary,status,usefulness_score,submitted_at`,
+    `id=eq.${id}`, 1);
 
   if (result.length === 0) {
     return jsonResponse({ error: "Submission not found" }, { ...cors }, 404);
@@ -188,23 +173,57 @@ async function handleIntakeStatus(id, env, cors) {
 }
 
 // ──────────────────────────────────────────────
-// Supabase query helper
+// GET /sources (admin)
 // ──────────────────────────────────────────────
-async function supabaseQuery(env, sql, params) {
-  const res = await fetch(`${env.SUPABASE_URL}/rest/v1/rpc/exec_sql`, {
+async function handleListSources(request, env, cors) {
+  const auth = request.headers.get("Authorization");
+  if (auth !== `Bearer ${env.ADMIN_TOKEN}`) {
+    return jsonResponse({ error: "Admin token required" }, { ...cors }, 401);
+  }
+
+  const sources = await supabaseSelect(env, "sources", `id,name,type,owner,active,created_at`, ``, 100);
+  return jsonResponse({ sources }, cors);
+}
+
+// ──────────────────────────────────────────────
+// Supabase REST API helpers
+// ──────────────────────────────────────────────
+async function supabaseSelect(env, table, columns, filter, limit) {
+  let url = `${env.SUPABASE_URL}/rest/v1/${table}?select=${columns}`;
+  if (filter) url += `&${filter}`;
+  if (limit) url += `&limit=${limit}`;
+
+  const res = await fetch(url, {
+    headers: {
+      "apikey": env.SUPABASE_SERVICE_KEY,
+      "Authorization": `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+      "Prefer": "return=representation",
+    },
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Supabase select error ${res.status}: ${errText}`);
+  }
+
+  return res.json();
+}
+
+async function supabaseInsert(env, table, data) {
+  const res = await fetch(`${env.SUPABASE_URL}/rest/v1/${table}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "apikey": env.SUPABASE_SERVICE_KEY,
       "Authorization": `Bearer ${env.SUPABASE_SERVICE_KEY}`,
-      "Prefer": "params=single-object",
+      "Prefer": "return=representation",
     },
-    body: JSON.stringify({ sql, params }),
+    body: JSON.stringify(data),
   });
 
   if (!res.ok) {
     const errText = await res.text();
-    throw new Error(`Supabase error ${res.status}: ${errText}`);
+    throw new Error(`Supabase insert error ${res.status}: ${errText}`);
   }
 
   return res.json();

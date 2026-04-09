@@ -32,3 +32,4 @@ memory/
 
 # Git itself
 .git/
+supabase-project/supabase/.temp/
