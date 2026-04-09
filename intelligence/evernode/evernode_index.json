@@ -1,0 +1,44 @@
+{
+  "updated": "2026-04-09T00:45:11Z",
+  "pages": {
+    "index": {
+      "url": "https://docs.evernode.org/en/latest/",
+      "chars": 509,
+      "status": "ok"
+    },
+    "hotpocket_index": {
+      "url": "https://docs.evernode.org/en/latest/sdk/hotpocket/index.html",
+      "chars": 234,
+      "status": "ok"
+    },
+    "hotpocket_basics": {
+      "url": "https://docs.evernode.org/en/latest/sdk/hotpocket/tutorials/basics.html",
+      "chars": 20362,
+      "status": "ok"
+    },
+    "hotpocket_tutorials": {
+      "url": "https://docs.evernode.org/en/latest/sdk/hotpocket/tutorials/index.html",
+      "chars": 280,
+      "status": "ok"
+    },
+    "hotpocket_ref": {
+      "url": "https://docs.evernode.org/en/latest/sdk/hotpocket/reference/index.html",
+      "chars": 131,
+      "status": "ok"
+    },
+    "hotpocket_libraries": {
+      "url": "https://docs.evernode.org/en/latest/sdk/hotpocket/libraries.html",
+      "chars": 405,
+      "status": "ok"
+    },
+    "evernode_sdk": {
+      "url": "https://docs.evernode.org/en/latest/sdk/evernode/",
+      "chars": 259,
+      "status": "ok"
+    },
+    "evernode_jsclient": {
+      "url": "https://docs.evernode.org/en/latest/sdk/evernode/evernode-js-client/index.html",
+      "error": "HTTP 404"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+# Evernode Docs — index
+# Source: https://docs.evernode.org/en/latest/
+# Fetched: 2026-04-09T00:45:11Z
+
+Evernode documentation
+View page source
+Evernode documentation
+Evernode is a decentralized marketplace of hosting infrastructure for decentralized apps (DApps). This documentation contains information
+about how the Evernode platform works, how to be a part of it and how to develop apps for Evernode.
+Start reading with
+platform overview
+Report issues about Evernode documentation
+here
+Evernode licence
+Please find the Evernode license
+here
+External resources
+Website
+Twitter
+GitHub
+XRPL Hooks
+Hosts dashboard

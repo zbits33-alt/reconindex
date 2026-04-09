@@ -1,0 +1,27 @@
+# Evernode Docs — hotpocket_libraries
+# Source: https://docs.evernode.org/en/latest/sdk/hotpocket/libraries.html
+# Fetched: 2026-04-09T00:45:11Z
+
+HotPocket SDK
+HotPocket SDK libraries
+View page source
+HotPocket SDK libraries
+Smart contract library
+NodeJs library
+source
+C library source
+Client library
+Javascript library
+for nodejs and browser. (
+source
+Community libraries
+React Native library for mobile application development -
+intro
+source
+(by
+@Geveo
+XRPL-based Decentralized Key Management framework for HotPocket: DKM -
+intro
+source
+(by
+@wojake

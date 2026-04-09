@@ -1,0 +1,8 @@
+{
+  "timestamp": "2026-04-09T00:44:12Z",
+  "result": {
+    "status": 404,
+    "length": 13516,
+    "sample": "<!DOCTYPE html><html lang=\"en\"><head><meta charSet=\"utf-8\" data-next-head=\"\"/><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" data-next-head=\"\"/><link rel=\"preconnect\" href=\"https://s1.xrpl.to\" crossorigin=\"anonymous\" class=\"jsx-b9b7a19250b8ff7d\" data-next-head=\"\"/><link rel=\"dns-prefetch\" href=\"https://s1.xrpl.to\" class=\"jsx-b9b7a19250b8ff7d\" data-next-head=\"\"/><link rel=\"preconnect\" href=\"https://api.xrpl.to\" crossorigin=\"anonymous\" class=\"jsx-b9b7a19"
+  }
+}

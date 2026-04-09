@@ -1,0 +1,7 @@
+name = "recon-intake-api"
+main = "worker.js"
+compatibility_date = "2026-04-09"
+
+[vars]
+SUPABASE_URL = "https://nygdcvjmjzvyxljexjjo.supabase.co"
+ADMIN_TOKEN = "recon-admin-$RANDOM"

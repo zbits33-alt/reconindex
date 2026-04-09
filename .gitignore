@@ -1,0 +1,34 @@
+# Secrets
+memory/secrets.md
+*.env
+.env.*
+
+# Wrangler
+.wrangler/
+
+# Node
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# State
+state/
+
+# Walkie
+walkie-*-inbox.txt
+walkie-*-watcher.pid
+
+# OpenClaw internal
+.openclaw/
+.walkie/
+
+# Skills (agent-internal)
+skills/
+
+# Memory
+memory/
+
+# Git itself
+.git/

@@ -1,0 +1,11 @@
+# Evernode Docs — hotpocket_ref
+# Source: https://docs.evernode.org/en/latest/sdk/hotpocket/reference/index.html
+# Fetched: 2026-04-09T00:45:11Z
+
+HotPocket SDK
+HotPocket Reference
+View page source
+HotPocket Reference
+Configuration
+Client (user) protocol
+DApp interface protocol
