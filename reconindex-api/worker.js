@@ -27,6 +27,10 @@ export default {
     if (path === "/intake/register" && method === "POST") {
       return handleIntakeRegister(request, env, cors);
     }
+    // Public self-registration — no admin token needed, auto-generates token
+    if (path === "/intake/connect" && method === "POST") {
+      return handlePublicConnect(request, env, cors);
+    }
     if (path.startsWith("/intake/status/") && method === "GET") {
       const id = path.split("/").pop();
       return handleIntakeStatus(id, env, cors);
@@ -156,6 +160,7 @@ export default {
         "/health",
         "/intake/submit",
         "/intake/register",
+        "/intake/connect",
         "/intake/status/:id",
         "/sources",
         "/chat/resolve",
@@ -510,6 +515,53 @@ async function handleIntakeRegister(request, env, cors) {
       name: source[0].name,
     },
     message: "Source registered successfully",
+  }, cors);
+}
+
+// Public self-registration — generates API token, no admin auth needed
+async function handlePublicConnect(request, env, cors) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return jsonResponse({ error: "Invalid JSON" }, { ...cors }, 400);
+  }
+
+  if (!body.name || !body.type) {
+    return jsonResponse({ error: "name and type are required" }, { ...cors }, 400);
+  }
+
+  // Generate API token
+  const uid = crypto.randomUUID().replace(/-/g, '').substring(0, 24);
+  const apiToken = `xpl-${body.name.toLowerCase().replace(/[^a-z0-9]/g, '')}-${uid}`;
+
+  // Check for duplicate name
+  const existing = await supabaseSelect(env, "sources", "id,name", `name=eq.${body.name}`, 1);
+  if (existing.length > 0) {
+    return jsonResponse({ error: "Name already registered" }, { ...cors }, 409);
+  }
+
+  const source = await supabaseInsert(env, "sources", {
+    name: body.name,
+    type: body.type,
+    owner: body.owner || null,
+    ecosystem: body.ecosystem || [],
+    public_description: body.description || null,
+    api_token: apiToken,
+    active: true,
+  });
+
+  await supabaseInsert(env, "permissions", {
+    source_id: source[0].id,
+    default_tier: body.default_tier || 2,
+  });
+
+  return jsonResponse({
+    success: true,
+    source_id: source[0].id,
+    name: source[0].name,
+    api_token: apiToken,
+    message: "Connected to Recon Index. Save your token — it's only shown once."
   }, cors);
 }
 

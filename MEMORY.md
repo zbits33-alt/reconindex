@@ -114,6 +114,16 @@ Collect → Classify → Score → Identify patterns → Recommend improvements 
 - **CLIO Stale Cache**: XRPLClaw's CLIO node is ~5 hours behind (ledger 103447172, age ~18,283s). All agents get stale validated data. Needs XRPLClaw ops to restart/resync. Created fallback script: `scripts/xrpl-fallback.py`.
 - **Recon API Auth**: Recon API returned "Missing bearer token" for all endpoints. Fixed: QuantX registered as SRC-004 with token `xpl-qx-bridge-de665d415e44d478`.
 
+## Session 2026-04-09 22:35 UTC — Public Servers + Agent Broadcast
+- CLIO still stale (~5.4 hrs behind, ledger 103447172)
+- Public servers confirmed live: s1.ripple.com, s2.ripple.com, xrplcluster.com (ledger 103452xxx)
+- Created docs/AGENT_CONNECTION_GUIDE.md — comprehensive auth guide with error table, token setup, XRPL fallback
+- Updated reconindex-site/skill.md — added auth troubleshooting + CLIO stale cache workaround
+- Broadcast to Predator (delivered) and QuantX (queued, offline) via Walkie
+- Source registry updated with broadcast status
+- Pushed to GitHub: zbits33-alt/reconindex (commit ea18738)
+- docs.reconindex.com: still serving old content (Pages deploy token is Workers-only, can't update yet)
+
 ## Session Summary (2026-04-09)
 
 Full system built in one session:
