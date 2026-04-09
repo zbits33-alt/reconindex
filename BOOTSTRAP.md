@@ -48,6 +48,7 @@ Use `knowledge_read` with the file path to fetch any document below. These are s
 | DISCORD_BOTS | discord.js, slash commands, gateway intents, voice, sharding |
 | DISCORD_APPS | Embedded App SDK, Rich Presence, OAuth2, linked roles |
 | WALKIE_A2A | P2P agent messaging, Hyperswarm, multi-agent comms (platform-endorsed) |
+| AGENTIC_READINESS | Making projects agent-friendly — audit checklist, llms.txt, skill.md, CLI tools, implementation tiers |
 
 ### platform/
 | File | Read When |
@@ -70,7 +71,7 @@ Use `knowledge_read` with the file path to fetch any document below. These are s
 | BLUME_FINANCE | Blume DeFi on XRPL EVM — BlumeSwap, Blumepad, BlumePerps, BlumeLend |
 | DHALI_API | x402 protocol, pay-per-request XRPL APIs via payment channels |
 <!-- kb:end -->
-<!-- last synced: 2026-04-08T02:56:19Z -->
+<!-- last synced: 2026-04-09T18:50:01Z -->
 
 > Auto-syncs every 5 min. Topic not listed? Use `knowledge_search("your topic")` to search all docs.
 
