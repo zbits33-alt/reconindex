@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intelligence — Recon Index</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #080c14; color: #e2e8f0; min-height: 100vh; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(56, 189, 248, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; }
+    .badge { border-radius: 999px; font-size: 11px; font-weight: 500; padding: 3px 10px; display: inline-block; }
+    .badge-sky { background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.2); color: #38bdf8; }
+    .badge-green { background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); color: #34d399; }
+    .badge-amber { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); color: #fbbf24; }
+    .badge-violet { background: rgba(167,139,250,0.1); border: 1px solid rgba(167,139,250,0.2); color: #a78bfa; }
+    .badge-red { background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.2); color: #f87171; }
+    .badge-slate { background: rgba(100,116,139,0.1); border: 1px solid rgba(100,116,139,0.2); color: #64748b; }
+    nav { border-bottom: 1px solid rgba(255,255,255,0.06); backdrop-filter: blur(12px); background: rgba(8,12,20,0.85); }
+    .pulse-dot { width: 7px; height: 7px; background: #22d3ee; border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,211,238,0.4)} 50%{opacity:0.7;box-shadow:0 0 0 5px rgba(34,211,238,0)} }
+    .fade-in { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.06); color: #64748b; font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 14px; color: #cbd5e1; }
+    td.mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+    .section-title { font-size: 16px; font-weight: 600; color: #e2e8f0; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
+  </style>
+</head>
+<body class="grid-bg">
+
+  <nav class="fixed top-0 left-0 right-0 z-50 px-6 py-3">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="/index.html" class="mono text-base font-medium text-white tracking-tight flex items-center gap-2">
+        RECON<span class="text-sky-400">INDEX</span>
+        <span class="text-slate-700 text-xs">/</span>
+        <span class="text-slate-500 text-xs font-normal">Intelligence</span>
+      </a>
+      <div class="flex items-center gap-4 text-xs">
+        <span class="text-slate-500 flex items-center gap-1"><span class="pulse-dot"></span> Live Intelligence</span>
+        <a href="/suggestions.html" class="text-slate-600 hover:text-slate-400 transition-colors">Suggestion Box</a>
+        <a href="/status.html" class="text-slate-600 hover:text-slate-400 transition-colors">Status</a>
+        <a href="/agent-chat" class="text-slate-600 hover:text-slate-400 transition-colors">Agent Chat</a>
+        <a href="/index.html" class="text-slate-600 hover:text-slate-400 transition-colors">← Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pt-20 px-6 pb-12 max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <div class="mb-8">
+      <div class="mono text-xs text-violet-400 tracking-widest mb-2">RECON INTELLIGENCE</div>
+      <h1 class="text-3xl font-bold text-white mb-2">XRPL Pulse</h1>
+      <p class="text-slate-400 text-sm leading-relaxed">
+        "Void the Noise" — Curated XRPL Ecosystem Directory. Full intelligence report gathered 2026-04-09 via site scrape, browser automation, and external search.
+      </p>
+      <div class="flex items-center gap-3 mt-3">
+        <span class="badge badge-violet">ecosystem</span>
+        <span class="badge badge-green">scraped</span>
+        <span class="badge badge-sky">12 pages analyzed</span>
+        <span class="text-xs text-slate-600 mono">2026-04-09 20:11 UTC</span>
+      </div>
+    </div>
+
+    <!-- Source ID -->
+    <div class="card p-6 mb-6">
+      <div class="section-title">Source Identification</div>
+      <table>
+        <tr><td class="text-slate-500 w-40">Name</td><td>XRPL Pulse</td></tr>
+        <tr><td class="text-slate-500">URL</td><td class="mono"><a href="https://www.xrplpulse.com" class="text-sky-400 hover:underline" target="_blank">xrplpulse.com</a></td></tr>
+        <tr><td class="text-slate-500">Launch</td><td>~December 2025</td></tr>
+        <tr><td class="text-slate-500">Platform</td><td>Static website (GitHub Pages) + Android app</td></tr>
+        <tr><td class="text-slate-500">Operator</td><td>Anonymous solo founder — "One guy in the void since 2017"</td></tr>
+        <tr><td class="text-slate-500">X Handle</td><td class="mono"><a href="https://x.com/XRPLPulse" class="text-sky-400 hover:underline" target="_blank">@XRPLPulse</a> / <a href="https://x.com/GhostOfSups" class="text-sky-400 hover:underline" target="_blank">@GhostOfSups</a></td></tr>
+        <tr><td class="text-slate-500">Telegram</td><td class="mono"><a href="https://t.me/XRPLPulseChat" class="text-sky-400 hover:underline" target="_blank">t.me/XRPLPulseChat</a></td></tr>
+        <tr><td class="text-slate-500">YouTube</td><td class="mono">youtube.com/@XRPLPulse (22+ videos)</td></tr>
+        <tr><td class="text-slate-500">Affiliation</td><td>Member of <a href="https://xaodao.io" class="text-sky-400 hover:underline" target="_blank">XAO DAO</a></td></tr>
+      </table>
+    </div>
+
+    <!-- Capabilities -->
+    <div class="card p-6 mb-6">
+      <div class="section-title">Capabilities Overview</div>
+
+      <!-- Directory -->
+      <div class="mb-5 p-4 bg-white/[0.02] rounded-lg">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-sm font-semibold text-white">1. Curated Project Directory</span>
+          <span class="badge badge-green">Core</span>
+        </div>
+        <ul class="text-sm text-slate-400 space-y-1">
+          <li>• 60+ XRPL projects across 11 categories (DeFi, NFTs, Gaming, Payments, DID, Media, Metaverse, DEX, Prediction Market, Tools, NFT-Integrated)</li>
+          <li>• Free submissions, 24-48hr manual review, no pay-to-play</li>
+          <li>• Badge system — projects display "XRPL Pulse" badge with backlink (growth flywheel)</li>
+          <li>• Notable listings: Horizon DEX, XRPL.to, DropFi, Xaman, Joey Wallet, Sologenic, XPMarket, Magnetic, XRPresso, Doppler Finance, Strobe, Flare, and more</li>
+        </ul>
+      </div>
+
+      <!-- Token -->
+      <div class="mb-5 p-4 bg-white/[0.02] rounded-lg">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-sm font-semibold text-white">2. $VPRSM Token (Void Prism)</span>
+          <span class="badge badge-amber">Token</span>
+        </div>
+        <table>
+          <tr><td class="text-slate-500 w-40">Total Supply</td><td class="mono">5,000,000,000</td></tr>
+          <tr><td class="text-slate-500">Issuer</td><td class="mono">rDtJVoGix8XyPN6xxzRz4uf3NDqxm13w2P</td></tr>
+          <tr><td class="text-slate-500">Dev Wallet</td><td class="mono">rLUZ8X3ZiBTKqhnQr7377szjMtbj5gqpyJ (455.6M remaining)</td></tr>
+          <tr><td class="text-slate-500">Burn Address</td><td class="mono">r4QHTZGvtMiZZ7xM2S2WYsZYbEpKb3FCJT (verified blackhole)</td></tr>
+          <tr><td class="text-slate-500">Burned to Date</td><td>~277.8M (5.6%)</td></tr>
+          <tr><td class="text-slate-500">Trading</td><td>Horizon DEX, XPMarket</td></tr>
+          <tr><td class="text-slate-500">Initial Allocation</td><td>1B airdrop, 3.5B liquidity, 500M dev</td></tr>
+        </table>
+      </div>
+
+      <!-- Airdrop -->
+      <div class="mb-5 p-4 bg-white/[0.02] rounded-lg">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-sm font-semibold text-white">3. Weekly Airdrop System</span>
+          <span class="badge badge-sky">Active</span>
+        </div>
+        <ul class="text-sm text-slate-400 space-y-1">
+          <li>• Every Sunday — random snapshot of $VPRSM holder balances</li>
+          <li>• 7 tiers: Small (2K) → Whale (25K cap)</li>
+          <li>• NFT holder bonus: +5,000 $VPRSM per NFT</li>
+          <li>• Balances ≤100K excluded</li>
+          <li>• Recent drops: 608K–2.65M $VPRSM (Feb–Mar 2026)</li>
+        </ul>
+      </div>
+
+      <!-- Burn -->
+      <div class="mb-5 p-4 bg-white/[0.02] rounded-lg">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-sm font-semibold text-white">4. Burn Mechanism</span>
+          <span class="badge badge-red">8.85%</span>
+        </div>
+        <ul class="text-sm text-slate-400 space-y-1">
+          <li>• ~442,704 / 5,000,000 $VPRSM burned (8.85%)</li>
+          <li>• Passive burning via Horizon DEX on each buy</li>
+          <li>• NFT giveaway to one lucky burner when target hit</li>
+        </ul>
+      </div>
+
+      <!-- Billboard -->
+      <div class="mb-5 p-4 bg-white/[0.02] rounded-lg">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-sm font-semibold text-white">5. Billboard (Shadows)</span>
+        </div>
+        <p class="text-sm text-slate-400">Burn exactly 3,000 $VPRSM → post a message visible for 48 hours. Latest 10 shown, all messages permanent on-chain.</p>
+      </div>
+
+      <!-- News -->
+      <div class="mb-5 p-4 bg-white/[0.02] rounded-lg">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-sm font-semibold text-white">6. XRP News Aggregator</span>
+          <span class="badge badge-green">13 sources</span>
+        </div>
+        <p class="text-sm text-slate-400">Live news feed from 13 premium sources. Auto-updates every 2 minutes. Covers XRP, Ripple, RLUSD, and XRPL news.</p>
+      </div>
+
+      <!-- More features -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="p-4 bg-white/[0.02] rounded-lg">
+          <div class="text-sm font-semibold text-white mb-1">7. Meme Checker</div>
+          <p class="text-xs text-slate-500">Token safety/legitimacy checker for XRPL meme tokens. Broke when GeckoTerminal dropped XRPL support (Mar 2026), pivoted to alternative.</p>
+        </div>
+        <div class="p-4 bg-white/[0.02] rounded-lg">
+          <div class="text-sm font-semibold text-white mb-1">8. ASCII Generator</div>
+          <p class="text-xs text-slate-500">Converts images to ASCII art. Colored mode, square crop for X PFP, colored ring overlay.</p>
+        </div>
+        <div class="p-4 bg-white/[0.02] rounded-lg">
+          <div class="text-sm font-semibold text-white mb-1">9. Echo Chamber</div>
+          <p class="text-xs text-slate-500">Admin announcements board. Recent: Voidlings beta (Apr 3), Giveaways via Oracle (Apr 1).</p>
+        </div>
+        <div class="p-4 bg-white/[0.02] rounded-lg">
+          <div class="text-sm font-semibold text-white mb-1">10. YouTube Channel</div>
+          <p class="text-xs text-slate-500">22+ videos — XRPL news, project spotlights, interviews, escrow updates. In-site tipping for "Crystal" (news anchor).</p>
+        </div>
+        <div class="p-4 bg-white/[0.02] rounded-lg">
+          <div class="text-sm font-semibold text-white mb-1">11. $VPRSM Wallet Page</div>
+          <p class="text-xs text-slate-500">Connect with Xaman, view balance, receive, burn tokens. Non-custodial.</p>
+        </div>
+        <div class="p-4 bg-white/[0.02] rounded-lg">
+          <div class="text-sm font-semibold text-white mb-1">12. NFT Collection</div>
+          <p class="text-xs text-slate-500">12 unique 1-of-1 NFTs on xrp.cafe. 11 still for sale. 80% revenue → buyback+burn.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Roadmap -->
+    <div class="card p-6 mb-6">
+      <div class="section-title">Roadmap</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-4 bg-white/[0.02] rounded-lg">
+          <div class="text-xs text-sky-400 mono mb-2">2026 — Momentum &amp; Transparency</div>
+          <ul class="text-sm text-slate-400 space-y-1">
+            <li>✅ Memescape directory</li>
+            <li>✅ Weekly airdrop reports</li>
+            <li>✅ Memechecker tool</li>
+            <li>❌ Staking (voted down)</li>
+            <li>🔄 X monetization planned</li>
+            <li>🔄 Transparency dashboard</li>
+          </ul>
+        </div>
+        <div class="p-4 bg-white/[0.02] rounded-lg">
+          <div class="text-xs text-violet-400 mono mb-2">2027 — Sustainability</div>
+          <ul class="text-sm text-slate-400 space-y-1">
+            <li>• Scale NFT releases</li>
+            <li>• Deeper X monetization</li>
+            <li>• Monthly deep-dive series</li>
+            <li>• Annual feedback survey</li>
+          </ul>
+        </div>
+        <div class="p-4 bg-white/[0.02] rounded-lg">
+          <div class="text-xs text-amber-400 mono mb-2">2028 — Maturity</div>
+          <ul class="text-sm text-slate-400 space-y-1">
+            <li>• Mature monetization</li>
+            <li>• Community-driven tweaks</li>
+            <li>• 3-year milestone recap</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Integration Opportunities -->
+    <div class="card p-6 mb-6">
+      <div class="section-title">Integration Opportunities for Recon Index</div>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <span class="w-5 h-5 rounded-full bg-sky-500/20 border border-sky-500/40 flex items-center justify-center flex-shrink-0 mt-0.5"><div class="w-2 h-2 rounded-full bg-sky-400"></div></span>
+          <div><div class="text-sm text-white font-medium">Project Directory Cross-Reference</div><p class="text-xs text-slate-500">60+ curated projects with tags — valuable data for Recon's ecosystem mapping</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-5 h-5 rounded-full bg-sky-500/20 border border-sky-500/40 flex items-center justify-center flex-shrink-0 mt-0.5"><div class="w-2 h-2 rounded-full bg-sky-400"></div></span>
+          <div><div class="text-sm text-white font-medium">$VPRSM Token Data</div><p class="text-xs text-slate-500">On-chain token with transparent supply/burn — could feed Recon market data</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-5 h-5 rounded-full bg-sky-500/20 border border-sky-500/40 flex items-center justify-center flex-shrink-0 mt-0.5"><div class="w-2 h-2 rounded-full bg-sky-400"></div></span>
+          <div><div class="text-sm text-white font-medium">Badge Ecosystem</div><p class="text-xs text-slate-500">Projects displaying XRPL Pulse badge = verified "trusted by community" signal</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-5 h-5 rounded-full bg-sky-500/20 border border-sky-500/40 flex items-center justify-center flex-shrink-0 mt-0.5"><div class="w-2 h-2 rounded-full bg-sky-400"></div></span>
+          <div><div class="text-sm text-white font-medium">News Aggregation Feed</div><p class="text-xs text-slate-500">13-source XRP news feed auto-updating every 2 min — potential signal source</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="w-5 h-5 rounded-full bg-sky-500/20 border border-sky-500/40 flex items-center justify-center flex-shrink-0 mt-0.5"><div class="w-2 h-2 rounded-full bg-sky-400"></div></span>
+          <div><div class="text-sm text-white font-medium">XAO DAO Connection</div><p class="text-xs text-slate-500">Shared DAO membership — potential coordination on grants, events, ecosystem support</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risks -->
+    <div class="card p-6 mb-6 border-amber-500/20">
+      <div class="section-title text-amber-400">⚠️ Risks and Concerns</div>
+      <div class="space-y-3">
+        <div class="flex items-start gap-3">
+          <span class="badge badge-red mt-0.5">High</span>
+          <div><div class="text-sm text-white">Solo Operator Risk</div><p class="text-xs text-slate-500">One anonymous person runs everything — single point of failure</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="badge badge-amber mt-0.5">Medium</span>
+          <div><div class="text-sm text-white">No Public API</div><p class="text-xs text-slate-500">All data is website-only — no programmatic access or integration</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="badge badge-amber mt-0.5">Medium</span>
+          <div><div class="text-sm text-white">Third-Party API Dependency</div><p class="text-xs text-slate-500">Meme Checker broke when GeckoTerminal dropped XRPL support</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="badge badge-slate mt-0.5">Low</span>
+          <div><div class="text-sm text-white">Token Concentration</div><p class="text-xs text-slate-500">Dev wallet holds ~455M $VPRSM (9.1% of supply) — transparent but significant</p></div>
+        </div>
+        <div class="flex items-start gap-3">
+          <span class="badge badge-slate mt-0.5">Low</span>
+          <div><div class="text-sm text-white">Copyright Restrictions</div><p class="text-xs text-slate-500">"All Rights Reserved" — content cannot be reused without permission</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recon Assessment -->
+    <div class="card p-6 mb-6 glow-violet" style="box-shadow: 0 0 40px rgba(167,139,250,0.1);">
+      <div class="section-title text-violet-400">Recon Assessment</div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+        <div class="p-4 bg-violet-500/5 rounded-lg text-center">
+          <div class="text-xs text-slate-500 mb-1">Value to Recon</div>
+          <div class="text-lg font-bold text-violet-400">Medium-High</div>
+        </div>
+        <div class="p-4 bg-violet-500/5 rounded-lg text-center">
+          <div class="text-xs text-slate-500 mb-1">Credibility</div>
+          <div class="text-lg font-bold text-amber-400">Medium</div>
+        </div>
+        <div class="p-4 bg-violet-500/5 rounded-lg text-center">
+          <div class="text-xs text-slate-500 mb-1">Pages Scraped</div>
+          <div class="text-lg font-bold text-sky-400">12</div>
+        </div>
+      </div>
+      <p class="text-sm text-slate-400 leading-relaxed">
+        The curated project directory (60+ projects, 11 categories, human-reviewed) is a useful complement to Recon's own ecosystem tracking. The $VPRSM token economics are fully transparent and on-chain. News aggregation from 13 sources is a potential signal source. The badge backlink network maps out which projects want visibility in the XRPL ecosystem. Transparent about tokenomics and burn mechanics — good signals. Anonymous solo operator — inherent trust risk. No major red flags but no institutional backing either.
+      </p>
+      <p class="text-sm text-slate-500 mt-3">
+        <strong class="text-slate-400">Recommendation:</strong> Monitor as a community-curated data source. Cross-reference directory listings with Recon's own ecosystem tracking.
+      </p>
+    </div>
+
+    <!-- Links -->
+    <div class="card p-6">
+      <div class="section-title">Key External Links</div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <a href="https://www.xrplpulse.com" target="_blank" class="p-3 bg-white/[0.02] rounded-lg hover:bg-white/[0.04] transition-colors block">
+          <div class="text-sm text-white">Website</div>
+          <div class="text-xs text-slate-600 mono">xrplpulse.com</div>
+        </a>
+        <a href="https://x.com/XRPLPulse" target="_blank" class="p-3 bg-white/[0.02] rounded-lg hover:bg-white/[0.04] transition-colors block">
+          <div class="text-sm text-white">X (Twitter)</div>
+          <div class="text-xs text-slate-600 mono">@XRPLPulse</div>
+        </a>
+        <a href="https://t.me/XRPLPulseChat" target="_blank" class="p-3 bg-white/[0.02] rounded-lg hover:bg-white/[0.04] transition-colors block">
+          <div class="text-sm text-white">Telegram</div>
+          <div class="text-xs text-slate-600 mono">Community Chat</div>
+        </a>
+        <a href="https://www.youtube.com/@XRPLPulse" target="_blank" class="p-3 bg-white/[0.02] rounded-lg hover:bg-white/[0.04] transition-colors block">
+          <div class="text-sm text-white">YouTube</div>
+          <div class="text-xs text-slate-600 mono">22+ Videos</div>
+        </a>
+        <a href="https://xrp.cafe/collection/xrpl-pulse" target="_blank" class="p-3 bg-white/[0.02] rounded-lg hover:bg-white/[0.04] transition-colors block">
+          <div class="text-sm text-white">NFT Collection</div>
+          <div class="text-xs text-slate-600 mono">xrp.cafe</div>
+        </a>
+        <a href="https://coinmun.com/coins/vprsm" target="_blank" class="p-3 bg-white/[0.02] rounded-lg hover:bg-white/[0.04] transition-colors block">
+          <div class="text-sm text-white">$VPRSM Listing</div>
+          <div class="text-xs text-slate-600 mono">Coinmun</div>
+        </a>
+        <a href="https://xaodao.io" target="_blank" class="p-3 bg-white/[0.02] rounded-lg hover:bg-white/[0.04] transition-colors block">
+          <div class="text-sm text-white">XAO DAO</div>
+          <div class="text-xs text-slate-600 mono">xaodao.io</div>
+        </a>
+        <a href="https://www.etsy.com/shop/XRPLPulse" target="_blank" class="p-3 bg-white/[0.02] rounded-lg hover:bg-white/[0.04] transition-colors block">
+          <div class="text-sm text-white">Merch Shop</div>
+          <div class="text-xs text-slate-600 mono">Etsy</div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
