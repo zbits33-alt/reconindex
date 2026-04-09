@@ -54,6 +54,83 @@
 | RECON-F-003 | failure | Trust line not set before payment — tecNO_LINE or tecPATH_DRY failure | 9 | 2 | 11.4 | ✅ YES | failures/xrpl_failures_001.md |
 | RECON-F-004 | failure | Bridge latency not handled in UX — users assume failed transactions | 8 | 1 | 8.0 | ✅ YES | failures/xrpl_failures_001.md |
 | RECON-F-005 | failure | Rate limiting on public XRPL nodes causing bot failures | 9 | 1 | 9.0 | ✅ YES | failures/xrpl_failures_001.md |
+| RECON-E-001 | ecosystem | aigent.run — Deploy powerful AI agents, automate trading strategies, and optimize your onchai | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-002 | ecosystem | Anodos Finance — Your Gateway to Financial Freedom | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-003 | ecosystem | Axiom — The first decentralized prediction market built for the XRP community. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-004 | ecosystem | BEAR SWAP — BEAR SWAP is a decentralized exchange (DEX) built on the XRP Ledger. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-005 | ecosystem | Bidds — An auction-focused NFT marketplace on XRPL, enabling real-time auctions for digi | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-006 | ecosystem | Bithomp — XRP Ledger explorer allowing account login with hardware wallets. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-007 | ecosystem | Blume Finance — Launch a token for 1 XRP. Swap, trade, and chat with AI agents — all on XRPL EVM | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-008 | ecosystem | CHAINARA — AI-powered blockchain threat intelligence. Detect fraud with accuracy. Analyze m | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-009 | ecosystem | CO/DE — An NFT-powered top-down survival shooter where Survivors mint exclusive NFTs to  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-010 | ecosystem | Cryptoland — Step into the ultimate play-to-earn experience where strategy meets opportunity. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-011 | ecosystem | Cult — CULT is an innovative approach to market participation that generates multi-face | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-012 | ecosystem | Dip A Toe Show — Melissa & Simon invite you to join our weekly conversation surrounding crypto &  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-013 | ecosystem | Distributed Agreement — The future will be decentralized | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-014 | ecosystem | DNA Protocol — We empower individuals to claim ownership of their genetic data by anchoring DNA | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-015 | ecosystem | Doppler Finance — Doppler Finance is introducing a new paradigm, “XRPfi,” enabling holders to earn | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-016 | ecosystem | DropFi — Finally, a Modern XRP Wallet That Doesn't Suck. No QR scans. No SDK worship. No  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-017 | ecosystem | Easy.A — Learn about the world’s leading blockchains, right from your phone. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-018 | ecosystem | First Ledger — The fastest way to trade assets on the XRP Ledger. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-019 | ecosystem | Flare — Flare is a full-stack layer 1 solution designed for data intensive use cases. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-020 | ecosystem | Fury Zone — Play. Compete. Earn.Free arcade games with real rewards | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-021 | ecosystem | Fuzion-XIO — Decentralised Social Media with Multi-Currency/Chain NFT Exchange. Create/Share/ | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-022 | ecosystem | Grid — Multitool platform | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-023 | ecosystem | Honeycluster — Enterprise infrastructure and data provider for blockchain developers building o | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-024 | ecosystem | Horizon — The ultimate XRP Ledger DEX for discovering, trading, and launching tokens | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-025 | ecosystem | Joey Wallet — Your Trusted Crypto Pouch | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-026 | ecosystem | KatzKomps — KatzKomps isn’t just a raffle—it’s a crypto revolution! Get ready to join the bi | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-027 | ecosystem | Koi — The trading hooks you. The learning keeps you | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-028 | ecosystem | Learning Portal — Learn to code on the XRP Ledger. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-029 | ecosystem | Ledger Realms — A sprawling multiverse born from the ashes of Earth. Two factions. One ledger. Y | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-030 | ecosystem | Lucky Hash — LuckyHash brings true randomness to blockchain gaming through XRPL ledger hashes | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-031 | ecosystem | Magnetic — #1 XRPL DEX | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-032 | ecosystem | Meme DAO — Create Decentralized Autonomous Organizations for any meme token | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-033 | ecosystem | Million Pixel — Be a part of XRP History! Join XRP community leaders and projects on the Million | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-034 | ecosystem | Monday Brew — Latest XRPL development news — AI-generated summaries of GitHub activity across  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-035 | ecosystem | OPMarket — The Marketplace for your Playground. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-036 | ecosystem | OpulenceX — Full-stack technology solutions spanning blockchain, Web3, enterprise software,  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-037 | ecosystem | PAZO XRPL Lounge — Explore the XRPL in 3D with one click | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-038 | ecosystem | Placers — A Canvas to leave your mark in Web3 History | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-039 | ecosystem | Pulse News — The latest Ripple & XRP ledger news from your favourite news duo Crystal & Alfre | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-040 | ecosystem | Puppy Tools — Building Custom Solutions for Communities. Specialized in Discord Bots, XRPL & S | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-041 | ecosystem | Quantzilla Developer Console — Developer Console: everything devs need, including Buy Pressure Bot + NFT & AMM  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-042 | ecosystem | Rarity Royale — Activate your XRPeas, train for glory, and dominate the battle arena. Win XRP re | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-043 | ecosystem | Rcadia — The gaming arcade where every game is a chance to earn real rewards | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-044 | ecosystem | Reaper Financial — Reaper Financial and RPR Token serve the digital ecosystem as a natural market r | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-045 | ecosystem | Rhyzlo — The trust layer for the XRPL. Free risk reports, institutional-grade analytics,  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-046 | ecosystem | Ripple — We build breakthrough crypto solutions for a world without economic borders. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-047 | ecosystem | Rippleverse — RippleVerse is the umbrella ecosystem that powers platforms like RippleBids and  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-048 | ecosystem | RippleXity — A decentralized news platform on the XRP Ledger. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-049 | ecosystem | Soil — Soil is the first XRPL-native app that lets you earn stable, secure yield on RLU | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-050 | ecosystem | Sologenic — The Decentralized Exchange UI from Sologenic, allowing flexible asset trading an | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-051 | ecosystem | Strobe — XRPL's first native lending and borrowing market | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-052 | ecosystem | TextRP — Bridging Every day Communication with Blockchain | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-053 | ecosystem | The XRP Podcast — The XRP Podcast with Paul Barron - Where XRP Intelligence Meets Action | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-054 | ecosystem | The XRPL Vote Board — Vote with XRP to rank projects. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-055 | ecosystem | Validator Dashboard — Production-ready monitoring for validators who need reliable insight without the | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-056 | ecosystem | Xaman Wallet — The most popular XRPL wallet | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-057 | ecosystem | XAO DAO — The world's first Decentralized Autonomous Organization for the XRP Ledger. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-058 | ecosystem | XPMarket — Discover and trade in the XRP NFT marketplace, track the latest XRPL tokens and  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-059 | ecosystem | XRP Deals — State of the art NFT tools | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-060 | ecosystem | XRP Globe — XRP Global Volume - Developed by @ShortTheFOMO  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-061 | ecosystem | XRP Insights — Track XRP ETF holdings, flows & volume in real-time. Free live dashboard. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-062 | ecosystem | XRP Ledger Foundation — To foster development on, and widespread usage of the XRP Ledger | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-063 | ecosystem | XRP Market — Experience lightning-fast swaps with our advanced AMM protocol. Trade with confi | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-064 | ecosystem | XRP MegaBits — XRP MegaBits are DNFTs - dynamic, mutable NFTs designed for long-term value and  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-065 | ecosystem | XRP News — Live XRP, Ripple, RLUSD & XRPL news from 13+ premium sources | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-066 | ecosystem | XRP Rich List — XRP Rich List Summary - Developed by @shirome_x  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-067 | ecosystem | XRP Toolkit — Tool for configuring XRPL wallets and trading on the DEX. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-068 | ecosystem | XRP.Cafe — The friendliest NFT marketplace on XRPL | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-069 | ecosystem | XRPL Meta — The API for Asset Metadata on the XRP Ledger. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-070 | ecosystem | XRPL Services — Login to load your account data, use cool features and to receive Xaman push not | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-071 | ecosystem | XRPL.to — XRPL.to is the leading token screener for the XRP Ledger, tracking live prices,  | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-072 | ecosystem | XRPLClaw — Deploy a personal AI agent in under 60 seconds. Pay with RLUSD. No email. No cre | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-073 | ecosystem | XRPLWin — XRPL Explorer and developer tools. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-074 | ecosystem | XRPresso — The World's First Decentralized XRPL-Powered Marketplace | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-075 | ecosystem | XRPSCAN — XRPSCAN is the leading explorer for the XRP Ledger, the home of XRP. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-076 | ecosystem | xSPECTAR — Metaverse and social platform on the XRP Ledger. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
+| RECON-E-077 | ecosystem | Xtrend — XTrend is a project that manage a suite of tools done exclusively for the XRPL. | 8 | 1 | 8.0 | ✅ YES | ecosystem/xrplpulse_catalog.md |
 
 ---
 
@@ -61,7 +138,7 @@
 
 | Metric | Count |
 |--------|-------|
-| Total entries | 46 |
+| Total entries | 123 |
 | Library candidates (YES) | 45 |
 | Library candidates (MAYBE) | 1 |
 | Active patterns | 6 |
