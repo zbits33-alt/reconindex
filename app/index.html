@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReconIndex — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #050a0f;
+      --surface: #0c1520;
+      --surface2: #101e2e;
+      --border: #1a2e45;
+      --accent: #00c2ff;
+      --accent2: #7c3aed;
+      --text: #e2eaf3;
+      --muted: #6b8299;
+      --success: #00e676;
+      --warning: #ffc107;
+      --danger: #ff5252;
+      --sidebar-w: 220px;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      padding: 1.5rem 1rem;
+      position: fixed; top: 0; left: 0; bottom: 0;
+    }
+    .sidebar-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      padding: 0 0.5rem;
+    }
+    .sidebar-logo span { color: var(--muted); }
+
+    .nav-section {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      padding: 0 0.5rem;
+      margin: 1rem 0 0.4rem;
+    }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      margin-bottom: 2px;
+    }
+    .nav-item:hover { background: var(--surface2); color: var(--text); }
+    .nav-item.active { background: rgba(0,194,255,0.1); color: var(--accent); }
+    .nav-item .icon { font-size: 1rem; width: 18px; text-align: center; }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: 0 0.5rem;
+    }
+    .agent-pill {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      font-size: 0.8rem;
+    }
+    .agent-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex; flex-direction: column;
+    }
+
+    .topbar {
+      height: 56px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(5,10,15,0.6);
+      backdrop-filter: blur(8px);
+      position: sticky; top: 0; z-index: 50;
+    }
+
+    .topbar-title { font-size: 0.95rem; font-weight: 600; }
+
+    .topbar-right { display: flex; align-items: center; gap: 1rem; }
+
+    .status-badge-sm {
+      display: flex; align-items: center; gap: 0.4rem;
+      background: rgba(0,230,118,0.08);
+      border: 1px solid rgba(0,230,118,0.15);
+      color: var(--success);
+      padding: 0.25rem 0.7rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── CONTENT ── */
+    .content { padding: 2rem; }
+
+    /* ── STAT CARDS ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+    }
+    .stat-card-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+    .stat-card-value { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+    .stat-card-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+    .val-blue { color: var(--accent); }
+    .val-green { color: var(--success); }
+    .val-purple { color: #a78bfa; }
+    .val-orange { color: var(--warning); }
+
+    /* ── TWO COLUMN ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    @media(max-width:900px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── PANEL ── */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .panel-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .panel-title { font-size: 0.875rem; font-weight: 600; }
+    .panel-action { font-size: 0.75rem; color: var(--accent); cursor: pointer; text-decoration: none; }
+
+    /* ── TABLE ── */
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      padding: 0.6rem 1.5rem;
+      text-align: left;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      background: rgba(0,0,0,0.2);
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.845rem;
+      border-bottom: 1px solid rgba(26,46,69,0.5);
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(0,194,255,0.03); }
+
+    /* ── BADGES ── */
+    .badge {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+    }
+    .badge-blue { background: rgba(0,194,255,0.1); color: var(--accent); }
+    .badge-green { background: rgba(0,230,118,0.1); color: var(--success); }
+    .badge-purple { background: rgba(124,58,237,0.15); color: #a78bfa; }
+    .badge-orange { background: rgba(255,193,7,0.1); color: var(--warning); }
+    .badge-red { background: rgba(255,82,82,0.1); color: var(--danger); }
+    .badge-gray { background: rgba(107,130,153,0.15); color: var(--muted); }
+
+    /* ── ACTIVITY LIST ── */
+    .activity-list { padding: 0; }
+    .activity-item {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,69,0.5);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .activity-body { flex: 1; }
+    .activity-text { font-size: 0.845rem; line-height: 1.4; }
+    .activity-meta { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; font-family: 'JetBrains Mono', monospace; }
+
+    /* ── PATTERN CARD ── */
+    .pattern-list { padding: 0; }
+    .pattern-item {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(26,46,69,0.5);
+    }
+    .pattern-item:last-child { border-bottom: none; }
+    .pattern-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; }
+    .pattern-id {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--muted);
+    }
+    .pattern-title { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.3rem; }
+    .pattern-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .pattern-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--warning);
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      padding: 3rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.875rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">RECON<span>INDEX</span></div>
+
+    <div class="nav-section">Intelligence</div>
+    <a href="#" class="nav-item active"><span class="icon">📊</span> Overview</a>
+    <a href="#" class="nav-item"><span class="icon">📥</span> Submissions</a>
+    <a href="#" class="nav-item"><span class="icon">💡</span> Knowledge Units</a>
+    <a href="#" class="nav-item"><span class="icon">🔁</span> Patterns</a>
+
+    <div class="nav-section">Library</div>
+    <a href="#" class="nav-item"><span class="icon">📚</span> Candidates</a>
+    <a href="#" class="nav-item"><span class="icon">✅</span> Published</a>
+    <a href="#" class="nav-item"><span class="icon">⚠️</span> Safety Flags</a>
+
+    <div class="nav-section">Network</div>
+    <a href="#" class="nav-item"><span class="icon">🔌</span> Sources</a>
+    <a href="#" class="nav-item"><span class="icon">📡</span> Update Requests</a>
+    <a href="#" class="nav-item"><span class="icon">⛓️</span> On-Chain Anchors</a>
+
+    <div class="nav-section">System</div>
+    <a href="#" class="nav-item"><span class="icon">⚙️</span> Settings</a>
+    <a href="https://docs.reconindex.com" class="nav-item"><span class="icon">📖</span> Docs</a>
+    <a href="https://reconindex.com" class="nav-item"><span class="icon">🌐</span> Public Site</a>
+
+    <div class="sidebar-footer">
+      <div class="agent-pill">
+        <div class="agent-dot"></div>
+        <div>
+          <div style="font-weight:600;font-size:0.8rem;">Recon</div>
+          <div style="color:var(--muted);font-size:0.7rem;font-family:'JetBrains Mono',monospace;">SRC-001</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title">Overview</div>
+      <div class="topbar-right">
+        <div class="status-badge-sm">
+          <div class="agent-dot"></div>
+          Collection Active
+        </div>
+        <span style="font-size:0.8rem;color:var(--muted);font-family:'JetBrains Mono',monospace;" id="live-time">--:--:-- UTC</span>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- STAT GRID -->
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-card-label">Knowledge Units</div>
+          <div class="stat-card-value val-blue">46</div>
+          <div class="stat-card-sub">↑ 12 this week</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Active Patterns</div>
+          <div class="stat-card-value val-orange">6</div>
+          <div class="stat-card-sub">2 new since last sync</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Connected Sources</div>
+          <div class="stat-card-value val-green">2</div>
+          <div class="stat-card-sub">Recon · Predator</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Library Candidates</div>
+          <div class="stat-card-value val-purple">14</div>
+          <div class="stat-card-sub">3 pending review</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Safety Flags</div>
+          <div class="stat-card-value" style="color:var(--danger)">0</div>
+          <div class="stat-card-sub">All clear</div>
+        </div>
+      </div>
+
+      <!-- TWO COLUMN -->
+      <div class="two-col">
+
+        <!-- RECENT SUBMISSIONS -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Recent Submissions</div>
+            <a href="#" class="panel-action">View all →</a>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Source</th>
+                <th>Category</th>
+                <th>Score</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">SRC-002</span></td>
+                <td><span class="badge badge-red">failure</span></td>
+                <td><span style="color:var(--success);">9</span></td>
+                <td><span class="badge badge-purple">classified</span></td>
+              </tr>
+              <tr>
+                <td><span style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">SRC-001</span></td>
+                <td><span class="badge badge-blue">knowledge</span></td>
+                <td><span style="color:var(--success);">8</span></td>
+                <td><span class="badge badge-green">library candidate</span></td>
+              </tr>
+              <tr>
+                <td><span style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">SRC-002</span></td>
+                <td><span class="badge badge-orange">operational</span></td>
+                <td><span style="color:var(--warning);">6</span></td>
+                <td><span class="badge badge-purple">classified</span></td>
+              </tr>
+              <tr>
+                <td><span style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;">SRC-001</span></td>
+                <td><span class="badge badge-gray">friction</span></td>
+                <td><span style="color:var(--warning);">7</span></td>
+                <td><span class="badge badge-purple">classified</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ACTIVE PATTERNS -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Active Patterns</div>
+            <a href="#" class="panel-action">View all →</a>
+          </div>
+          <div class="pattern-list">
+            <div class="pattern-item">
+              <div class="pattern-header">
+                <span class="pattern-id">P-FAIL-002</span>
+                <span class="pattern-count">3 sources</span>
+              </div>
+              <div class="pattern-title">Silent Exception Handling</div>
+              <div class="pattern-desc">Exceptions caught and swallowed without logging. Funds trapped silently.</div>
+            </div>
+            <div class="pattern-item">
+              <div class="pattern-header">
+                <span class="pattern-id">P-FRIC-003</span>
+                <span class="pattern-count">2 sources</span>
+              </div>
+              <div class="pattern-title">Inconsistent Token Naming</div>
+              <div class="pattern-desc">Same token referenced differently across tools. Causes lookup failures.</div>
+            </div>
+            <div class="pattern-item">
+              <div class="pattern-header">
+                <span class="pattern-id">P-ARCH-001</span>
+                <span class="pattern-count">2 sources</span>
+              </div>
+              <div class="pattern-title">AMM vs DEX Logic Mismatch</div>
+              <div class="pattern-desc">Orderbook slippage logic applied to AMM pools. Systematic overpay.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ACTIVITY FEED -->
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Intelligence Activity</div>
+          <span class="status-badge-sm" style="font-size:0.72rem;">
+            <div class="agent-dot"></div> Live
+          </span>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-icon" style="background:rgba(0,230,118,0.1);">📚</div>
+            <div class="activity-body">
+              <div class="activity-text">Knowledge unit <strong>AMM slippage miscalculation</strong> promoted to ReconIndex Library</div>
+              <div class="activity-meta">SRC-001 · failure · score: 9 · 03:28 UTC</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon" style="background:rgba(255,82,82,0.1);">⚠️</div>
+            <div class="activity-body">
+              <div class="activity-text">Pattern <strong>P-FAIL-002</strong> confirmed — silent exception handling. Fix documented.</div>
+              <div class="activity-meta">SRC-002 · pattern · 03:14 UTC</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon" style="background:rgba(124,58,237,0.15);">📡</div>
+            <div class="activity-body">
+              <div class="activity-text">Predator (SRC-002) submitted performance data — executor missing receive()</div>
+              <div class="activity-meta">SRC-002 · operational · score: 8 · 02:55 UTC</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon" style="background:rgba(0,194,255,0.1);">⛓️</div>
+            <div class="activity-body">
+              <div class="activity-text">91 XRPL amendments indexed. 13 pending. Intelligence archive updated.</div>
+              <div class="activity-meta">SRC-001 · knowledge · score: 7 · 01:47 UTC</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon" style="background:rgba(0,230,118,0.1);">🔌</div>
+            <div class="activity-body">
+              <div class="activity-text">Source SRC-002 (Predator) registered. Permissions confirmed. Baseline layer 1 complete.</div>
+              <div class="activity-meta">admin · registration · 2026-04-09</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Live clock
+    function updateTime() {
+      const now = new Date();
+      const hh = String(now.getUTCHours()).padStart(2,'0');
+      const mm = String(now.getUTCMinutes()).padStart(2,'0');
+      const ss = String(now.getUTCSeconds()).padStart(2,'0');
+      document.getElementById('live-time').textContent = `${hh}:${mm}:${ss} UTC`;
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+
+</body>
+</html>
