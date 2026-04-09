@@ -17,6 +17,8 @@ Thumbs.db
 state/
 
 # Walkie
+walkie-inbox.txt
+walkie-watcher.pid
 walkie-*-inbox.txt
 walkie-*-watcher.pid
 

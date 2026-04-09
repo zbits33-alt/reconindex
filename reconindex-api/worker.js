@@ -138,7 +138,6 @@ async function handleIntakeRegister(request, env, cors) {
     owner: body.owner || null,
     ecosystem: body.ecosystem || [],
     api_token: body.api_token,
-    default_tier: body.default_tier || 2,
   });
 
   // Insert default permissions

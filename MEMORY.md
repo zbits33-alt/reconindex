@@ -156,3 +156,22 @@ Full system built in one session:
 - Scripts & Tools Index: 14 items (collections/RECON_SCRIPTS_INDEX.md)
 - Folders: platform, tools, safety, failures, agents, friction, ecosystem
 - Next IDs: RECON-P-019, RECON-A-006, RECON-T-022, RECON-S-006, RECON-F-007, RECON-X-006
+
+## Session 2026-04-09 17:04 UTC — Resume & Finish
+
+**What was done:**
+- GitHub repo initialized and pushed (github.com/zbits33-alt/reconindex, 2 commits, 76 files)
+- .gitignore set up to exclude .openclaw/, .walkie/, memory/, state/, skills/, secrets
+- Supabase schema confirmed live — all 8 tables verified (sources, permissions, assets, submissions, knowledge_units, library_candidates, patterns, safety_flags)
+- Supabase API keys retrieved via CLI (anon + service_role JWTs) — saved to secrets.md
+- Sources registered in DB: Recon (id: 12cd9959), Predator (id: f1bdb866)
+- Permissions configured for both sources
+- Test submission received: Predator identity update
+- Worker.js rewritten: replaced broken `exec_sql` calls with proper Supabase REST API
+- Added `/sources` admin endpoint to worker
+- wrangler.toml updated with real Supabase service key
+
+**Known blockers:**
+- **CF Workers deploy**: `cfut_*` tokens in secrets are Cloudflare Tunnel tokens, NOT API tokens with Workers/Pages permissions. Cannot redeploy api.reconindex.com or docs.reconindex.com via wrangler until a proper CF API token is provided.
+- Old worker at api.reconindex.com uses `exec_sql` (doesn't exist on Supabase) — intake submit returns error 1101. New worker.js is ready locally but not deployed.
+- docs.reconindex.com is live from previous deployment but cannot be updated without CF token.
