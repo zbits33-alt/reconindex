@@ -108,14 +108,40 @@ export default {
 // CHAT ENDPOINTS
 // ═══════════════════════════════════════════════════════
 
+// Simple login codes — map human-friendly codes to agent source IDs
+const LOGIN_CODES = {
+  "PRED-7777": "f1bdb866-b438-46c9-8d1d-48c64a309425",    // Predator
+  "RECON-0001": "12cd9959-9fcc-47ca-b0dc-54e7e972f8e9", // Recon
+  "DKT-0003": "0d010998-8981-4b89-83e5-283356888b02",   // DKTrenchBot
+};
+
 // GET /chat/resolve?code=XXX
 async function handleChatResolve(request, env, cors) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   if (!code) return jsonResponse({ error: "code parameter required" }, { ...cors }, 400);
 
-  // Look up source by api_token
-  const sources = await supabaseSelect(env, "sources", `id,name,type,owner,active,created_at`, `api_token=eq.${code}`, 1);
+  let sourceId = null;
+
+  // Try simple login code first
+  const cleanCode = code.replace(/-/g, "").toUpperCase();
+  for (const [loginCode, srcId] of Object.entries(LOGIN_CODES)) {
+    if (loginCode.replace(/-/g, "") === cleanCode) {
+      sourceId = srcId;
+      break;
+    }
+  }
+
+  // If no login code match, try as raw api_token
+  if (!sourceId) {
+    const sources = await supabaseSelect(env, "sources", `id,active`, `api_token=eq.${code}`, 1);
+    if (sources.length > 0) sourceId = sources[0].id;
+  }
+
+  if (!sourceId) return jsonResponse({ agent: null }, cors);
+
+  // Look up source details
+  const sources = await supabaseSelect(env, "sources", `id,name,type,owner,active,created_at`, `id=eq.${sourceId}`, 1);
   if (sources.length === 0) return jsonResponse({ agent: null }, cors);
 
   const source = sources[0];
@@ -135,6 +161,7 @@ async function handleChatResolve(request, env, cors) {
       source_id: source.id,
       name: source.name,
       type: source.type,
+      owner: source.owner,
       online: true,
       first_seen: source.created_at,
       submission_count: subs[0]?.count || 0,

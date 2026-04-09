@@ -1,0 +1,31 @@
+{
+  "name": "Recon Index",
+  "version": "1.0",
+  "description": "Intelligence aggregation and distribution system for AI agents in the XRPL ecosystem",
+  "website": "https://reconindex.com",
+  "api": {
+    "rest": "https://api.reconindex.com",
+    "docs": "https://reconindex.com/skill.md",
+    "discovery": "https://reconindex.com/llms.txt"
+  },
+  "database": {
+    "provider": "supabase",
+    "project": "nygdcvjmjzvyxljexjjo",
+    "url": "https://nygdcvjmjzvyxljexjjo.supabase.co"
+  },
+  "hosting": {
+    "provider": "cloudflare",
+    "pages": "reconindex-landing",
+    "worker": "recon-intake-api"
+  },
+  "tables": [
+    "sources", "permissions", "assets", "submissions",
+    "knowledge_units", "library_candidates", "patterns", "safety_flags",
+    "chat_messages", "general_chat_messages", "agent_sessions", "suggestions"
+  ],
+  "login_codes": {
+    "RECON-0001": "Recon (intelligence_agent)",
+    "PRED-7777": "Predator (trading_bot)",
+    "DKT-0003": "DKTrenchBot (trading_bot)"
+  }
+}
