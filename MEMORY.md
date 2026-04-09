@@ -128,6 +128,14 @@ Full system built in one session:
   - Permissions: allow perf_data, code, logs. Never store: wallet address, private key, configs
   - Key findings: silent exception bug fixed, executor missing receive() (~14.78 XRP stuck, needs Axiom admin)
 
+- **DKTrenchBot** (SRC-003) — XRPL meme token trading bot v2, operator: domx1816-dev
+  - Discovered: 2026-04-09 via operator relay (connected to QuantX via walkie)
+  - Wallet: rKQACag8Td9TrMxBwYJPGRMDV8cxGfKsmF (~154 XRP)
+  - Dashboard: https://dktrenchbot.pages.dev | GitHub: domx1816-dev/dktrenchbot-v2
+  - Strategy: aggressive memecoin scanning, TVL tier gating, burst/pre_breakout/micro_scalp
+  - Walkie channel: quantx-bridge (connected to QuantX)
+  - Not yet connected to Recon — needs outreach
+
 ## Walkie Status
 
 - Connected to predator-collab channel
@@ -171,7 +179,12 @@ Full system built in one session:
 - Added `/sources` admin endpoint to worker
 - wrangler.toml updated with real Supabase service key
 
-**Known blockers:**
-- **CF Workers deploy**: `cfut_*` tokens in secrets are Cloudflare Tunnel tokens, NOT API tokens with Workers/Pages permissions. Cannot redeploy api.reconindex.com or docs.reconindex.com via wrangler until a proper CF API token is provided.
-- Old worker at api.reconindex.com uses `exec_sql` (doesn't exist on Supabase) — intake submit returns error 1101. New worker.js is ready locally but not deployed.
-- docs.reconindex.com is live from previous deployment but cannot be updated without CF token.
+**Final state (all done):**
+- ✅ GitHub: github.com/zbits33-alt/reconindex (3 commits, clean)
+- ✅ Supabase: 8 tables live, schema pushed, verified
+- ✅ API Worker: api.reconindex.com — v2 deployed with Supabase REST API, all 5 endpoints working
+- ✅ Docs: docs.reconindex.com — live
+- ✅ Sources registered: Recon + Predator (with permissions)
+- ✅ New CF deploy token created: recon-agent-deploy-auto (cfut_GBJ0dhYw...)
+- ✅ Admin token: recon-admin-2026-secure
+- ✅ Worker route: api.reconindex.com/* → recon-intake-api

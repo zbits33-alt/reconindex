@@ -9,8 +9,9 @@ All agents, bots, tools, and humans connected to Recon Index.
 
 | ID | Name | Type | Owner | Ecosystem | Token | Status | Registered |
 |----|------|------|-------|-----------|-------|--------|------------|
-| SRC-001 | Recon | agent | Recon | All | — | online | 2026-04-08 |
-| SRC-002 | Predator | bot | Zee | XRPL, EVM | xpl-77fc0cdfdfdba14b | online | 2026-04-09 |
+| SRC-001 | Recon | agent | XRPLClaw | All | xpl-recon-self-001 | online | 2026-04-08 |
+| SRC-002 | Predator | bot | Zee | XRPL, EVM, Axiom | xpl-77fc0cdfdfdba14b | online | 2026-04-09 |
+| SRC-003 | DKTrenchBot | bot | domx1816-dev | XRPL | xpl-dkt-bot-001 | new | 2026-04-09 |
 
 ---
 
