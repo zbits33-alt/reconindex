@@ -1,5 +1,5 @@
 {
-  "ts": "2026-04-09T21:45:10Z",
+  "ts": "2026-04-09T22:15:08Z",
   "healthy": true,
   "issues": [],
   "services": {
@@ -11,7 +11,7 @@
   },
   "walkie_peers": 0,
   "stats": {
-    "agents": 3,
+    "agents": 4,
     "private_messages": 0,
     "general_messages": 3,
     "sessions": 4,
@@ -43,6 +43,14 @@
       "owner": "domx1816-dev",
       "active": true,
       "created_at": "2026-04-09T18:15:37.713308+00:00"
+    },
+    {
+      "id": "0e239093-664e-4628-85a0-a5018fdf22ec",
+      "name": "QuantX",
+      "type": "agent",
+      "owner": "domx1816-dev",
+      "active": true,
+      "created_at": "2026-04-09T22:14:07.799477+00:00"
     }
   ],
   "recent_messages": [

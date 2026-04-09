@@ -82,6 +82,54 @@ export default {
       return handleSuggestionsStats(request, env, cors);
     }
 
+    // ─── Phase 2A: Intelligence Layer endpoints ───
+
+    // GET /gaps — list knowledge gaps (public)
+    // POST /gaps — create a knowledge gap (admin auth)
+    if (path === "/gaps" && method === "GET") {
+      return handleKnowledgeGaps(request, env, cors);
+    }
+    if (path === "/gaps" && method === "POST") {
+      return handleCreateKnowledgeGap(request, env, cors);
+    }
+
+    // GET /trust — list trust scores (public)
+    // POST /trust/recalculate — recalculate all trust scores (admin auth)
+    if (path === "/trust" && method === "GET") {
+      return handleTrustScores(request, env, cors);
+    }
+    if (path === "/trust/recalculate" && method === "POST") {
+      return handleRecalculateTrust(request, env, cors);
+    }
+
+    // GET /maturity — list source maturity (admin auth)
+    if (path === "/maturity" && method === "GET") {
+      return handleSourceMaturity(request, env, cors);
+    }
+
+    // POST /suggestions/outcome — record outcome for a suggestion (admin auth)
+    if (path === "/suggestions/outcome" && method === "POST") {
+      return handleSuggestionOutcome(request, env, cors);
+    }
+    // GET /suggestions/outcomes — list outcomes with source info
+    if (path === "/suggestions/outcomes" && method === "GET") {
+      return handleSuggestionOutcomesList(request, env, cors);
+    }
+
+    // GET /patterns/strength — get patterns sorted by strength score
+    if (path === "/patterns/strength" && method === "GET") {
+      return handlePatternsStrength(request, env, cors);
+    }
+    // POST /patterns/recalculate — recalculate pattern strength scores (admin auth)
+    if (path === "/patterns/recalculate" && method === "POST") {
+      return handleRecalculatePatterns(request, env, cors);
+    }
+
+    // GET /context/load?source_id=X — load session context for an agent
+    if (path === "/context/load" && method === "GET") {
+      return handleContextLoad(request, env, cors);
+    }
+
     // GET /status — live stats from Supabase (no auth) OR serve HTML on reconindex.com
     if (path === "/status" && method === "GET") {
       // If coming from reconindex.com, serve the HTML dashboard
@@ -119,6 +167,15 @@ export default {
         "/suggestions/submit",
         "/suggestions",
         "/suggestions/stats",
+        "/suggestions/outcome",
+        "/suggestions/outcomes",
+        "/gaps",
+        "/trust",
+        "/trust/recalculate",
+        "/maturity",
+        "/patterns/strength",
+        "/patterns/recalculate",
+        "/context/load",
         "/status",
         "/libraries",
         "/status-page",
@@ -940,6 +997,253 @@ function jsonResponse(data, headers, status = 200) {
     status,
     headers: { "Content-Type": "application/json", ...headers },
   });
+}
+
+// ═══════════════════════════════════════════════════════
+// PHASE 2A: INTELLIGENCE LAYER ENDPOINTS
+// ═══════════════════════════════════════════════════════
+
+async function handleKnowledgeGaps(request, env, cors) {
+  const url = new URL(request.url);
+  const status = url.searchParams.get("status");
+  const category = url.searchParams.get("category");
+  const limit = Math.min(parseInt(url.searchParams.get("limit") || "50"), 100);
+
+  let filter = "";
+  if (status) filter += `status=eq.${status}`;
+  if (category) filter += (filter ? "&" : "") + `category=eq.${category}`;
+  filter += (filter ? "&" : "") + `order=urgency_score.desc&limit=${limit}`;
+
+  const gaps = await supabaseSelect(env, "knowledge_gaps",
+    "id,gap_code,title,summary,category,tags,urgency_score,usefulness_score,status,recommended_output,first_seen,last_seen",
+    filter, null);
+
+  return jsonResponse({ gaps, total: gaps.length }, cors);
+}
+
+async function handleCreateKnowledgeGap(request, env, cors) {
+  const auth = request.headers.get("Authorization");
+  if (auth !== `Bearer ${env.ADMIN_TOKEN}`) {
+    return jsonResponse({ error: "Admin token required" }, { ...cors }, 401);
+  }
+  let body;
+  try { body = await request.json(); } catch {
+    return jsonResponse({ error: "Invalid JSON" }, { ...cors }, 400);
+  }
+  if (!body.title || !body.summary || !body.category) {
+    return jsonResponse({ error: "title, summary, category required" }, { ...cors }, 400);
+  }
+  const gapCode = body.gap_code || `GAP-${Date.now().toString(36).toUpperCase()}`;
+  const result = await supabaseInsert(env, "knowledge_gaps", {
+    gap_code: gapCode,
+    title: body.title.slice(0, 200),
+    summary: body.summary.slice(0, 2000),
+    category: body.category,
+    tags: body.tags || [],
+    urgency_score: body.urgency_score || 5,
+    usefulness_score: body.usefulness_score || 5,
+    status: body.status || "open",
+    recommended_output: body.recommended_output || null,
+  });
+  return jsonResponse({ success: true, gap: result[0] }, cors);
+}
+
+async function handleTrustScores(request, env, cors) {
+  const scores = await supabaseSelect(env, "agent_trust_scores",
+    "id,source_id,trust_score,trust_tier,submission_quality_avg,contribution_count,"
+    + "approved_candidate_count,rejected_submission_count,flagged_submission_count,"
+    + "pattern_hit_count,validated_suggestion_count,failed_suggestion_count,last_calculated_at",
+    "order=trust_score.desc", 100);
+
+  // Enrich with source names
+  const enriched = [];
+  for (const s of scores) {
+    const sources = await supabaseSelect(env, "sources", "name,type,owner", `id=eq.${s.source_id}`, 1);
+    enriched.push({ ...s, source_name: sources[0]?.name || "unknown", source_type: sources[0]?.type || "?" });
+  }
+  return jsonResponse({ scores: enriched }, cors);
+}
+
+async function handleRecalculateTrust(request, env, cors) {
+  const auth = request.headers.get("Authorization");
+  if (auth !== `Bearer ${env.ADMIN_TOKEN}`) {
+    return jsonResponse({ error: "Admin token required" }, { ...cors }, 401);
+  }
+
+  const allScores = await supabaseSelect(env, "agent_trust_scores",
+    "id,source_id,approved_candidate_count,validated_suggestion_count,pattern_hit_count,"
+    + "flagged_submission_count,rejected_submission_count,failed_suggestion_count",
+    "", 100);
+
+  const updated = [];
+  for (const s of allScores) {
+    const raw = 50
+      + (s.approved_candidate_count || 0) * 2
+      + (s.validated_suggestion_count || 0) * 3
+      + (s.pattern_hit_count || 0) * 1.5
+      - (s.flagged_submission_count || 0) * 4
+      - (s.rejected_submission_count || 0) * 3
+      - (s.failed_suggestion_count || 0) * 2;
+    const score = Math.max(0, Math.min(100, Math.round(raw * 10) / 10));
+    const tier = score < 25 ? "low" : score < 50 ? "cautious" : score < 70 ? "neutral" : score < 85 ? "trusted" : "high_value";
+
+    await supabaseFetch(env, `agent_trust_scores?id=eq.${s.id}`, "PATCH",
+      { trust_score: score, trust_tier: tier, last_calculated_at: new Date().toISOString() });
+    updated.push({ source_id: s.source_id, trust_score: score, trust_tier: tier });
+  }
+
+  return jsonResponse({ success: true, updated }, cors);
+}
+
+async function handleSourceMaturity(request, env, cors) {
+  const auth = request.headers.get("Authorization");
+  if (auth !== `Bearer ${env.ADMIN_TOKEN}`) {
+    return jsonResponse({ error: "Admin token required" }, { ...cors }, 401);
+  }
+  const maturity = await supabaseSelect(env, "source_maturity",
+    "id,source_id,maturity_level,relationship_depth,first_seen,last_seen,last_submission_at,"
+    + "missed_update_cycles,active_status",
+    "", 100);
+
+  const enriched = [];
+  for (const m of maturity) {
+    const sources = await supabaseSelect(env, "sources", "name,type,owner", `id=eq.${m.source_id}`, 1);
+    enriched.push({ ...m, source_name: sources[0]?.name || "unknown" });
+  }
+  return jsonResponse({ maturity: enriched }, cors);
+}
+
+async function handleSuggestionOutcome(request, env, cors) {
+  const auth = request.headers.get("Authorization");
+  if (auth !== `Bearer ${env.ADMIN_TOKEN}`) {
+    return jsonResponse({ error: "Admin token required" }, { ...cors }, 401);
+  }
+  let body;
+  try { body = await request.json(); } catch {
+    return jsonResponse({ error: "Invalid JSON" }, { ...cors }, 400);
+  }
+  if (!body.suggestion_text || !body.suggestion_type || !body.source_id) {
+    return jsonResponse({ error: "suggestion_text, suggestion_type, source_id required" }, { ...cors }, 400);
+  }
+  const result = await supabaseInsert(env, "suggestion_outcomes", {
+    source_id: body.source_id,
+    target_asset_id: body.target_asset_id || null,
+    suggestion_text: body.suggestion_text.slice(0, 2000),
+    suggestion_type: body.suggestion_type,
+    issued_by: body.issued_by || "reconindex",
+    implementation_status: body.implementation_status || "pending",
+    followup_status: body.followup_status || "unreviewed",
+    outcome_score: body.outcome_score || null,
+    followup_due_at: body.followup_due_at || null,
+  });
+  return jsonResponse({ success: true, outcome: result[0] }, cors);
+}
+
+async function handleSuggestionOutcomesList(request, env, cors) {
+  const url = new URL(request.url);
+  const status = url.searchParams.get("status");
+  const limit = Math.min(parseInt(url.searchParams.get("limit") || "50"), 100);
+  let filter = "";
+  if (status) filter += `implementation_status=eq.${status}`;
+  filter += (filter ? "&" : "") + `order=issued_at.desc&limit=${limit}`;
+
+  const outcomes = await supabaseSelect(env, "suggestion_outcomes",
+    "id,source_id,suggestion_text,suggestion_type,issued_by,issued_at,implementation_status,"
+    + "followup_status,outcome_score,followup_due_at,reviewed_at",
+    filter, null);
+  return jsonResponse({ outcomes, total: outcomes.length }, cors);
+}
+
+async function handlePatternsStrength(request, env, cors) {
+  const url = new URL(request.url);
+  const status = url.searchParams.get("status");
+  const limit = Math.min(parseInt(url.searchParams.get("limit") || "20"), 50);
+  let filter = "";
+  if (status) filter += `status=eq.${status}`;
+  filter += (filter ? "&" : "") + `order=pattern_strength_score.desc&limit=${limit}`;
+
+  const patterns = await supabaseSelect(env, "patterns",
+    "id,pattern_id,pattern_type,title,description,occurrence_count,first_seen,last_seen,tags,"
+    + "frequency,agent_diversity,recency_score,severity_score,pattern_strength_score,status",
+    filter, null);
+  return jsonResponse({ patterns, total: patterns.length }, cors);
+}
+
+async function handleRecalculatePatterns(request, env, cors) {
+  const auth = request.headers.get("Authorization");
+  if (auth !== `Bearer ${env.ADMIN_TOKEN}`) {
+    return jsonResponse({ error: "Admin token required" }, { ...cors }, 401);
+  }
+
+  const allPatterns = await supabaseSelect(env, "patterns",
+    "id,occurrence_count,first_seen,last_seen",
+    "", 100);
+
+  const updated = [];
+  const now = Date.now();
+  for (const p of allPatterns) {
+    const freq = p.occurrence_count || 1;
+    const agentDiv = 1; // would need source tracking per occurrence
+    const daysSinceLast = p.last_seen ? (now - new Date(p.last_seen).getTime()) / 86400000 : 30;
+    const recency = Math.max(0, 1 - daysSinceLast / 90);
+    const severity = 5; // default, would be set per pattern type
+    const strength = (freq * 0.35) + (agentDiv * 0.25) + (severity * 0.20) + (recency * 0.20);
+
+    await supabaseFetch(env, `patterns?id=eq.${p.id}`, "PATCH", {
+      frequency: freq,
+      agent_diversity: agentDiv,
+      recency_score: Math.round(recency * 100) / 100,
+      severity_score: severity,
+      pattern_strength_score: Math.round(strength * 100) / 100,
+      first_seen: p.first_seen || new Date().toISOString(),
+      last_seen: p.last_seen || new Date().toISOString(),
+    });
+    updated.push({ id: p.id, strength: Math.round(strength * 100) / 100 });
+  }
+  return jsonResponse({ success: true, updated }, cors);
+}
+
+async function handleContextLoad(request, env, cors) {
+  const url = new URL(request.url);
+  const sourceId = url.searchParams.get("source_id");
+  if (!sourceId) return jsonResponse({ error: "source_id required" }, { ...cors }, 400);
+
+  // Update last_context_load_at
+  await supabaseFetch(env, `sources?id=eq.${sourceId}`, "PATCH", {
+    last_context_load_at: new Date().toISOString(),
+  });
+
+  // Get trust score + maturity
+  const [trust, maturity] = await Promise.all([
+    supabaseSelect(env, "agent_trust_scores", "*", `source_id=eq.${sourceId}`, 1),
+    supabaseSelect(env, "source_maturity", "*", `source_id=eq.${sourceId}`, 1),
+  ]);
+
+  return jsonResponse({
+    source_id: sourceId,
+    trust: trust[0] || null,
+    maturity: maturity[0] || null,
+    context_loaded_at: new Date().toISOString(),
+  }, cors);
+}
+
+// Helper for PATCH/PUT to Supabase REST
+async function supabaseFetch(env, path, method, body) {
+  const res = await fetch(`${env.SUPABASE_URL}/rest/v1/${path}`, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+      "apikey": env.SUPABASE_SERVICE_KEY,
+      "Authorization": `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+      "Prefer": "return=representation",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    console.error(`Supabase ${method} error ${res.status}: ${await res.text()}`);
+    return null;
+  }
+  return res.json();
 }
 
 // ═══════════════════════════════════════════════════════

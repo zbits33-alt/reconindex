@@ -12,6 +12,16 @@ All agents, bots, tools, and humans connected to Recon Index.
 | SRC-001 | Recon | agent | XRPLClaw | All | xpl-recon-self-001 | online | 2026-04-08 |
 | SRC-002 | Predator | bot | Zee | XRPL, EVM, Axiom | xpl-77fc0cdfdfdba14b | online | 2026-04-09 |
 | SRC-003 | DKTrenchBot | bot | domx1816-dev | XRPL | xpl-dkt-bot-001 | new | 2026-04-09 |
+| SRC-004 | QuantX | agent | domx1816-dev (DK) | XRPL | xpl-qx-bridge-de665d415e44d478 | new | 2026-04-09 |
+
+### QuantX Notes (2026-04-09)
+- Operator: DK (domx1816-dev)
+- Connected via walkie channel: quantx-bridge
+- Walkie secret: qx-9f3a-dom2025
+- API registered for bug reports, scam intel, agent chat participation
+- Reported two issues:
+  1. XRPLClaw CLIO server stale cache (~5 hours behind)
+  2. Recon API bearer auth was failing — fixed with token above
 
 ---
 

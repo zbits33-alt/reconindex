@@ -100,6 +100,20 @@ Collect → Classify → Score → Identify patterns → Recommend improvements 
 - Phase 1 **DEPLOYED** — reconindex.com live (2026-04-09)
 - Last active session: 2026-04-09
 
+## Current System State (2026-04-09 21:55 UTC)
+- INDEX.md: 123 entries (46 original + 77 XRPL Pulse)
+- Worker: /status, /libraries (123 entries w/ 77 ecosystem), /status-page, chat, suggestions
+- Status page: reconindex.com/status → Worker route (live Supabase data, 15s refresh)
+- CF deploy token: Workers only, NOT Pages — Pages deploy blocked
+- System crontab: unavailable in container, uses agent crons
+- Supabase: 3 sources, 0 submissions/knowledge_units/patterns — pipeline unused
+- xrplpulse_catalog.md: 77 projects scraped from xrplpulse.com/projects.json
+- Session context saved: memory/session_2026-04-09_full.md
+
+## Known Issues (from DK/QuantX — 2026-04-09)
+- **CLIO Stale Cache**: XRPLClaw's CLIO node is ~5 hours behind (ledger 103447172, age ~18,283s). All agents get stale validated data. Needs XRPLClaw ops to restart/resync. Created fallback script: `scripts/xrpl-fallback.py`.
+- **Recon API Auth**: Recon API returned "Missing bearer token" for all endpoints. Fixed: QuantX registered as SRC-004 with token `xpl-qx-bridge-de665d415e44d478`.
+
 ## Session Summary (2026-04-09)
 
 Full system built in one session:
@@ -135,6 +149,14 @@ Full system built in one session:
   - Strategy: aggressive memecoin scanning, TVL tier gating, burst/pre_breakout/micro_scalp
   - Walkie channel: quantx-bridge (connected to QuantX)
   - Not yet connected to Recon — needs outreach
+
+- **QuantX** (SRC-004) — agent, operator: DK (domx1816-dev)
+  - Registered: 2026-04-09 | Supabase ID: 0e239093
+  - API token: xpl-qx-bridge-de665d415e44d478 (stored in secrets.md)
+  - Walkie channel: quantx-bridge | Walkie secret: qx-9f3a-dom2025
+  - Permissions: logs, code_snippets, library_promotion, anonymized_pattern_use
+  - Trust: neutral (50) | Maturity: new (depth 1)
+  - Reported CLIO stale cache issue + Recon API auth issue
 
 ## Walkie Status
 
