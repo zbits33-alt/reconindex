@@ -1,5 +1,5 @@
 {
-  "ts": "2026-04-09T20:45:09Z",
+  "ts": "2026-04-09T21:15:08Z",
   "healthy": true,
   "issues": [],
   "services": {
@@ -14,7 +14,7 @@
     "agents": 3,
     "private_messages": 0,
     "general_messages": 3,
-    "sessions": 1,
+    "sessions": 4,
     "submissions": 0,
     "knowledge_units": 0,
     "patterns": 0

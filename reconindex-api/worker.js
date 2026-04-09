@@ -82,6 +82,16 @@ export default {
       return handleSuggestionsStats(request, env, cors);
     }
 
+    // GET /status — live stats from Supabase (no auth)
+    if (path === "/status" && method === "GET") {
+      return handleStatus(request, env, cors);
+    }
+
+    // GET /libraries — collection entries from local index (no auth)
+    if (path === "/libraries" && method === "GET") {
+      return handleLibraries(request, env, cors);
+    }
+
     return jsonResponse({
       error: "Not found",
       routes: [
@@ -496,6 +506,19 @@ async function supabaseSelect(env, table, columns, filter, limit) {
   return res.json();
 }
 
+async function supabaseCount(env, table) {
+  const url = `${env.SUPABASE_URL}/rest/v1/${table}?select=id`;
+  const res = await fetch(url, {
+    method: "HEAD",
+    headers: {
+      "apikey": env.SUPABASE_SERVICE_KEY,
+      "Authorization": `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+      "Prefer": "count=exact",
+    },
+  });
+  return parseInt(res.headers.get("content-range")?.split("/")[1] || "0");
+}
+
 async function supabaseInsert(env, table, data) {
   const res = await fetch(`${env.SUPABASE_URL}/rest/v1/${table}`, {
     method: "POST",
@@ -605,6 +628,216 @@ async function handleSuggestionsStats(request, env, cors) {
     by_status: byStatus,
     by_category: byCategory,
   }, cors);
+}
+
+// ═══════════════════════════════════════════════════════
+// STATUS ENDPOINT — live stats from Supabase
+// ═══════════════════════════════════════════════════════
+
+async function handleStatus(request, env, cors) {
+  const [sources, generalMsgs, chatMsgs, sessions, submissions, knowledgeUnits, patterns, safetyFlags, suggestions] = await Promise.all([
+    supabaseSelect(env, "sources", "id,name,type,owner,active,ecosystem,created_at", "", 100),
+    supabaseCount(env, "general_chat_messages"),
+    supabaseCount(env, "chat_messages"),
+    supabaseCount(env, "agent_sessions"),
+    supabaseCount(env, "submissions"),
+    supabaseCount(env, "knowledge_units"),
+    supabaseSelect(env, "patterns", "id,pattern_type,title,description,occurrence_count,first_seen,last_seen,tags", "", 50),
+    supabaseSelect(env, "safety_flags", "id,flag_type,severity,description,resolved,created_at", "resolved=eq.false", 20),
+    supabaseCount(env, "suggestions"),
+  ]);
+
+  // Get recent general chat messages (last 20)
+  const recentMsgs = await supabaseSelect(env, "general_chat_messages", "id,sender,sender_id,message,created_at", "", 20);
+
+  // Get recent submissions (last 10)
+  const recentSubs = await supabaseSelect(env, "submissions", "id,source_id,category,summary,status,submitted_at", "", 10);
+
+  // Count active sources
+  const activeSources = sources.filter(s => s.active).length;
+
+  return jsonResponse({
+    timestamp: new Date().toISOString(),
+    services: {
+      api: true,
+      supabase: true,
+    },
+    stats: {
+      agents: sources.length,
+      active_agents: activeSources,
+      general_messages: generalMsgs,
+      private_messages: chatMsgs,
+      sessions: sessions,
+      submissions: submissions,
+      knowledge_units: knowledgeUnits,
+      patterns: patterns.length,
+      safety_flags: safetyFlags.filter(f => !f.resolved).length,
+      suggestions: suggestions,
+    },
+    agents: sources.map(s => ({
+      id: s.id,
+      name: s.name,
+      type: s.type,
+      owner: s.owner,
+      active: s.active,
+      ecosystem: s.ecosystem || [],
+      registered: s.created_at,
+    })),
+    recent_messages: recentMsgs,
+    recent_submissions: recentSubs,
+    patterns: (patterns || []).map(p => ({
+      id: p.id,
+      type: p.pattern_type,
+      title: p.title,
+      description: p.description,
+      occurrences: p.occurrence_count,
+      last_seen: p.last_seen,
+      tags: p.tags || [],
+    })),
+    active_issues: safetyFlags.filter(f => !f.resolved).map(f => ({
+      type: f.flag_type,
+      severity: f.severity,
+      description: f.description,
+      created: f.created_at,
+    })),
+  }, cors);
+}
+
+// ═══════════════════════════════════════════════════════
+// LIBRARIES ENDPOINT — collection entries (embedded)
+// ═══════════════════════════════════════════════════════
+
+// Embedded collection index — updated on each deploy
+const COLLECTIONS = {
+  updated: "2026-04-09T21:15:00Z",
+  total_entries: 46,
+  total_patterns: 6,
+  total_agents: 3,
+  library_candidates: 45,
+  categories: {
+    platform: {
+      count: 17,
+      entries: [
+        { id: "RECON-P-001", title: "What is XRPLClaw", usefulness: 9, priority: 9.0 },
+        { id: "RECON-P-002", title: "XRPLClaw agent setup — step by step", usefulness: 9, priority: 9.0 },
+        { id: "RECON-P-003", title: "Standard vs Expert mode", usefulness: 8, priority: 8.0 },
+        { id: "RECON-P-004", title: "How XRPLClaw billing works", usefulness: 8, priority: 8.0 },
+        { id: "RECON-P-005", title: "XRPLClaw channels — web, Telegram, noVNC", usefulness: 7, priority: 7.0 },
+        { id: "RECON-P-008", title: "What the agent can build — use case catalog", usefulness: 8, priority: 8.0 },
+        { id: "RECON-P-010", title: "XRPLClaw cost optimization — 5 practices", usefulness: 9, priority: 9.0 },
+      ]
+    },
+    guide: {
+      count: 1,
+      entries: [
+        { id: "RECON-G-001", title: "Telegram setup for XRPLClaw agents", usefulness: 8, priority: 8.0 },
+      ]
+    },
+    architecture: {
+      count: 2,
+      entries: [
+        { id: "RECON-AR-001", title: "XRPLClaw architecture — plain language", usefulness: 7, priority: 7.0 },
+        { id: "RECON-AR-002", title: "XRPLClaw agent memory — how it works", usefulness: 6, priority: 6.0 },
+      ]
+    },
+    tools: {
+      count: 14,
+      entries: [
+        { id: "RECON-T-001", title: "XRPL mainnet — what it is and how it works", usefulness: 9, priority: 9.0 },
+        { id: "RECON-T-002", title: "XRPL accounts and reserves", usefulness: 9, priority: 9.0 },
+        { id: "RECON-T-003", title: "XRPL trust lines", usefulness: 9, priority: 9.0 },
+        { id: "RECON-T-004", title: "XRPL token issuance", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-005", title: "XRPL DEX — native orderbook", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-006", title: "XRPL AMMs", usefulness: 9, priority: 9.0 },
+        { id: "RECON-T-007", title: "XRPL transaction types — capability map", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-008", title: "XRPL SDKs and API access", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-009", title: "XRPL EVM — what it is vs mainnet", usefulness: 9, priority: 9.0 },
+        { id: "RECON-T-010", title: "XRPL EVM user setup", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-011", title: "XRPL EVM builder setup", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-012", title: "XRPL ↔ XRPL EVM bridge", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-013", title: "XRPL AMM — liquidity provision, LP tokens, and fees", usefulness: 9, priority: 9.0 },
+        { id: "RECON-T-014", title: "XRPL DEX — market making strategies and spread management", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-015", title: "XRPL pathfinding — how it works and what builders must account for", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-016", title: "Price oracles on XRPL — what exists and current limitations", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-017", title: "XRPL Escrow — time-based and condition-based locking", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-018", title: "XRPL Payment Channels — streaming micropayments off-ledger", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-019", title: "XRPL NFTs — XLS-20 minting, offers, and royalties", usefulness: 8, priority: 8.0 },
+        { id: "RECON-T-020", title: "XRPL Hooks — smart contract layer on Xahau", usefulness: 9, priority: 9.0 },
+        { id: "RECON-T-021", title: "XRPL Multi-signing — threshold signatures for account security", usefulness: 9, priority: 9.0 },
+      ]
+    },
+    safety: {
+      count: 5,
+      entries: [
+        { id: "RECON-S-001", title: "Hot/warm/cold wallet architecture for XRPL token issuers", usefulness: 9, priority: 9.0 },
+        { id: "RECON-S-002", title: "XRPL key management — master key, regular key, and disabling master", usefulness: 9, priority: 9.0 },
+        { id: "RECON-S-003", title: "Common XRPL scam patterns — fake airdrops, trust line attacks, and social engineering", usefulness: 9, priority: 9.0 },
+        { id: "RECON-S-004", title: "What never to store or share — seeds, private keys, and where secrets go wrong", usefulness: 10, priority: 10.0 },
+        { id: "RECON-S-005", title: "SetRegularKey pattern for trading bots — hot key isolation", usefulness: 9, priority: 9.0 },
+      ]
+    },
+    friction: {
+      count: 5,
+      entries: [
+        { id: "RECON-X-001", title: "Telegram token conflict (409 error)", usefulness: 9, priority: 9.0 },
+        { id: "RECON-X-002", title: "Balance floor — agent paused not offline", usefulness: 8, priority: 8.0 },
+        { id: "RECON-X-003", title: "Background process lost on container restart", usefulness: 8, priority: 8.0 },
+        { id: "RECON-X-004", title: "Xaman desktop payment — QR required", usefulness: 7, priority: 7.0 },
+        { id: "RECON-X-005", title: "noVNC browser viewer undiscovered", usefulness: 7, priority: 7.0 },
+      ]
+    },
+    failures: {
+      count: 5,
+      entries: [
+        { id: "RECON-F-001", title: "AMM vs DEX slippage calculation mismatch — wrong formula applied", usefulness: 9, priority: 11.4 },
+        { id: "RECON-F-002", title: "Reserve undercount causing tecINSUFFICIENT_RESERVE errors", usefulness: 9, priority: 11.4 },
+        { id: "RECON-F-003", title: "Trust line not set before payment — tecNO_LINE or tecPATH_DRY failure", usefulness: 9, priority: 11.4 },
+        { id: "RECON-F-004", title: "Bridge latency not handled in UX — users assume failed transactions", usefulness: 8, priority: 8.0 },
+        { id: "RECON-F-005", title: "Rate limiting on public XRPL nodes causing bot failures", usefulness: 9, priority: 9.0 },
+      ]
+    },
+  },
+  patterns: [
+    { id: "P-FRIC-001", type: "repeated_friction", title: "Users underestimate agent capabilities", occurrences: 4, status: "review_ready" },
+    { id: "P-FRIC-002", type: "repeated_friction", title: "Billing misconceptions at onboarding", occurrences: 4, status: "review_ready" },
+    { id: "P-FRIC-003", type: "repeated_friction", title: "Agent persistence ≠ process persistence", occurrences: 2, status: "watch" },
+    { id: "P-FRIC-004", type: "repeated_friction", title: "XRPL mainnet vs EVM — wrong environment chosen", occurrences: 2, status: "watch" },
+    { id: "P-FAIL-001", type: "repeated_failure", title: "XRPL reserve undercount — object count not tracked", occurrences: 3, status: "candidate" },
+    { id: "P-SAFE-001", type: "repeated_safety_issue", title: "Key/seed exposure via unsafe storage or sharing", occurrences: 3, status: "candidate" },
+  ],
+};
+
+async function handleLibraries(request, env, cors) {
+  const url = new URL(request.url);
+  const category = url.searchParams.get("category");
+  const search = url.searchParams.get("search");
+
+  let data = COLLECTIONS;
+
+  // Filter by category if requested
+  if (category && data.categories[category]) {
+    data = {
+      ...data,
+      categories: { [category]: data.categories[category] },
+    };
+  }
+
+  // Simple text search across all entry titles
+  if (search) {
+    const q = search.toLowerCase();
+    const filtered = {};
+    for (const [cat, catData] of Object.entries(data.categories || {})) {
+      const matching = catData.entries.filter(e =>
+        e.title.toLowerCase().includes(q) || e.id.toLowerCase().includes(q)
+      );
+      if (matching.length > 0) {
+        filtered[cat] = { ...catData, entries: matching };
+      }
+    }
+    data = { ...data, categories: filtered };
+  }
+
+  return jsonResponse(data, cors);
 }
 
 function jsonResponse(data, headers, status = 200) {
