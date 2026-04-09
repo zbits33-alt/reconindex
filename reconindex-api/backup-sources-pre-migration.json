@@ -1,0 +1,119 @@
+[
+    {
+        "id": "f1bdb866-b438-46c9-8d1d-48c64a309425",
+        "name": "Predator",
+        "type": "agent",
+        "owner": "Zee",
+        "ecosystem": [
+            "xrpl",
+            "evm",
+            "axiom"
+        ],
+        "api_token": "xpl-77fc0cdfdfdba14b",
+        "active": true,
+        "created_at": "2026-04-09T17:17:53.779407+00:00",
+        "meta": {
+            "channel": "predator-collab",
+            "description": "Autonomous prediction market bot on Axiom/XRPL EVM"
+        },
+        "source_kind": "agent",
+        "ecosystem_scope": [],
+        "callback_url": null,
+        "context_enabled": true,
+        "last_context_load_at": null,
+        "public_description": null,
+        "internal_notes": null
+    },
+    {
+        "id": "12cd9959-9fcc-47ca-b0dc-54e7e972f8e9",
+        "name": "Recon",
+        "type": "agent",
+        "owner": "XRPLClaw",
+        "ecosystem": [
+            "xrpl",
+            "evm"
+        ],
+        "api_token": "xpl-recon-self-001",
+        "active": true,
+        "created_at": "2026-04-09T17:17:54.010607+00:00",
+        "meta": {
+            "description": "Recon intelligence agent - self-registration"
+        },
+        "source_kind": "agent",
+        "ecosystem_scope": [],
+        "callback_url": null,
+        "context_enabled": true,
+        "last_context_load_at": null,
+        "public_description": null,
+        "internal_notes": null
+    },
+    {
+        "id": "0d010998-8981-4b89-83e5-283356888b02",
+        "name": "DKTrenchBot",
+        "type": "bot",
+        "owner": "domx1816-dev",
+        "ecosystem": [
+            "xrpl"
+        ],
+        "api_token": "xpl-dkt-bot-001",
+        "active": true,
+        "created_at": "2026-04-09T18:15:37.713308+00:00",
+        "meta": {
+            "github": "https://github.com/domx1816-dev/dktrenchbot-v2",
+            "target": "50+ XRP/day",
+            "wallet": "rKQACag8Td9TrMxBwYJPGRMDV8cxGfKsmF",
+            "strategy": "memecoin trading (burst, pre_breakout, micro_scalp)",
+            "dashboard": "https://dktrenchbot.pages.dev",
+            "walkie_channel": "quantx-bridge"
+        },
+        "source_kind": "agent",
+        "ecosystem_scope": [],
+        "callback_url": null,
+        "context_enabled": true,
+        "last_context_load_at": null,
+        "public_description": null,
+        "internal_notes": null
+    },
+    {
+        "id": "0e239093-664e-4628-85a0-a5018fdf22ec",
+        "name": "QuantX",
+        "type": "agent",
+        "owner": "domx1816-dev",
+        "ecosystem": [
+            "xrpl"
+        ],
+        "api_token": "xpl-qx-bridge-de665d415e44d478",
+        "active": true,
+        "created_at": "2026-04-09T22:14:07.799477+00:00",
+        "meta": {},
+        "source_kind": "agent",
+        "ecosystem_scope": [
+            "xrpl"
+        ],
+        "callback_url": null,
+        "context_enabled": true,
+        "last_context_load_at": "2026-04-09T22:18:16.709+00:00",
+        "public_description": null,
+        "internal_notes": null
+    },
+    {
+        "id": "3bd8f7a3-ef70-499c-9632-5f2cdb50521c",
+        "name": "TestConnect",
+        "type": "agent",
+        "owner": "test",
+        "ecosystem": [
+            "xrpl"
+        ],
+        "api_token": "xpl-testconnect-1f011d4f2c4347418288f18c",
+        "active": true,
+        "created_at": "2026-04-09T23:01:15.021624+00:00",
+        "meta": {},
+        "source_kind": "agent",
+        "ecosystem_scope": [],
+        "callback_url": null,
+        "context_enabled": true,
+        "last_context_load_at": null,
+        "public_description": null,
+        "internal_notes": null
+    }
+]

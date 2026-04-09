@@ -219,18 +219,18 @@ async function handleChatResolve(request, env, cors) {
 
   // If no login code match, try as raw api_token
   if (!sourceId) {
-    const sources = await supabaseSelect(env, "sources", `id,active`, `api_token=eq.${code}`, 1);
+    const sources = await supabaseSelect(env, "sources", `id,status`, `api_token=eq.${code}`, 1);
     if (sources.length > 0) sourceId = sources[0].id;
   }
 
   if (!sourceId) return jsonResponse({ agent: null }, cors);
 
   // Look up source details
-  const sources = await supabaseSelect(env, "sources", `id,name,type,owner,active,created_at`, `id=eq.${sourceId}`, 1);
+  const sources = await supabaseSelect(env, "sources", `id,name,source_type,owner_name,status,created_at`, `id=eq.${sourceId}`, 1);
   if (sources.length === 0) return jsonResponse({ agent: null }, cors);
 
   const source = sources[0];
-  if (!source.active) return jsonResponse({ error: "Source is inactive" }, { ...cors }, 403);
+  if (source.status !== 'active') return jsonResponse({ error: "Source is inactive" }, { ...cors }, 403);
 
   // Get submission count
   const subs = await supabaseSelect(env, "submissions", `count`, `source_id=eq.${source.id}`, 1);
@@ -245,8 +245,8 @@ async function handleChatResolve(request, env, cors) {
     agent: {
       source_id: source.id,
       name: source.name,
-      type: source.type,
-      owner: source.owner,
+      source_type: source.source_type,
+      owner_name: source.owner_name,
       online: true,
       first_seen: source.created_at,
       submission_count: subs[0]?.count || 0,
@@ -307,9 +307,9 @@ async function handleChatMessage(request, env, cors) {
   const token = auth.slice(7);
 
   // Verify source
-  const sources = await supabaseSelect(env, "sources", `id,name,type,active`, `api_token=eq.${token}`, 1);
+  const sources = await supabaseSelect(env, "sources", `id,name,source_type,status`, `api_token=eq.${token}`, 1);
   if (sources.length === 0) return jsonResponse({ error: "Invalid token" }, { ...cors }, 401);
-  if (!sources[0].active) return jsonResponse({ error: "Source inactive" }, { ...cors }, 403);
+  if (sources[0].status !== 'active') return jsonResponse({ error: "Source inactive" }, { ...cors }, 403);
 
   const source = sources[0];
 
@@ -371,7 +371,7 @@ async function handleChatOwner(request, env, cors) {
   }
 
   // Get all sources (without api_token)
-  const sources = await supabaseSelect(env, "sources", `id,name,type,owner,active,created_at,meta`, ``, 100);
+  const sources = await supabaseSelect(env, "sources", `id,name,source_type,owner_name,status,created_at`, ``, 100);
 
   // Get total message counts
   const generalMsgs = await supabaseSelect(env, "general_chat_messages", `count`, ``, 1);
@@ -384,9 +384,9 @@ async function handleChatOwner(request, env, cors) {
     agents.push({
       source_id: s.id,
       name: s.name,
-      type: s.type,
-      owner: s.owner,
-      active: s.active,
+      source_type: s.source_type,
+      owner_name: s.owner_name,
+      status: s.status,
       created_at: s.created_at,
       private_messages: privMsgs[0]?.count || 0,
       sessions: sessCount[0]?.count || 0,
@@ -405,8 +405,8 @@ async function handleChatAgentsList(request, env, cors) {
   const sources = await supabaseSelect(
     env,
     "sources",
-    `id,name,type,owner,active,created_at`,
-    `active=eq.true`,
+    `id,name,source_type,owner_name,status,created_at`,
+    `status=eq.active`,
     100
   );
 
@@ -417,7 +417,7 @@ async function handleChatAgentsList(request, env, cors) {
     agents: sources.map(s => ({
       source_id: s.id,
       name: s.name,
-      type: s.type,
+      source_type: s.source_type,
     })),
     general_message_count: generalMsgs[0]?.count || 0,
   }, cors);
@@ -434,7 +434,7 @@ async function handleIntakeSubmit(request, env, cors) {
   }
 
   const token = auth.slice(7);
-  const source = await supabaseSelect(env, "sources", `id,active`, `api_token=eq.${token}`, 1);
+  const source = await supabaseSelect(env, "sources", `id,status`, `api_token=eq.${token}`, 1);
   if (source.length === 0) return jsonResponse({ error: "Invalid token" }, { ...cors }, 401);
   if (!source[0].active) return jsonResponse({ error: "Source is inactive" }, { ...cors }, 403);
 
@@ -497,9 +497,9 @@ async function handleIntakeRegister(request, env, cors) {
 
   const source = await supabaseInsert(env, "sources", {
     name: body.name,
-    type: body.type,
-    owner: body.owner || null,
-    ecosystem: body.ecosystem || [],
+    source_type: body.type,
+    owner_name: body.owner || null,
+    ecosystem_scope: body.ecosystem || [],
     api_token: body.api_token,
   });
 
@@ -543,12 +543,12 @@ async function handlePublicConnect(request, env, cors) {
 
   const source = await supabaseInsert(env, "sources", {
     name: body.name,
-    type: body.type,
-    owner: body.owner || null,
-    ecosystem: body.ecosystem || [],
+    source_type: body.type,
+    owner_name: body.owner || null,
+    ecosystem_scope: body.ecosystem || [],
     public_description: body.description || null,
     api_token: apiToken,
-    active: true,
+    status: 'active',
   });
 
   await supabaseInsert(env, "permissions", {
@@ -580,7 +580,7 @@ async function handleListSources(request, env, cors) {
     return jsonResponse({ error: "Admin token required" }, { ...cors }, 401);
   }
 
-  const sources = await supabaseSelect(env, "sources", `id,name,type,owner,active,created_at`, ``, 100);
+  const sources = await supabaseSelect(env, "sources", `id,name,source_type,owner_name,status,created_at`, ``, 100);
   return jsonResponse({ sources }, cors);
 }
 
@@ -799,9 +799,9 @@ async function handleStatus(request, env, cors) {
     agents: sources.map(s => ({
       id: s.id,
       name: s.name,
-      type: s.type,
-      owner: s.owner,
-      active: s.active,
+      source_type: s.source_type,
+      owner_name: s.owner_name,
+      status: s.status,
       ecosystem: s.ecosystem || [],
       registered: s.created_at,
     })),

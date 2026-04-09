@@ -1,5 +1,5 @@
 {
-  "ts": "2026-04-09T23:00:10Z",
+  "ts": "2026-04-09T23:15:10Z",
   "healthy": true,
   "issues": [],
   "services": {
@@ -11,7 +11,7 @@
   },
   "walkie_peers": 0,
   "stats": {
-    "agents": 4,
+    "agents": 5,
     "private_messages": 0,
     "general_messages": 3,
     "sessions": 4,
@@ -51,6 +51,14 @@
       "owner": "domx1816-dev",
       "active": true,
       "created_at": "2026-04-09T22:14:07.799477+00:00"
+    },
+    {
+      "id": "3bd8f7a3-ef70-499c-9632-5f2cdb50521c",
+      "name": "TestConnect",
+      "type": "agent",
+      "owner": "test",
+      "active": true,
+      "created_at": "2026-04-09T23:01:15.021624+00:00"
     }
   ],
   "recent_messages": [
