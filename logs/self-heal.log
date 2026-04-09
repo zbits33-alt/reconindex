@@ -1,0 +1,61 @@
+[19:40:11] ━━━ self-heal cycle ━━━
+[19:40:11] ✅ API healthy
+[19:40:11] ✅ Site healthy
+[19:40:12] ✅ Supabase healthy
+[19:40:12] ⚠️ Walkie: 0 peers — reconnecting
+[19:40:15] ❌ Walkie reconnect failed
+[19:40:15] ✅ Market fresh (10s)
+[19:40:19] Stats: 0 agents · 0 msgs · 0 sessions · 0 patterns
+[19:40:19] ✅ ALL HEALTHY
+[19:43:50] ━━━ self-heal cycle ━━━
+[19:43:50] ✅ API healthy
+[19:43:50] ✅ Site healthy
+[19:43:50] ✅ Supabase healthy
+[19:43:50] ⚠️ Walkie running but 0 peers — reconnecting
+[19:43:54] ❌ Walkie reconnect failed
+[19:43:54] ✅ Market data fresh (229s)
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+NameError: name 'true' is not defined. Did you mean: 'True'?
+[19:43:57] Stats: 3 agents · 3 msgs · 1 sessions · 0 patterns
+[19:43:57] ✅ ALL HEALTHY
+[19:46:19] ━━━ self-heal cycle ━━━
+[19:46:19] ✅ API healthy
+[19:46:19] ✅ Site healthy
+[19:46:19] ✅ Supabase healthy
+[19:46:20] ⚠️ Walkie 0 peers — reconnecting
+[19:46:23] ❌ Walkie reconnect failed
+[19:46:23] ✅ Market fresh (77s)
+Status written
+[19:46:25] Stats: 3 agents · 3 msgs · 1 sessions · 0 patterns
+[19:46:25] ⚠️ ISSUES: walkie_down,
+[19:48:05] ━━━ self-heal cycle ━━━
+[19:48:05] ✅ API healthy
+[19:48:05] ✅ Site healthy
+[19:48:06] ✅ Supabase healthy
+[19:48:06] ⚠️ Walkie 0 peers — reconnecting
+[19:48:09] ❌ Walkie reconnect failed
+[19:48:09] ✅ Market fresh (183s)
+Status written
+[19:48:11] Stats: 3 agents · 3 msgs · 1 sessions · 0 patterns
+[19:48:11] ⚠️ ISSUES: walkie_down,
+[19:54:21] ━━━ self-heal cycle ━━━
+[19:54:21] ✅ API healthy
+[19:54:21] ✅ Site healthy
+[19:54:21] ✅ Supabase healthy
+[19:54:21] ✅ Walkie: 0 peers, 4 active channels
+[19:54:21] ✅ Market fresh (254s)
+Status written
+[19:54:24] Stats: 3 agents · 3 msgs · 1 sessions · 0 patterns
+[19:54:24] ✅ ALL HEALTHY
+[20:00:06] ━━━ self-heal cycle ━━━
+[20:00:06] ✅ API healthy
+[20:00:06] ✅ Site healthy
+[20:00:06] ✅ Supabase healthy
+[20:00:06] ✅ Walkie: 0 peers, 4 active channels
+[20:00:06] ✅ Market fresh (1s)
+Status written
+[20:00:09] Stats: 3 agents · 3 msgs · 1 sessions · 0 patterns
+[20:00:09] ✅ ALL HEALTHY
+[20:00:19] [LIBSYNC] Libraries sync started
+[20:00:19] [LIBSYNC] Libraries sync complete

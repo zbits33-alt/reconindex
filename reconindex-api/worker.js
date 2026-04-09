@@ -66,6 +66,22 @@ export default {
       return handleChatAgentsList(request, env, cors);
     }
 
+    // ─── Suggestion Box endpoints ───
+    // POST /suggestions/submit
+    if (path === "/suggestions/submit" && method === "POST") {
+      return handleSuggestionSubmit(request, env, cors);
+    }
+
+    // GET /suggestions?status=X&category=Y
+    if (path === "/suggestions" && method === "GET") {
+      return handleSuggestionsList(request, env, cors);
+    }
+
+    // GET /suggestions/stats
+    if (path === "/suggestions/stats" && method === "GET") {
+      return handleSuggestionsStats(request, env, cors);
+    }
+
     return jsonResponse({
       error: "Not found",
       routes: [
@@ -80,6 +96,9 @@ export default {
         "/chat/sessions",
         "/chat/owner",
         "/chat/agents",
+        "/suggestions/submit",
+        "/suggestions",
+        "/suggestions/stats",
       ],
     }, { ...cors }, 404);
   },
@@ -469,6 +488,96 @@ async function supabaseInsert(env, table, data) {
   }
 
   return res.json();
+}
+
+// ═══════════════════════════════════════════════════════
+// SUGGESTION BOX ENDPOINTS
+// ═══════════════════════════════════════════════════════
+
+async function handleSuggestionSubmit(request, env, cors) {
+  let body;
+  try { body = await request.json(); } catch {
+    return jsonResponse({ error: "Invalid JSON" }, { ...cors }, 400);
+  }
+
+  const required = ["title", "description", "category"];
+  for (const field of required) {
+    if (!body[field]) return jsonResponse({ error: `${field} is required` }, { ...cors }, 400);
+  }
+
+  const validCategories = ["feature", "improvement", "bug", "integration", "documentation", "ecosystem", "other"];
+  if (!validCategories.includes(body.category)) {
+    return jsonResponse({ error: `Invalid category. Must be one of: ${validCategories.join(", ")}` }, { ...cors }, 400);
+  }
+
+  const validTypes = ["human", "agent", "bot", "tool"];
+  const subType = validTypes.includes(body.submitter_type) ? body.submitter_type : "human";
+
+  const validPriorities = ["low", "medium", "high", "critical"];
+  const priority = validPriorities.includes(body.priority) ? body.priority : "medium";
+
+  const result = await supabaseInsert(env, "suggestions", {
+    submitter_name: (body.submitter_name || "Anonymous").slice(0, 100),
+    submitter_type: subType,
+    submitter_id: body.submitter_id || null,
+    email: body.email || null,
+    category: body.category,
+    priority: priority,
+    title: body.title.slice(0, 200),
+    description: body.description.slice(0, 5000),
+    status: "submitted",
+  });
+
+  return jsonResponse({
+    success: true,
+    suggestion_id: result[0]?.id,
+    message: "Suggestion submitted. Recon will review it.",
+  }, cors);
+}
+
+async function handleSuggestionsList(request, env, cors) {
+  const url = new URL(request.url);
+  const statuses = url.searchParams.getAll("status");
+  const category = url.searchParams.get("category");
+  const limit = Math.min(parseInt(url.searchParams.get("limit") || "50"), 100);
+
+  let filter = "";
+  if (statuses.length > 0) {
+    filter = statuses.map(s => `status=eq.${s}`).join(" or ");
+  }
+  if (category) {
+    filter += (filter ? " and " : "") + `category=eq.${category}`;
+  }
+
+  // Order by created_at desc
+  filter += (filter ? "&" : "") + `order=created_at.desc&limit=${limit}`;
+
+  const suggestions = await supabaseSelect(env, "suggestions",
+    "id,submitter_name,submitter_type,category,priority,title,description,status,recon_notes,created_at,updated_at",
+    filter, null);
+
+  return jsonResponse({ suggestions }, cors);
+}
+
+async function handleSuggestionsStats(request, env, cors) {
+  // Get counts by status
+  const allSuggestions = await supabaseSelect(env, "suggestions", "id,status,category", "", 1000);
+
+  const byStatus = {};
+  const byCategory = {};
+  let total = 0;
+
+  for (const s of allSuggestions) {
+    total++;
+    byStatus[s.status] = (byStatus[s.status] || 0) + 1;
+    byCategory[s.category] = (byCategory[s.category] || 0) + 1;
+  }
+
+  return jsonResponse({
+    total,
+    by_status: byStatus,
+    by_category: byCategory,
+  }, cors);
 }
 
 function jsonResponse(data, headers, status = 200) {

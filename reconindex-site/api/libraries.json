@@ -1,0 +1,508 @@
+{
+  "updated": "2026-04-09T20:00:19Z",
+  "total_entries": 46,
+  "total_patterns": 1,
+  "total_agents": 0,
+  "library_candidates": 45,
+  "categories": {
+    "platform": {
+      "count": 17,
+      "entries": [
+        {
+          "id": "RECON-P-001",
+          "title": "What is XRPLClaw",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-P-010",
+          "title": "XRPLClaw cost optimization \u2014 5 practices",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-T-001",
+          "title": "XRPL mainnet \u2014 what it is and how it works",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-T-002",
+          "title": "XRPL accounts and reserves",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-T-003",
+          "title": "XRPL trust lines",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-T-006",
+          "title": "XRPL AMMs",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-T-009",
+          "title": "XRPL EVM \u2014 what it is vs mainnet",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-P-003",
+          "title": "Standard vs Expert mode",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-P-004",
+          "title": "How XRPLClaw billing works",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-P-008",
+          "title": "What the agent can build \u2014 use case catalog",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-004",
+          "title": "XRPL token issuance",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-005",
+          "title": "XRPL DEX \u2014 native orderbook",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-007",
+          "title": "XRPL transaction types \u2014 capability map",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-008",
+          "title": "XRPL SDKs and API access",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-011",
+          "title": "XRPL EVM builder setup",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-012",
+          "title": "XRPL \u2194 XRPL EVM bridge",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-P-005",
+          "title": "XRPLClaw channels \u2014 web, Telegram, noVNC",
+          "usefulness": 7,
+          "priority": 7.0
+        }
+      ]
+    },
+    "guide": {
+      "count": 3,
+      "entries": [
+        {
+          "id": "RECON-P-002",
+          "title": "XRPLClaw agent setup \u2014 step by step",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-G-001",
+          "title": "Telegram setup for XRPLClaw agents",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-010",
+          "title": "XRPL EVM user setup",
+          "usefulness": 8,
+          "priority": 8.0
+        }
+      ]
+    },
+    "architecture": {
+      "count": 2,
+      "entries": [
+        {
+          "id": "RECON-AR-001",
+          "title": "XRPLClaw architecture \u2014 plain language",
+          "usefulness": 7,
+          "priority": 7.0
+        },
+        {
+          "id": "RECON-AR-002",
+          "title": "XRPLClaw agent memory \u2014 how it works",
+          "usefulness": 6,
+          "priority": 6.0
+        }
+      ]
+    },
+    "friction": {
+      "count": 5,
+      "entries": [
+        {
+          "id": "RECON-X-001",
+          "title": "Telegram token conflict (409 error)",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-X-002",
+          "title": "Balance floor \u2014 agent paused not offline",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-X-003",
+          "title": "Background process lost on container restart",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-X-004",
+          "title": "Xaman desktop payment \u2014 QR required",
+          "usefulness": 7,
+          "priority": 7.0
+        },
+        {
+          "id": "RECON-X-005",
+          "title": "noVNC browser viewer undiscovered",
+          "usefulness": 7,
+          "priority": 7.0
+        }
+      ]
+    },
+    "tool": {
+      "count": 9,
+      "entries": [
+        {
+          "id": "RECON-T-013",
+          "title": "XRPL AMM \u2014 liquidity provision, LP tokens, and fees",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-T-020",
+          "title": "XRPL Hooks \u2014 smart contract layer on Xahau (not XRPL mainnet)",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-T-021",
+          "title": "XRPL Multi-signing \u2014 threshold signatures for account security",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-T-014",
+          "title": "XRPL DEX \u2014 market making strategies and spread management",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-015",
+          "title": "XRPL pathfinding \u2014 how it works and what builders must account for",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-016",
+          "title": "Price oracles on XRPL \u2014 what exists and current limitations",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-017",
+          "title": "XRPL Escrow \u2014 time-based and condition-based locking",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-018",
+          "title": "XRPL Payment Channels \u2014 streaming micropayments off-ledger",
+          "usefulness": 8,
+          "priority": 8.0
+        },
+        {
+          "id": "RECON-T-019",
+          "title": "XRPL NFTs \u2014 XLS-20 minting, offers, and royalties",
+          "usefulness": 8,
+          "priority": 8.0
+        }
+      ]
+    },
+    "safety": {
+      "count": 5,
+      "entries": [
+        {
+          "id": "RECON-S-004",
+          "title": "What never to store or share \u2014 seeds, private keys, and where secrets go wrong",
+          "usefulness": 10,
+          "priority": 10.0
+        },
+        {
+          "id": "RECON-S-001",
+          "title": "Hot/warm/cold wallet architecture for XRPL token issuers",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-S-002",
+          "title": "XRPL key management \u2014 master key, regular key, and disabling master",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-S-003",
+          "title": "Common XRPL scam patterns \u2014 fake airdrops, trust line attacks, and social engineering",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-S-005",
+          "title": "SetRegularKey pattern for trading bots \u2014 hot key isolation",
+          "usefulness": 9,
+          "priority": 9.0
+        }
+      ]
+    },
+    "failure": {
+      "count": 5,
+      "entries": [
+        {
+          "id": "RECON-F-001",
+          "title": "AMM vs DEX slippage calculation mismatch \u2014 wrong formula applied",
+          "usefulness": 9,
+          "priority": 11.4
+        },
+        {
+          "id": "RECON-F-002",
+          "title": "Reserve undercount causing tecINSUFFICIENT_RESERVE errors",
+          "usefulness": 9,
+          "priority": 11.4
+        },
+        {
+          "id": "RECON-F-003",
+          "title": "Trust line not set before payment \u2014 tecNO_LINE or tecPATH_DRY failure",
+          "usefulness": 9,
+          "priority": 11.4
+        },
+        {
+          "id": "RECON-F-005",
+          "title": "Rate limiting on public XRPL nodes causing bot failures",
+          "usefulness": 9,
+          "priority": 9.0
+        },
+        {
+          "id": "RECON-F-004",
+          "title": "Bridge latency not handled in UX \u2014 users assume failed transactions",
+          "usefulness": 8,
+          "priority": 8.0
+        }
+      ]
+    }
+  },
+  "top_entries": [
+    {
+      "id": "RECON-F-001",
+      "type": "failure",
+      "title": "AMM vs DEX slippage calculation mismatch \u2014 wrong formula applied",
+      "usefulness": 9,
+      "priority": 11.4,
+      "preview": "> File: failures/xrpl_failures_001.md | Schema: v2 | Created: 2026-04-09\n> Entries: RECON-F-001 through RECON-F-005\n\n---\n\n## RECON-F-001\n\n```\nID:             RECON-F-001\nTYPE:           failure\nTITLE:          AMM vs DEX slippage calculation mismatch \u2014 wrong formula applied\nSUMMARY:        Builders frequently reuse DEX slippage logic for AMM swaps or vice versa, producing incorrect estimates that"
+    },
+    {
+      "id": "RECON-F-002",
+      "type": "failure",
+      "title": "Reserve undercount causing tecINSUFFICIENT_RESERVE errors",
+      "usefulness": 9,
+      "priority": 11.4,
+      "preview": "> File: failures/xrpl_failures_001.md | Schema: v2 | Created: 2026-04-09\n> Entries: RECON-F-001 through RECON-F-005\n\n---\n\n## RECON-F-001\n\n```\nID:             RECON-F-001\nTYPE:           failure\nTITLE:          AMM vs DEX slippage calculation mismatch \u2014 wrong formula applied\nSUMMARY:        Builders frequently reuse DEX slippage logic for AMM swaps or vice versa, producing incorrect estimates that"
+    },
+    {
+      "id": "RECON-F-003",
+      "type": "failure",
+      "title": "Trust line not set before payment \u2014 tecNO_LINE or tecPATH_DRY failure",
+      "usefulness": 9,
+      "priority": 11.4,
+      "preview": "> File: failures/xrpl_failures_001.md | Schema: v2 | Created: 2026-04-09\n> Entries: RECON-F-001 through RECON-F-005\n\n---\n\n## RECON-F-001\n\n```\nID:             RECON-F-001\nTYPE:           failure\nTITLE:          AMM vs DEX slippage calculation mismatch \u2014 wrong formula applied\nSUMMARY:        Builders frequently reuse DEX slippage logic for AMM swaps or vice versa, producing incorrect estimates that"
+    },
+    {
+      "id": "RECON-S-004",
+      "type": "safety",
+      "title": "What never to store or share \u2014 seeds, private keys, and where secrets go wrong",
+      "usefulness": 10,
+      "priority": 10.0,
+      "preview": "> File: safety/xrpl_safety_001.md | Schema: v2 | Created: 2026-04-09\n> Entries: RECON-S-001 through RECON-S-005\n\n---\n\n## RECON-S-001\n\n```\nID:             RECON-S-001\nTYPE:           safety\nTITLE:          Hot/warm/cold wallet architecture for XRPL token issuers\nSUMMARY:        Token issuers on XRPL should use a three-tier wallet architecture to limit blast radius from key compromise. Cold wallet:"
+    },
+    {
+      "id": "RECON-P-001",
+      "type": "platform",
+      "title": "What is XRPLClaw",
+      "usefulness": 9,
+      "priority": 9.0,
+      "preview": "> File: platform/xrplclaw_001.md | Schema: v2 | Date: 2026-04-09\n\n---\n\n## RECON-P-001\n\n```\nID:             RECON-P-001\nTYPE:           platform\nTITLE:          What is XRPLClaw\nSUMMARY:        XRPLClaw is an XRPL-native AI agent hosting platform. Each user gets a persistent AI agent running on a server \u2014 always on, accessible via web terminal and Telegram. Auth is via Xaman wallet. Payment is in R"
+    },
+    {
+      "id": "RECON-P-002",
+      "type": "guide",
+      "title": "XRPLClaw agent setup \u2014 step by step",
+      "usefulness": 9,
+      "priority": 9.0,
+      "preview": "> File: platform/xrplclaw_001.md | Schema: v2 | Date: 2026-04-09\n\n---\n\n## RECON-P-001\n\n```\nID:             RECON-P-001\nTYPE:           platform\nTITLE:          What is XRPLClaw\nSUMMARY:        XRPLClaw is an XRPL-native AI agent hosting platform. Each user gets a persistent AI agent running on a server \u2014 always on, accessible via web terminal and Telegram. Auth is via Xaman wallet. Payment is in R"
+    },
+    {
+      "id": "RECON-P-010",
+      "type": "platform",
+      "title": "XRPLClaw cost optimization \u2014 5 practices",
+      "usefulness": 9,
+      "priority": 9.0,
+      "preview": "> File: platform/xrplclaw_001.md | Schema: v2 | Date: 2026-04-09\n\n---\n\n## RECON-P-001\n\n```\nID:             RECON-P-001\nTYPE:           platform\nTITLE:          What is XRPLClaw\nSUMMARY:        XRPLClaw is an XRPL-native AI agent hosting platform. Each user gets a persistent AI agent running on a server \u2014 always on, accessible via web terminal and Telegram. Auth is via Xaman wallet. Payment is in R"
+    },
+    {
+      "id": "RECON-X-001",
+      "type": "friction",
+      "title": "Telegram token conflict (409 error)",
+      "usefulness": 9,
+      "priority": 9.0,
+      "preview": "> File: friction/telegram_001.md | Schema: v2 | Date: 2026-04-09\n\n---\n\n## RECON-X-001\n\n```\nID:             RECON-X-001\nTYPE:           friction\nTITLE:          Telegram bot not responding \u2014 token conflict (409 error)\nSUMMARY:        The #1 cause of Telegram bot failure on XRPLClaw is a token conflict. Telegram's API allows only one service to poll a bot token simultaneously. When two services poll"
+    }
+  ],
+  "library_candidates_list": [
+    {
+      "id": "RECON-F-001",
+      "title": "AMM vs DEX slippage calculation mismatch \u2014 wrong formula applied",
+      "type": "failure",
+      "priority": 11.4
+    },
+    {
+      "id": "RECON-F-002",
+      "title": "Reserve undercount causing tecINSUFFICIENT_RESERVE errors",
+      "type": "failure",
+      "priority": 11.4
+    },
+    {
+      "id": "RECON-F-003",
+      "title": "Trust line not set before payment \u2014 tecNO_LINE or tecPATH_DRY failure",
+      "type": "failure",
+      "priority": 11.4
+    },
+    {
+      "id": "RECON-S-004",
+      "title": "What never to store or share \u2014 seeds, private keys, and where secrets go wrong",
+      "type": "safety",
+      "priority": 10.0
+    },
+    {
+      "id": "RECON-P-001",
+      "title": "What is XRPLClaw",
+      "type": "platform",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-P-002",
+      "title": "XRPLClaw agent setup \u2014 step by step",
+      "type": "guide",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-P-010",
+      "title": "XRPLClaw cost optimization \u2014 5 practices",
+      "type": "platform",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-X-001",
+      "title": "Telegram token conflict (409 error)",
+      "type": "friction",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-T-001",
+      "title": "XRPL mainnet \u2014 what it is and how it works",
+      "type": "platform",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-T-002",
+      "title": "XRPL accounts and reserves",
+      "type": "platform",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-T-003",
+      "title": "XRPL trust lines",
+      "type": "platform",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-T-006",
+      "title": "XRPL AMMs",
+      "type": "platform",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-T-009",
+      "title": "XRPL EVM \u2014 what it is vs mainnet",
+      "type": "platform",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-T-013",
+      "title": "XRPL AMM \u2014 liquidity provision, LP tokens, and fees",
+      "type": "tool",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-T-020",
+      "title": "XRPL Hooks \u2014 smart contract layer on Xahau (not XRPL mainnet)",
+      "type": "tool",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-T-021",
+      "title": "XRPL Multi-signing \u2014 threshold signatures for account security",
+      "type": "tool",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-S-001",
+      "title": "Hot/warm/cold wallet architecture for XRPL token issuers",
+      "type": "safety",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-S-002",
+      "title": "XRPL key management \u2014 master key, regular key, and disabling master",
+      "type": "safety",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-S-003",
+      "title": "Common XRPL scam patterns \u2014 fake airdrops, trust line attacks, and social engineering",
+      "type": "safety",
+      "priority": 9.0
+    },
+    {
+      "id": "RECON-S-005",
+      "title": "SetRegularKey pattern for trading bots \u2014 hot key isolation",
+      "type": "safety",
+      "priority": 9.0
+    }
+  ]
+}
