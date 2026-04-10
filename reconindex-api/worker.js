@@ -442,7 +442,7 @@ async function handleIntakeSubmit(request, env, cors) {
   const token = auth.slice(7);
   const source = await supabaseSelect(env, "sources", `id,status`, `api_token=eq.${token}`, 1);
   if (source.length === 0) return jsonResponse({ error: "Invalid token" }, { ...cors }, 401);
-  if (!source[0].active) return jsonResponse({ error: "Source is inactive" }, { ...cors }, 403);
+  if (source[0].status !== 'active') return jsonResponse({ error: "Source is inactive" }, { ...cors }, 403);
 
   const sourceId = source[0].id;
 
