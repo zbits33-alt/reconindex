@@ -11,3 +11,8 @@ ADMIN_TOKEN = "recon-admin-2026-secure"
 pattern = "reconindex.com/*"
 zone_name = "reconindex.com"
 custom_domain = false
+
+[[routes]]
+pattern = "api.reconindex.com/*"
+zone_name = "reconindex.com"
+custom_domain = false
