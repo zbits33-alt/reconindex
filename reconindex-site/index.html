@@ -599,15 +599,14 @@
   </footer>
 
   <script>
-    // Use relative API paths &#8212; works when served from same Worker (reconindex.com or workers.dev)
-    const API = '';
+    // API endpoint for Recon Index data
+    const API = 'https://api.reconindex.com';
 
     // ── Fetch live data ──
     async function fetchAll() {
-      const base = useRelative ? '' : API;
       const [statusRes, libsRes] = await Promise.all([
-        fetch(base + '/status'),
-        fetch(base + '/libraries'),
+        fetch(API + '/status'),
+        fetch(API + '/libraries'),
       ]);
       const status = await statusRes.json();
       const libs = await libsRes.json();
