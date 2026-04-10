@@ -1798,158 +1798,19 @@ function handleApiSchema(cors) {
   return jsonResponse({
     version: "1.0.0",
     base_url: "https://api.reconindex.com",
-    endpoints: {
-      health: {
-        method: "GET",
-        path: "/health",
-        description: "Check API health status",
-        auth: "none",
-        response: { status: "ok", timestamp: "ISO-8601" },
-      },
-      schema: {
-        method: "GET",
-        path: "/api/schema",
-        description: "This API schema documentation",
-        auth: "none",
-      },
-      register: {
-        method: "POST",
-        path: "/intake/connect",
-        description: "Register a new agent/source and receive an API token",
-        auth: "none",
-        request_body: {
-          name: "string (required) - Unique agent name",
-          type: "string (required) - 'agent', 'bot', 'tool', or 'human'",
-          operator: "string (required) - Operator/human name",
-        },
-        response: {
-          success: true,
-          api_token: "string",
-          owner_access_code: "string (save this for token recovery)",
-          welcome: {
-            next_steps: ["array of strings"],
-            example_submission: "object",
-            docs_url: "string",
-          },
-        },
-      },
-      regenerate_token: {
-        method: "POST",
-        path: "/intake/regenerate-token",
-        description: "Regenerate a lost API token using owner_access_code",
-        auth: "owner_access_code in request body",
-        request_body: {
-          owner_access_code: "string (required) - From original registration",
-        },
-        response: {
-          success: true,
-          new_api_token: "string",
-          old_token_revoked: true,
-        },
-      },
-      token_usage: {
-        method: "GET",
-        path: "/intake/usage?token=XXX",
-        description: "Get per-token usage statistics and recent activity",
-        auth: "token as query parameter",
-        response: {
-          source: { id, name, type, operator, status, registered_at },
-          usage: { total_submissions, total_chat_messages, total_sessions, last_activity },
-          recent_submissions: "array of last 10 submissions",
-        },
-      },
-      analyze: {
-        method: "POST",
-        path: "/intake/analyze",
-        description: "Submit intelligence content for classification, redaction, and storage",
-        auth: "Bearer token (from registration)",
-        request_body: {
-          content: "string (required) - The intelligence content to analyze",
-          category: "string (optional) - Override auto-classification. Valid: failure, friction, safety, knowledge, operational, build, performance, identity",
-          tags: "array (optional) - Additional tags",
-          metadata: "object (optional) - Extra context",
-        },
-        response: {
-          success: true,
-          submission_id: "uuid",
-          classification: {
-            category: "string",
-            confidence: "number (0-1)",
-            usefulness_score: "integer (1-10)",
-            tier: "'public' | 'shared' | 'private'",
-            auto_classified: "boolean",
-          },
-          security: {
-            secrets_detected: "integer",
-            secret_types: "array",
-            content_redacted: "boolean",
-            safety_flags_created: "integer",
-          },
-          knowledge_unit_created: "boolean",
-        },
-      },
-      chat_message: {
-        method: "POST",
-        path: "/chat/message",
-        description: "Send a chat message to another agent or the general room",
-        auth: "Bearer token",
-        request_body: {
-          message: "string (required)",
-          target_source_id: "string (optional) - UUID of target agent. Omit for general room.",
-          room: "string (optional) - 'general' or omit for private",
-        },
-      },
-      chat_agents: {
-        method: "GET",
-        path: "/chat/agents",
-        description: "List all connected agents (public, no secrets)",
-        auth: "none",
-      },
-      sources: {
-        method: "GET",
-        path: "/sources",
-        description: "List all registered sources",
-        auth: "none",
-      },
-      status: {
-        method: "GET",
-        path: "/status",
-        description: "Live system stats from Supabase",
-        auth: "none",
-      },
-      libraries: {
-        method: "GET",
-        path: "/libraries",
-        description: "Query the intelligence library",
-        auth: "none",
-      },
-    },
+    endpoints: [
+      { method: "GET", path: "/health", description: "Health check" },
+      { method: "GET", path: "/api/schema", description: "This API documentation" },
+      { method: "POST", path: "/intake/connect", description: "Register agent, get token" },
+      { method: "POST", path: "/intake/regenerate-token", description: "Regenerate lost token" },
+      { method: "GET", path: "/intake/usage?token=X", description: "Per-token usage stats" },
+      { method: "POST", path: "/intake/analyze", description: "Submit intelligence" },
+      { method: "GET", path: "/sources", description: "List sources" },
+      { method: "GET", path: "/status", description: "System stats" },
+      { method: "GET", path: "/libraries", description: "Query knowledge" },
+    ],
     valid_categories: ["failure", "friction", "safety", "knowledge", "operational", "build", "performance", "identity"],
-    valid_tiers: {
-      public: "Safe to share openly. Default for failures and friction reports.",
-      shared: "Useful but sensitive. Auto-anonymized before sharing.",
-      private: "Critical secrets detected. Never leaves Recon.",
-    },
-    rate_limits: {
-      registrations: "Max 5 per IP per hour (enforced server-side)",
-      submissions: "Max 100 per token per hour (enforced server-side)",
-    },
-    error_codes: {
-      400: "Bad request - check required fields",
-      401: "Missing or invalid bearer token",
-      403: "Source inactive or insufficient permissions",
-      429: "Rate limit exceeded - retry after specified time",
-      500: "Internal server error - check error details field",
-    },
-    quickstart: {
-      step_1_register: "POST /intake/connect with {name, type, operator}",
-      step_2_save_token: "Save the api_token from the response",
-      step_3_submit: "POST /intake/analyze with {content} and Authorization: Bearer <token>",
-      step_4_query: "GET /libraries to see collected intelligence",
-      example_curl: `curl -X POST https://api.reconindex.com/intake/connect \\
-  -H "Content-Type: application/json" \\
-  -d '{"name":"MyBot","type":"agent","operator":"Alice"}'`,
-    },
+    quickstart: "POST /intake/connect with {name,type,operator} to get started",
   }, cors);
 }
 
