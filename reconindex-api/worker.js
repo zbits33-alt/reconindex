@@ -36,6 +36,14 @@ export default {
     if (path === "/intake/connect" && method === "POST") {
       return handlePublicConnect(request, env, cors);
     }
+    // POST /intake/regenerate-token → regenerate token for existing source
+    if (path === "/intake/regenerate-token" && method === "POST") {
+      return handleRegenerateToken(request, env, cors);
+    }
+    // GET /intake/usage?token=XXX → per-token usage stats
+    if (path === "/intake/usage" && method === "GET") {
+      return handleTokenUsage(request, env, cors);
+    }
     if (path.startsWith("/intake/status/") && method === "GET") {
       const id = path.split("/").pop();
       return handleIntakeStatus(id, env, cors);
@@ -170,7 +178,7 @@ export default {
       "/suggestions/submit", "/suggestions", "/suggestions/stats", "/suggestions/outcome",
       "/suggestions/outcomes", "/gaps", "/trust", "/trust/recalculate", "/maturity",
       "/patterns/strength", "/patterns/recalculate", "/context/load",
-      "/intake/submit", "/intake/register", "/intake/connect", "/intake/analyze",
+      "/intake/submit", "/intake/register", "/intake/connect", "/intake/regenerate-token", "/intake/usage", "/intake/analyze",
       "/owner/resolve",
       "/status-page", "/intelligence/xrplpulse", "/building-recon"]);
 
@@ -611,6 +619,10 @@ async function handlePublicConnect(request, env, cors) {
   const uid = crypto.randomUUID().replace(/-/g, '').substring(0, 24);
   const apiToken = `xpl-${body.name.toLowerCase().replace(/[^a-z0-9]/g, '')}-${uid}`;
 
+  // Generate owner_access_code for token recovery
+  const ownerCodeSuffix = crypto.randomUUID().replace(/-/g, '').substring(0, 6);
+  const ownerAccessCode = `OWN-${body.name.toUpperCase().replace(/[^A-Z0-9]/g, '').substring(0, 10)}-${ownerCodeSuffix}`;
+
   // Check for duplicate name
   const existing = await supabaseSelect(env, "sources", "id,name", `name=eq.${body.name}`, 1);
   if (existing.length > 0) {
@@ -624,6 +636,7 @@ async function handlePublicConnect(request, env, cors) {
     ecosystem_scope: body.ecosystem || [],
     public_description: body.description || null,
     api_token: apiToken,
+    owner_access_code: ownerAccessCode,
     status: 'active',
   });
 
@@ -664,6 +677,142 @@ async function handlePublicConnect(request, env, cors) {
         note: "Exceeding limits returns HTTP 429 with retry-after header",
       },
     },
+  }, cors);
+}
+
+// ═══════════════════════════════════════════════════════
+// TOKEN REGENERATION — for lost tokens
+// ═══════════════════════════════════════════════════════
+async function handleRegenerateToken(request, env, cors) {
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return jsonResponse({ error: "Invalid JSON" }, { ...cors }, 400);
+  }
+
+  // Authenticate with owner_access_code (not the old API token)
+  if (!body.owner_access_code) {
+    return jsonResponse({ error: "owner_access_code is required" }, { ...cors }, 401);
+  }
+
+  const sources = await supabaseSelect(env, "sources",
+    "id,name,api_token,owner_access_code,status",
+    `owner_access_code=eq.${body.owner_access_code}`, 1);
+
+  if (sources.length === 0) {
+    return jsonResponse({ error: "Invalid owner access code" }, { ...cors }, 401);
+  }
+
+  const source = sources[0];
+  if (source.status !== 'active') {
+    return jsonResponse({ error: "Source is inactive" }, { ...cors }, 403);
+  }
+
+  // Generate new token
+  const uid = crypto.randomUUID().replace(/-/g, '').substring(0, 24);
+  const newToken = `xpl-${source.name.toLowerCase().replace(/[^a-z0-9]/g, '')}-${uid}`;
+
+  // Update in Supabase
+  const updateRes = await fetch(`${env.SUPABASE_URL}/rest/v1/sources?id=eq.${source.id}`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": env.SUPABASE_SERVICE_KEY,
+        "Authorization": `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+        "Prefer": "return=representation",
+      },
+      body: JSON.stringify({ api_token: newToken }),
+    }
+  );
+
+  if (!updateRes.ok) {
+    console.error("Token update failed:", await updateRes.text());
+    return jsonResponse({ error: "Failed to regenerate token" }, { ...cors }, 500);
+  }
+
+  return jsonResponse({
+    success: true,
+    source_id: source.id,
+    name: source.name,
+    old_token_revoked: true,
+    new_api_token: newToken,
+    message: "Token regenerated. Old token is now invalid. Save this new token — it's only shown once.",
+  }, cors);
+}
+
+// ═══════════════════════════════════════════════════════
+// TOKEN USAGE STATS — per-token activity dashboard
+// ═══════════════════════════════════════════════════════
+async function handleTokenUsage(request, env, cors) {
+  const url = new URL(request.url);
+  const token = url.searchParams.get("token");
+
+  if (!token) {
+    return jsonResponse({ error: "token query parameter is required" }, { ...cors }, 400);
+  }
+
+  // Verify source
+  const sources = await supabaseSelect(env, "sources",
+    "id,name,source_type,owner_name,status,created_at",
+    `api_token=eq.${token}`, 1);
+
+  if (sources.length === 0) {
+    return jsonResponse({ error: "Invalid token" }, { ...cors }, 401);
+  }
+
+  const source = sources[0];
+
+  // Get submission count (use simple select + length for reliability)
+  const subs = await supabaseSelect(env, "submissions", "id",
+    `source_id=eq.${source.id}`, 1000);
+  const submissionCount = subs.length;
+
+  // Get recent submissions
+  const recentSubs = await supabaseSelect(env, "submissions",
+    "id,category,tier,status,usefulness_score,submitted_at",
+    `source_id=eq.${source.id}&order=submitted_at.desc&limit=10`, 10);
+
+  // Get chat message count
+  const chatMsgs = await supabaseSelect(env, "chat_messages", "id",
+    `source_id=eq.${source.id}`, 1000);
+  const chatCount = chatMsgs.length;
+
+  // Get session count
+  const sessions = await supabaseSelect(env, "agent_sessions", "id",
+    `source_id=eq.${source.id}`, 1000);
+  const sessionCount = sessions.length;
+
+  // Get last activity timestamp
+  const lastActivity = await supabaseSelect(env, "submissions",
+    "submitted_at",
+    `source_id=eq.${source.id}&order=submitted_at.desc&limit=1`, 1);
+
+  return jsonResponse({
+    success: true,
+    source: {
+      id: source.id,
+      name: source.name,
+      type: source.source_type,
+      operator: source.owner_name,
+      status: source.status,
+      registered_at: source.created_at,
+    },
+    usage: {
+      total_submissions: submissionCount,
+      total_chat_messages: chatCount,
+      total_sessions: sessionCount,
+      last_activity: lastActivity[0]?.submitted_at || null,
+    },
+    recent_submissions: recentSubs.map(s => ({
+      id: s.id,
+      category: s.category,
+      tier: s.tier === 1 ? "public" : s.tier === 2 ? "shared" : "private",
+      status: s.status,
+      usefulness_score: s.usefulness_score,
+      submitted_at: s.submitted_at,
+    })),
   }, cors);
 }
 
@@ -1676,11 +1825,37 @@ function handleApiSchema(cors) {
         response: {
           success: true,
           api_token: "string",
+          owner_access_code: "string (save this for token recovery)",
           welcome: {
             next_steps: ["array of strings"],
             example_submission: "object",
             docs_url: "string",
           },
+        },
+      },
+      regenerate_token: {
+        method: "POST",
+        path: "/intake/regenerate-token",
+        description: "Regenerate a lost API token using owner_access_code",
+        auth: "owner_access_code in request body",
+        request_body: {
+          owner_access_code: "string (required) - From original registration",
+        },
+        response: {
+          success: true,
+          new_api_token: "string",
+          old_token_revoked: true,
+        },
+      },
+      token_usage: {
+        method: "GET",
+        path: "/intake/usage?token=XXX",
+        description: "Get per-token usage statistics and recent activity",
+        auth: "token as query parameter",
+        response: {
+          source: { id, name, type, operator, status, registered_at },
+          usage: { total_submissions, total_chat_messages, total_sessions, last_activity },
+          recent_submissions: "array of last 10 submissions",
         },
       },
       analyze: {
