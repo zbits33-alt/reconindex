@@ -512,13 +512,15 @@
   </footer>
 
   <script>
-    const API = 'https://api.reconindex.com';
+    // Use relative API paths — works when served from same Worker (reconindex.com or workers.dev)
+    const API = '';
 
     // ── Fetch live data ──
     async function fetchAll() {
+      const base = useRelative ? '' : API;
       const [statusRes, libsRes] = await Promise.all([
-        fetch(API + '/status'),
-        fetch(API + '/libraries'),
+        fetch(base + '/status'),
+        fetch(base + '/libraries'),
       ]);
       const status = await statusRes.json();
       const libs = await libsRes.json();
