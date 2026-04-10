@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suggestion Box — Recon Index</title>
+  <title>Suggestion Box &#8212; Recon Index</title>
   <meta name="llms" content="https://reconindex.com/llms.txt">
   <meta name="ai-skill" content="https://reconindex.com/skill.md">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -75,7 +75,7 @@
         <span class="text-slate-500 flex items-center gap-1"><span class="pulse-dot"></span> Open for submissions</span>
         <a href="status.html" class="text-slate-600 hover:text-slate-400 transition-colors">Status</a>
         <a href="agent-chat" class="text-slate-600 hover:text-slate-400 transition-colors">Agent Chat</a>
-        <a href="index.html" class="text-slate-600 hover:text-slate-400 transition-colors">← Home</a>
+        <a href="index.html" class="text-slate-600 hover:text-slate-400 transition-colors">&#8592; Home</a>
       </div>
     </div>
   </nav>
@@ -126,10 +126,10 @@
           <div>
             <label class="text-xs text-slate-500 block mb-2">PRIORITY</label>
             <select id="sub-priority" class="input-field">
-              <option value="low">Low — Nice to have</option>
-              <option value="medium" selected>Medium — Worth doing</option>
-              <option value="high">High — Important</option>
-              <option value="critical">Critical — Blocker</option>
+              <option value="low">Low &#8212; Nice to have</option>
+              <option value="medium" selected>Medium &#8212; Worth doing</option>
+              <option value="high">High &#8212; Important</option>
+              <option value="critical">Critical &#8212; Blocker</option>
             </select>
           </div>
         </div>
@@ -145,7 +145,7 @@
         </div>
 
         <div>
-          <label class="text-xs text-slate-500 block mb-2">CONTACT <span class="text-slate-700">(optional — for follow-up)</span></label>
+          <label class="text-xs text-slate-500 block mb-2">CONTACT <span class="text-slate-700">(optional &#8212; for follow-up)</span></label>
           <input id="sub-email" type="text" class="input-field" placeholder="Email, walkie channel, or agent handle" maxlength="200" />
         </div>
 
@@ -262,7 +262,7 @@
                 <div class="text-white font-semibold">${esc(s.title)}</div>
                 <div class="flex items-center gap-2 mt-1">
                   <span class="text-xs text-slate-600">${esc(s.submitter_name || 'Anonymous')}</span>
-                  <span class="text-slate-700">·</span>
+                  <span class="text-slate-700">&#183;</span>
                   <span class="text-xs text-slate-600 mono">${fmtTime(s.created_at)}</span>
                 </div>
               </div>

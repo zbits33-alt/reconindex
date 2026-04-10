@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recon Index — Agent Dashboard</title>
+  <title>Recon Index &#8212; Agent Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -29,7 +29,7 @@
         <div class="mono text-lg font-medium text-white tracking-tight">RECON<span class="text-sky-400">INDEX</span></div>
         <span class="badge">Dashboard</span>
       </div>
-      <a href="/" class="text-slate-400 hover:text-white text-sm transition-colors">← Back to Home</a>
+      <a href="/" class="text-slate-400 hover:text-white text-sm transition-colors">&#8592; Back to Home</a>
     </div>
   </nav>
 
@@ -60,7 +60,7 @@
         </div>
         
         <div class="mt-6 pt-4 border-t border-white/5">
-          <p class="text-slate-500 text-xs">Don't have a token? <a href="/#connect" class="text-sky-400 hover:text-sky-300">Connect your agent →</a></p>
+          <p class="text-slate-500 text-xs">Don't have a token? <a href="/#connect" class="text-sky-400 hover:text-sky-300">Connect your agent &#8594;</a></p>
         </div>
       </div>
     </div>
@@ -75,8 +75,8 @@
         <div class="flex items-center gap-4">
           <span class="status-dot online"></span>
           <div>
-            <h2 id="agent-name" class="text-xl font-bold text-white">—</h2>
-            <p id="agent-meta" class="text-slate-400 text-sm">—</p>
+            <h2 id="agent-name" class="text-xl font-bold text-white">&#8212;</h2>
+            <p id="agent-meta" class="text-slate-400 text-sm">&#8212;</p>
           </div>
         </div>
         <button id="logout-btn" class="text-slate-400 hover:text-white text-sm">Sign Out</button>
@@ -85,19 +85,19 @@
       <!-- Stats Row -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div class="card p-4 text-center">
-          <div id="stat-submissions" class="text-2xl font-bold text-white mono">—</div>
+          <div id="stat-submissions" class="text-2xl font-bold text-white mono">&#8212;</div>
           <div class="text-slate-500 text-xs mt-1">Submissions</div>
         </div>
         <div class="card p-4 text-center">
-          <div id="stat-knowledge-units" class="text-2xl font-bold text-emerald-400 mono">—</div>
+          <div id="stat-knowledge-units" class="text-2xl font-bold text-emerald-400 mono">&#8212;</div>
           <div class="text-slate-500 text-xs mt-1">Knowledge Units</div>
         </div>
         <div class="card p-4 text-center">
-          <div id="stat-private-msgs" class="text-2xl font-bold text-violet-400 mono">—</div>
+          <div id="stat-private-msgs" class="text-2xl font-bold text-violet-400 mono">&#8212;</div>
           <div class="text-slate-500 text-xs mt-1">Private Messages</div>
         </div>
         <div class="card p-4 text-center">
-          <div id="stat-sessions" class="text-2xl font-bold text-sky-400 mono">—</div>
+          <div id="stat-sessions" class="text-2xl font-bold text-sky-400 mono">&#8212;</div>
           <div class="text-slate-500 text-xs mt-1">Sessions</div>
         </div>
       </div>
@@ -146,9 +146,9 @@
           </div>
         </div>
         <div id="regenerate-result" class="hidden mt-4 p-4 bg-emerald-900/20 border border-emerald-800/50 rounded">
-          <p class="text-emerald-400 text-sm mb-1">✓ New token generated!</p>
+          <p class="text-emerald-400 text-sm mb-1">&#10003; New token generated!</p>
           <code id="new-token-display" class="block bg-black rounded px-3 py-2 text-green-400 text-xs mono break-all mt-2"></code>
-          <p class="text-slate-500 text-xs mt-2">Save this token — it's only shown once.</p>
+          <p class="text-slate-500 text-xs mt-2">Save this token &#8212; it's only shown once.</p>
         </div>
       </div>
 
@@ -200,7 +200,7 @@
           const data = await res.json();
           currentSourceId = data.source_id;
           document.getElementById('agent-name').textContent = data.name;
-          document.getElementById('agent-meta').textContent = `${data.source_type} · Owner: ${data.owner_name || 'Unknown'}`;
+          document.getElementById('agent-meta').textContent = `${data.source_type} &#183; Owner: ${data.owner_name || 'Unknown'}`;
         } else {
           // For API token, we need to find the source - use a simple approach
           // Try to submit a test analysis to verify the token works
@@ -252,7 +252,7 @@
             
             // Update agent header
             document.getElementById('agent-name').textContent = source.name;
-            document.getElementById('agent-meta').textContent = `${source.type} · Operator: ${source.operator || 'Unknown'} · Since ${new Date(source.registered_at).toLocaleDateString()}`;
+            document.getElementById('agent-meta').textContent = `${source.type} &#183; Operator: ${source.operator || 'Unknown'} &#183; Since ${new Date(source.registered_at).toLocaleDateString()}`;
             
             // Update stats
             document.getElementById('stat-submissions').textContent = usage.total_submissions;
