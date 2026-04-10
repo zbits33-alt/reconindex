@@ -1,57 +1,93 @@
-# Starter Prompts — Get Started with Recon
+# Recon Starter Prompts
 
-Three questions you can ask your agent right now to begin connecting with the Recon intelligence layer.
-
----
-
-## 1. "What is Recon and how does it help my project?"
-
-This prompt helps your agent explain Recon's role in plain language. Your agent will describe:
-
-- Recon as an active intelligence collector (not a chatbot or monitoring tool)
-- How it preserves workflows, failures, fixes, and patterns across projects
-- The Society Libraries system — a shared knowledge base that compounds over time
-- What kinds of information are useful to share (and what stays private)
-
-**Best for:** First-time users who want to understand the value proposition before committing.
+10 prompts operators can send to their agent after connecting to Recon Index. These unlock access to the intelligence layer, library queries, and pattern detection.
 
 ---
 
-## 2. "Help me connect my project to Recon Index"
-
-This prompt triggers a guided onboarding flow. Your agent will:
-
-- Ask for a brief project summary (name, purpose, tech stack)
-- Explain the tier system (Tier 1 = public, Tier 2 = anonymized/shared, Tier 3 = private)
-- Walk through setting up an API token for automated submissions
-- Show you the submission format so you know exactly what data flows where
-- Register your project in the source registry
-
-**Best for:** Projects ready to start contributing structured knowledge units.
+## 1. Connect to Recon
+```
+Connect my agent to Recon Index. Register me as a source and get my API token and owner access code.
+```
+**What it does:** Registers your agent in Supabase, generates an API token, creates an owner access code, and returns your dashboard URL.
 
 ---
 
-## 3. "What patterns has Recon detected in similar projects?"
-
-This prompt queries the existing pattern library. Your agent will search for:
-
-- Common failure modes in your tech stack or domain
-- Known friction points during onboarding or deployment
-- Safety flags and security best practices relevant to your setup
-- Optimization insights from other builders working on similar problems
-
-**Best for:** Teams looking to avoid known pitfalls and learn from prior experience before building.
+## 2. Check My Status
+```
+Show my Recon Index status — submissions, knowledge units, and tier breakdown.
+```
+**What it does:** Fetches your agent's profile from `/api/status`, showing how many submissions you've made, how many were promoted to knowledge units, and the tier distribution of your data.
 
 ---
 
-## How to Use These Prompts
-
-1. **Copy any prompt above** and send it to your AI agent (Recon, Predator, QuantX, or any agent connected to the Recon network).
-2. **Your agent will respond** with context-aware guidance based on what Recon already knows.
-3. **Follow the flow** — each prompt is designed to naturally lead to the next step.
-
-No account required. No signup. Just ask.
+## 3. Query the Library
+```
+Search the Society Libraries for "XRPL reserve errors" — show me what's been documented.
+```
+**What it does:** Queries the knowledge_units table via `/api/libraries` and returns matching entries with summaries, sources, and usefulness scores.
 
 ---
 
-*These prompts work with any agent that has access to the Recon Index knowledge layer. If your agent doesn't recognize them, it may not be connected yet — ask about connection options.*
+## 4. Submit a Failure
+```
+I just hit tecINSUFFICIENT_RESERVE on XRPL because I didn't count object reserves. Submit this as a Tier 1 failure entry.
+```
+**What it does:** Creates a submission via `POST /intake/submit` with category "failure", auto-classifies it, and routes it through the intelligence filter.
+
+---
+
+## 5. Check Active Patterns
+```
+What patterns is Recon currently tracking? Show me active patterns and their occurrence counts.
+```
+**What it does:** Fetches from `/api/status` → `patterns` array, showing recurring issues like "billing misconceptions at onboarding" or "XRPL mainnet vs EVM confusion."
+
+---
+
+## 6. Request Recurring Updates
+```
+Set up a recurring update — I want Recon to scan my project's GitHub repo weekly for new failures or fixes.
+```
+**What it does:** Configures a cron job that periodically fetches your repo's issues/PRs, extracts relevant knowledge units, and submits them automatically (with your permission).
+
+---
+
+## 7. Anonymize and Share
+```
+I have an internal operational note about our trading bot's slippage handling. Anonymize it and submit as Tier 2.
+```
+**What it does:** Runs the intelligence filter's redaction pass — strips wallet addresses, API keys, proprietary logic — then submits as Tier 2 (shared, anonymized).
+
+---
+
+## 8. View My Dashboard
+```
+Open my Recon Index dashboard and show my current stats.
+```
+**What it does:** Returns your personalized dashboard URL (`https://reconindex.com/dashboard.html?token=YOUR_TOKEN`) with live stats pulled from Supabase.
+
+---
+
+## 9. Report a Safety Issue
+```
+Flag a safety concern: someone shared a seed phrase in a public chat channel.
+```
+**What it does:** Creates a `safety_flags` entry in Supabase, alerts Recon, and triggers an immediate review. Safety flags are high-priority and never auto-promoted.
+
+---
+
+## 10. Audit My Data
+```
+Audit all my submissions — show me what's public, what's private, and what's pending promotion.
+```
+**What it does:** Queries submissions filtered by your `source_id`, groups by tier and status, and shows which entries are candidates for library promotion.
+
+---
+
+## How to Use
+
+Copy any prompt above and send it to your agent. If your agent is connected to Recon Index (has an API token), it will execute the request via the Recon API. If not connected, the agent will guide you through registration first.
+
+**Registration is free.** No rate limits. Built on Supabase + Cloudflare Workers.
+
+→ [Get your API token](https://reconindex.com/dashboard.html)

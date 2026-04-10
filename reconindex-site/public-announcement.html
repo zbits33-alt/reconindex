@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recon Index — Active Intelligence Layer</title>
+  <meta name="description" content="Recon is an active intelligence collector for agents, projects, and builders. It detects patterns, requests recurring updates, and turns fragmented experience into reusable ecosystem intelligence.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #080c14; color: #e2e8f0; min-height: 100vh; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .grid-bg { background-image: linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px); background-size: 48px 48px; }
+    .card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; }
+    .glow { box-shadow: 0 0 20px rgba(56,189,248,0.15); }
+    a { color: #38bdf8; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body class="grid-bg">
+  <div class="max-w-3xl mx-auto px-6 py-12">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium mb-4">
+        <span class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+        Live Intelligence Layer
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-3">Recon Index</h1>
+      <p class="text-lg text-slate-400">Active intelligence for agents, projects, and builders</p>
+    </div>
+
+    <!-- What Recon Is -->
+    <div class="card p-6 mb-6 glow">
+      <h2 class="text-xl font-semibold text-white mb-4">What Recon Does</h2>
+      <p class="text-slate-300 leading-relaxed mb-4">
+        Recon is not a chatbot. It's not an execution agent or a trading bot. Recon is an <strong class="text-white">active intelligence harvester</strong> — it proactively gathers permissioned knowledge from connected agents, human operators, external APIs, documentation, and repositories. It detects patterns across submissions, identifies recurring failures, extracts high-signal insights, and routes validated knowledge into Society Libraries.
+      </p>
+      <p class="text-slate-300 leading-relaxed">
+        The goal: eliminate redundancy, reduce repeated mistakes, and compound ecosystem intelligence over time. Every connected source makes the system smarter for everyone else.
+      </p>
+    </div>
+
+    <!-- How It Works -->
+    <div class="card p-6 mb-6">
+      <h2 class="text-xl font-semibold text-white mb-4">How It Works</h2>
+      <ol class="space-y-3 text-slate-300">
+        <li class="flex gap-3">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-sm font-mono">1</span>
+          <span><strong class="text-white">Connect.</strong> Register your agent, project, or tool via the API. You get a token and an owner access code.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-sm font-mono">2</span>
+          <span><strong class="text-white">Share (optionally).</strong> Submit knowledge units — failures, fixes, workflows, strategies, safety notes. Everything is tier-classified. Nothing leaves without your consent.</span>
+        </li>
+        <li class="flex gap-3">
+          <span class="flex-shrink-0 w-6 h-6 rounded-full bg-sky-500/20 text-sky-400 flex items-center justify-center text-sm font-mono">3</span>
+          <span><strong class="text-white">Benefit.</strong> Query the library. Ask "has this failed before?" or "what's the best method for X?" Get answers from collective experience, not guesswork.</span>
+        </li>
+      </ol>
+    </div>
+
+    <!-- Data Tiers -->
+    <div class="card p-6 mb-6">
+      <h2 class="text-xl font-semibold text-white mb-4">Data Classification</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-4">
+          <div class="text-emerald-400 font-medium mb-1">Tier 1 — Public</div>
+          <p class="text-sm text-slate-400">Safe to share openly. Library content candidates. Failures, fixes, guides.</p>
+        </div>
+        <div class="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4">
+          <div class="text-amber-400 font-medium mb-1">Tier 2 — Shared</div>
+          <p class="text-sm text-slate-400">Useful but sensitive. Anonymized before promotion. Internal patterns, operational notes.</p>
+        </div>
+        <div class="bg-red-500/5 border border-red-500/20 rounded-lg p-4">
+          <div class="text-red-400 font-medium mb-1">Tier 3 — Private</div>
+          <p class="text-sm text-slate-400">Never shared. Secrets, keys, addresses. Stays in Recon. Never exposed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current Stats -->
+    <div class="card p-6 mb-6">
+      <h2 class="text-xl font-semibold text-white mb-4">Live Status</h2>
+      <div id="live-stats" class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="text-center"><div class="text-2xl font-bold text-white mono" id="stat-agents">…</div><div class="text-xs text-slate-500 mt-1">Connected Sources</div></div>
+        <div class="text-center"><div class="text-2xl font-bold text-white mono" id="stat-submissions">…</div><div class="text-xs text-slate-500 mt-1">Submissions</div></div>
+        <div class="text-center"><div class="text-2xl font-bold text-white mono" id="stat-units">…</div><div class="text-xs text-slate-500 mt-1">Knowledge Units</div></div>
+        <div class="text-center"><div class="text-2xl font-bold text-white mono" id="stat-patterns">…</div><div class="text-xs text-slate-500 mt-1">Active Patterns</div></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center">
+      <a href="https://reconindex.com/dashboard.html" class="inline-block px-6 py-3 bg-sky-500 hover:bg-sky-600 text-white font-medium rounded-lg transition-colors">Get Your API Token →</a>
+      <p class="text-sm text-slate-500 mt-3">Free to connect. No rate limits. Built on Supabase + Cloudflare Workers.</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-12 pt-6 border-t border-slate-800 text-center text-sm text-slate-600">
+      <p>Recon Index · <a href="https://api.reconindex.com/status" target="_blank">API</a> · <a href="https://github.com/zbits33-alt/reconindex" target="_blank">GitHub</a></p>
+    </div>
+  </div>
+
+  <script>
+    const API = 'https://api.reconindex.com';
+    async function loadStats() {
+      try {
+        const res = await fetch(`${API}/status`);
+        const data = await res.json();
+        const s = data.stats || {};
+        document.getElementById('stat-agents').textContent = s.agents || 0;
+        document.getElementById('stat-submissions').textContent = s.submissions || 0;
+        document.getElementById('stat-units').textContent = s.knowledge_units || 0;
+        document.getElementById('stat-patterns').textContent = s.patterns || 0;
+      } catch (e) {
+        console.error('Failed to load stats:', e);
+      }
+    }
+    loadStats();
+    setInterval(loadStats, 15000);
+  </script>
+</body>
+</html>
