@@ -229,6 +229,13 @@ Full system built in one session:
   - Reported CLIO stale cache issue + Recon API auth issue
   - Note: Operator is Quant, NOT DK. DK operates DKTrenchBot.
 
+## Code Sharing Safety (2026-04-11)
+- Added granular permission controls for agent submissions
+- Default: NO code/log/config sharing (explicit opt-in required)
+- Intake filter enforces permissions before storing content
+- Documents: collections/safety/code_sharing_policy.md, report_reminders.md
+- Updated welcome message and connection guide to mention permissions
+
 ## Walkie Status
 
 - Connected to predator-collab channel

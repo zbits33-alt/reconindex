@@ -604,6 +604,15 @@ async function handleIntakeRegister(request, env, cors) {
   await supabaseInsert(env, "permissions", {
     source_id: source[0].id,
     default_tier: body.default_tier || 2,
+    allow_code: body.permissions?.allow_code || false,
+    allow_logs: body.permissions?.allow_logs || false,
+    allow_configs: body.permissions?.allow_configs || false,
+    allow_screenshots: body.permissions?.allow_screenshots || false,
+    allow_prompts: body.permissions?.allow_prompts || false,
+    allow_perf_data: body.permissions?.allow_perf_data ?? true,
+    allow_anonymized_sharing: body.permissions?.allow_anonymized_sharing ?? true,
+    allow_library_promotion: body.permissions?.allow_library_promotion || false,
+    never_store: body.permissions?.never_store || [],
   });
 
   return jsonResponse({
@@ -688,6 +697,15 @@ async function handlePublicConnect(request, env, cors) {
   await supabaseInsert(env, "permissions", {
     source_id: source[0].id,
     default_tier: body.default_tier || 2,
+    allow_code: body.permissions?.allow_code || false,
+    allow_logs: body.permissions?.allow_logs || false,
+    allow_configs: body.permissions?.allow_configs || false,
+    allow_screenshots: body.permissions?.allow_screenshots || false,
+    allow_prompts: body.permissions?.allow_prompts || false,
+    allow_perf_data: body.permissions?.allow_perf_data ?? true,
+    allow_anonymized_sharing: body.permissions?.allow_anonymized_sharing ?? true,
+    allow_library_promotion: body.permissions?.allow_library_promotion || false,
+    never_store: body.permissions?.never_store || [],
   });
 
   // Fetch the generated owner_access_code
@@ -716,6 +734,16 @@ async function handlePublicConnect(request, env, cors) {
         tags: ["onboarding", "first-submission"],
       },
       valid_categories: ["failure", "friction", "safety", "knowledge", "operational", "build", "performance", "identity"],
+      data_sharing: {
+        note: "Code, logs, and configs are NOT stored by default. You must explicitly grant permission.",
+        current_permissions: {
+          allow_code: body.permissions?.allow_code || false,
+          allow_logs: body.permissions?.allow_logs || false,
+          allow_configs: body.permissions?.allow_configs || false,
+          never_store: body.permissions?.never_store || [],
+        },
+        docs: "See collections/safety/code_sharing_policy.md for details",
+      },
       docs_url: "https://api.reconindex.com/api/schema",
       rate_limits: {
         submissions_per_hour: 100,
@@ -1608,7 +1636,7 @@ async function supabaseFetch(env, path, method, body) {
 
 // Secret detection patterns
 const SECRET_PATTERNS = [
-  { type: "seed_phrase", regex: /\b(?:s[0-9A-Za-z]{50,}|seed[=:\s]+[A-Za-z]{8,})\b/gi, severity: "critical" },
+  { type: "seed_phrase", regex: /\b(?:s[Ed][0-9A-Za-z]{50,}|seed[=:\s]+[A-Za-z]{8,})\b/gi, severity: "critical" },
   { type: "private_key", regex: /\b(?:ed25519|secp256k1)?[:\s]*(?:priv(?:ate)?[=:\s]+)?[0-9a-fA-F]{64}\b/gi, severity: "critical" },
   { type: "wallet_address", regex: /\br[rp][a-zA-HJ-NP-Z0-9]{25,55}\b/g, severity: "medium" },
   { type: "api_key", regex: /\b(?:api[_-]?key|apikey|access[_-]?token)\s*[:=]\s*[A-Za-z0-9_\-\.]{16,}\b/gi, severity: "high" },
@@ -1831,9 +1859,67 @@ async function handleIntakeAnalyze(request, env, cors) {
     // ─── Step 5: Generate safety flags ───
     const safetyFlags = generateSafetyFlags(secrets, rawContent);
 
+    // ─── Step 5b: Check source permissions for code/logs/configs ───
+    const perms = await supabaseSelect(env, "permissions", 
+      "allow_code, allow_logs, allow_configs, never_store", 
+      `source_id=eq.${source.id}`, 1);
+    const perm = perms[0] || {};
+    
+    let contentToStore = rawContent;
+    let permissionWarnings = [];
+    
+    // Detect content types
+    const hasCodeBlock = /```[\s\S]*?```/.test(rawContent) || /^\s*(import |from |def |class |const |let |var |function )/m.test(rawContent);
+    const hasLogOutput = /(ERROR|WARN|INFO|DEBUG|TRACE).*?:/.test(rawContent) || /\[\d{4}-\d{2}-\d{2}/.test(rawContent);
+    const hasConfigFormat = /^(api_key|secret|password|token|bearer|endpoint)\s*[:=]/mi.test(rawContent);
+    
+    // Check permissions and strip if not allowed
+    if (hasCodeBlock && !perm.allow_code) {
+      // Remove code blocks but keep surrounding text
+      contentToStore = contentToStore.replace(/```[\s\S]*?```/g, '[CODE_BLOCK_REMOVED]');
+      permissionWarnings.push("Code block removed (permission not granted)");
+    }
+    if (hasLogOutput && !perm.allow_logs) {
+      // Strip log lines that look like structured output
+      contentToStore = contentToStore.split('\n').filter(line => {
+        return !(/^(ERROR|WARN|INFO|DEBUG|TRACE).*?:/.test(line) || /\[\d{4}-\d{2}-\d{2}/.test(line));
+      }).join('\n');
+      if (contentToStore.trim().length < rawContent.length * 0.3) {
+        permissionWarnings.push("Log output removed (permission not granted)");
+      }
+    }
+    if (hasConfigFormat && !perm.allow_configs) {
+      // Redact config-like lines
+      contentToStore = contentToStore.replace(/^(api_key|secret|password|token|bearer|endpoint)\s*[:=].*$/gim, '$1=[REDACTED]');
+      permissionWarnings.push("Config values redacted (permission not granted)");
+    }
+    
+    // Apply never_store redactions
+    if (perm.never_store && Array.isArray(perm.never_store)) {
+      for (const field of perm.never_store) {
+        // Simple pattern matching for common sensitive fields
+        if (field === 'wallet_address') {
+          contentToStore = contentToStore.replace(/\br[rp][a-zA-HJ-NP-Z0-9]{25,55}\b/g, '[REDACTED:wallet_address]');
+        } else if (field === 'private_key' || field === 'seed_phrase') {
+          // Already handled by detectSecrets, but double-check
+          contentToStore = contentToStore.replace(/[0-9a-fA-F]{64}/g, '[REDACTED:key]');
+        } else if (field === 'api_token' || field === 'bearer_token') {
+          contentToStore = contentToStore.replace(/xpl-[a-z0-9\-]{10,}/gi, '[REDACTED:token]');
+        }
+      }
+    }
+    
+    // If permission stripping left us with almost nothing, reject
+    if (contentToStore.trim().length < 10 && rawContent.trim().length > 50) {
+      return jsonResponse({
+        error: "Content stripped by permissions",
+        warnings: permissionWarnings,
+        message: "Your submission contained code/logs/configs but your permissions don't allow storing them. Grant permission or submit a summary instead.",
+      }, { ...cors }, 403);
+    }
+
     // ─── Step 6: Route to Supabase ───
-    const contentToStore = tier === 3 ? redacted : rawContent;
-    const summary = rawContent.length > 200 ? rawContent.substring(0, 200) + "..." : rawContent;
+    const summary = contentToStore.length > 200 ? contentToStore.substring(0, 200) + "..." : contentToStore;
 
     // Insert submission
     const submission = await supabaseInsert(env, "submissions", {
@@ -1904,10 +1990,19 @@ async function handleIntakeAnalyze(request, env, cors) {
         content_redacted: tier === 3,
         safety_flags_created: safetyFlags.length,
       },
+      permissions: {
+        warnings: permissionWarnings,
+        code_stripped: hasCodeBlock && !perm.allow_code,
+        logs_stripped: hasLogOutput && !perm.allow_logs,
+        configs_redacted: hasConfigFormat && !perm.allow_configs,
+      },
       knowledge_unit_created: !!knowledgeUnit,
       message: secrets.length > 0
         ? `Content classified as ${category} (tier ${tier}). ${secrets.length} secret(s) detected and redacted.`
         : `Content classified as ${category} (tier ${tier}). No secrets detected.`,
+      note: permissionWarnings.length > 0
+        ? `${permissionWarnings.join("; ")}. To share this content, update your permissions. See docs for details.`
+        : undefined,
     }, cors);
   } catch (err) {
     console.error("/intake/analyze error:", err.message, err.stack);

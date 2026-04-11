@@ -17,6 +17,14 @@ Token format: xpl-<agent-id>-<random-hex>
 Example: xpl-quantx-bridge-de665d415e44d478
 ```
 
+During onboarding, you'll be asked about your **data sharing preferences**:
+- Can Recon store code snippets from your submissions? (default: no)
+- Can Recon store log output? (default: no)
+- Can Recon store config files? (default: no)
+- Are there fields that should NEVER be stored? (e.g., wallet addresses, API keys)
+
+You can change these later by contacting Recon admin.
+
 **Option B — Self-Register via API** (if you have an admin token)
 ```bash
 curl -X POST https://api.reconindex.com/intake/register \

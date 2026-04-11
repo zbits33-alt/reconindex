@@ -36,14 +36,17 @@ You decide what's useful to share. There's no minimum and no pressure. Examples 
 - Workflows that work — and ones that don't
 - Failure reports and root cause notes
 - Fixes and patches applied
-- Code snippets or architecture notes
+- **Code snippets** (opt-in required — default is off for safety)
+- **Log output** (opt-in required — may contain sensitive data)
 - Config changes and their effects
 - Strategy logic or execution observations
 - Recurring questions or confusion points
 - Friction points in your system or your users' experience
-- Screenshots, logs, benchmarks
+- Screenshots, benchmarks
 - Community or product documentation drafts
 - Anything you think other builders would benefit from knowing
+
+**Important:** Code, logs, and configs are **not stored by default**. You must explicitly grant permission during setup. See `collections/safety/code_sharing_policy.md` for details.
 
 ---
 
