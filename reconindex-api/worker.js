@@ -4,15 +4,37 @@ export default {
     const path = url.pathname;
     const method = request.method;
 
-    // CORS headers
+    // CORS: restrict to configured origins
+    const allowedOriginsRaw = env.ALLOWED_ORIGINS || "https://reconindex.com,https://app.reconindex.com";
+    const allowedOrigins = allowedOriginsRaw.split(",").map(o => o.trim()).filter(Boolean);
+    const origin = request.headers.get("Origin");
+    const corsOrigin = allowedOrigins.includes(origin) ? origin : allowedOrigins[0] || "https://reconindex.com";
+
     const cors = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Origin": corsOrigin,
+      "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      "Vary": "Origin",
     };
 
     if (method === "OPTIONS") {
       return new Response(null, { headers: cors });
+    }
+
+    // Rate limiting helper — uses KV namespace RATE_LIMITS
+    async function checkRateLimit(key, maxRequests, windowSeconds) {
+      if (!env.RATE_LIMITS) return { allowed: true }; // KV not bound, skip
+      const now = Date.now();
+      const windowStart = now - (windowSeconds * 1000);
+      const existing = await env.RATE_LIMITS.get(key);
+      const timestamps = existing ? JSON.parse(existing) : [];
+      const valid = timestamps.filter(t => t > windowStart);
+      if (valid.length >= maxRequests) {
+        return { allowed: false, retryAfter: Math.ceil((valid[0] + windowSeconds * 1000 - now) / 1000) };
+      }
+      valid.push(now);
+      await env.RATE_LIMITS.put(key, JSON.stringify(valid), { expirationTtl: windowSeconds + 60 });
+      return { allowed: true };
     }
 
     // ─── Health ───
@@ -644,21 +666,15 @@ async function handleIntakeRegister(request, env, cors) {
 
 // Public self-registration — generates API token, no admin auth needed
 async function handlePublicConnect(request, env, cors) {
-  // Rate limiting: max 5 registrations per IP per hour
+  // Per-IP rate limit: 5 registrations per 10 minutes
   const clientIp = request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || "unknown";
-  const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
-  const recentRegistrations = await supabaseSelect(env, "sources", "id,created_at",
-    `created_at=gte.${oneHourAgo}`, 100);
-  const ipRegistrations = recentRegistrations.filter(s => {
-    // We can't track by IP directly in Supabase, so we use a simple global limit
-    return true;
-  });
-  // Simple global rate limit: max 20 registrations per hour across all IPs
-  if (recentRegistrations.length >= 20) {
+  const rlKey = `connect:${clientIp}`;
+  const rl = await checkRateLimit(rlKey, 5, 600); // 5 requests per 600 seconds (10 min)
+  if (!rl.allowed) {
     return jsonResponse({
       error: "Rate limit exceeded",
-      retry_after: 3600,
-      message: "Too many registrations. Please wait before trying again.",
+      retry_after: rl.retryAfter,
+      message: "Too many registration attempts. Please wait before trying again.",
     }, { ...cors }, 429);
   }
 
@@ -1925,12 +1941,21 @@ function generateSafetyFlags(secrets, text) {
 
 async function handleIntakeAnalyze(request, env, cors) {
   try {
-    // Auth: require bearer token (source API token)
+    // Per-token rate limit: 30 requests per 10 minutes
     const auth = request.headers.get("Authorization");
     if (!auth || !auth.startsWith("Bearer ")) {
       return jsonResponse({ error: "Missing bearer token" }, { ...cors }, 401);
     }
     const token = auth.slice(7);
+    const rlKey = `analyze:${token.substring(0, 20)}`;
+    const rl = await checkRateLimit(rlKey, 30, 600); // 30 requests per 600 seconds (10 min)
+    if (!rl.allowed) {
+      return jsonResponse({
+        error: "Rate limit exceeded",
+        retry_after: rl.retryAfter,
+        message: "Too many requests. Please wait before trying again.",
+      }, { ...cors }, 429);
+    }
 
     // Verify source
     const sources = await supabaseSelect(env, "sources", `id,name,source_type,status`, `api_token=eq.${token}`, 1);
@@ -1945,6 +1970,11 @@ async function handleIntakeAnalyze(request, env, cors) {
 
     if (!body.content || !body.content.trim()) {
       return jsonResponse({ error: "content is required" }, { ...cors }, 400);
+    }
+
+    // Input length limit
+    if (body.content.length > 50000) {
+      return jsonResponse({ error: "Content too long (max 50KB)" }, { ...cors }, 400);
     }
 
     const rawContent = body.content;
@@ -2232,6 +2262,18 @@ async function handleAgentChatPage(request, cors) {
 // POST /intake/public — public submission endpoint (no auth required)
 // Auto-creates a source if agent_name is provided, or uses anonymous source
 async function handlePublicSubmit(request, env, cors) {
+  // Per-IP rate limit: 10 submissions per 10 minutes
+  const clientIp = request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || "unknown";
+  const rlKey = `submit:${clientIp}`;
+  const rl = await checkRateLimit(rlKey, 10, 600); // 10 requests per 600 seconds (10 min)
+  if (!rl.allowed) {
+    return jsonResponse({
+      error: "Rate limit exceeded",
+      retry_after: rl.retryAfter,
+      message: "Too many submissions. Please wait before trying again.",
+    }, { ...cors }, 429);
+  }
+
   let body;
   try {
     body = await request.json();
@@ -2241,6 +2283,14 @@ async function handlePublicSubmit(request, env, cors) {
 
   if (!body.content || !body.content.trim()) {
     return jsonResponse({ error: "content is required" }, { ...cors }, 400);
+  }
+
+  // Input length limits
+  if (body.content.length > 50000) {
+    return jsonResponse({ error: "Content too long (max 50KB)" }, { ...cors }, 400);
+  }
+  if (body.agent_name && body.agent_name.length > 100) {
+    return jsonResponse({ error: "Agent name too long (max 100 chars)" }, { ...cors }, 400);
   }
 
   // Determine source: use provided agent_name or create/use anonymous source

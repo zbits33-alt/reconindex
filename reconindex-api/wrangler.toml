@@ -2,10 +2,20 @@ name = "recon-intake-api"
 main = "worker.js"
 compatibility_date = "2026-04-09"
 
+# Secrets must be set via `wrangler secret put`:
+# - SUPABASE_URL
+# - SUPABASE_SERVICE_KEY  (rotate this immediately)
+# - ADMIN_TOKEN           (generate a strong random token)
+# - ALLOWED_ORIGINS       (comma-separated, e.g. "https://reconindex.com,https://app.reconindex.com")
+
 [vars]
 SUPABASE_URL = "https://nygdcvjmjzvyxljexjjo.supabase.co"
-SUPABASE_SERVICE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55Z2Rjdmptanp2eXhsamV4ampvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTcwOTMyMSwiZXhwIjoyMDkxMjg1MzIxfQ.sPHZ0c7yxquUQkHzXFSyBlCSqm4p_j4Um8mIaLLVtkQ"
-ADMIN_TOKEN = "recon-admin-2026-secure"
+# ALLOWED_ORIGINS should be set via `wrangler secret put` or env var
+# Example: wrangler secret put ALLOWED_ORIGINS --env production
+
+kv_namespaces = [
+  { binding = "RATE_LIMITS", id = "c9263c70f53745e5b839262978a48624" }
+]
 
 [[routes]]
 pattern = "api.reconindex.com/*"
