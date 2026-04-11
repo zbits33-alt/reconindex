@@ -190,6 +190,24 @@ export default {
       return handleGatePending(request, env, cors);
     }
 
+    // ─── PHASE 1: ENTITY & CONTENT ENDPOINTS ───
+    // GET /entities — list entities with optional filters
+    if (path === "/entities" && method === "GET") {
+      return handleEntitiesList(request, env, cors);
+    }
+    // POST /entities — create a new entity (admin auth)
+    if (path === "/entities" && method === "POST") {
+      return handleEntityCreate(request, env, cors);
+    }
+    // GET /content-items — browseable content layer
+    if (path === "/content-items" && method === "GET") {
+      return handleContentItemsList(request, env, cors);
+    }
+    // GET /ecosystem-updates — living XRPL feed
+    if (path === "/ecosystem-updates" && method === "GET") {
+      return handleEcosystemUpdatesList(request, env, cors);
+    }
+
     // Landing page for reconindex.com (non-api host, non-API paths only)
     const host = request.headers.get("host") || "";
     const isMainDomain = host.includes("reconindex.com") && !host.startsWith("api.");
@@ -203,6 +221,7 @@ export default {
       "/intake/submit", "/intake/register", "/intake/connect", "/intake/regenerate-token", "/intake/usage", "/intake/analyze", "/intake/public",
       "/owner/resolve",
       "/query/search", "/gate/promote", "/gate/pending",
+      "/entities", "/content-items", "/ecosystem-updates",
       "/status-page", "/intelligence/xrplpulse", "/building-recon"]);
 
     if (path === "/dashboard.html" && isMainDomain) {
@@ -2243,6 +2262,86 @@ async function handleGatePending(request, env, cors) {
   const pending = (subs || []).slice(0, 20);
 
   return jsonResponse({ success: true, count: pending.length, pending }, cors);
+}
+
+// ═══════════════════════════════════════════════════════
+// PHASE 1: ENTITY & CONTENT ENDPOINTS
+// ═══════════════════════════════════════════════════════
+
+// GET /entities — list entities with optional filters
+async function handleEntitiesList(request, env, cors) {
+  const url = new URL(request.url);
+  const type = url.searchParams.get("type");
+  const ecosystem = url.searchParams.get("ecosystem");
+  const limit = parseInt(url.searchParams.get("limit") || "50", 10);
+
+  let filter = `order=created_at.desc&limit=${Math.min(limit, 200)}`;
+  if (type) filter += `&entity_type=eq.${type}`;
+  if (ecosystem) filter += `&ecosystem=cs.{${ecosystem}}`;
+
+  // Join with entity_profiles for richer data (verified status)
+  const entities = await supabaseSelect(env, "entities", "id,name,entity_type,description,ecosystem,stage,created_at", filter, Math.min(limit, 200));
+
+  // Enrich with verification status
+  if (entities && entities.length > 0) {
+    const ids = entities.map(e => e.id);
+    const profiles = await supabaseSelect(env, "entity_profiles", "entity_id,verified,slug", `entity_id=in.(${ids.join(',')})`, 200);
+    const profileMap = {};
+    if (profiles) {
+      profiles.forEach(p => { profileMap[p.entity_id] = p; });
+    }
+    
+    entities.forEach(e => {
+      const profile = profileMap[e.id];
+      e.verified = profile ? profile.verified : false;
+      e.slug = profile ? profile.slug : null;
+    });
+  }
+
+  return jsonResponse({ success: true, count: entities ? entities.length : 0, entities }, cors);
+}
+
+// POST /entities — create a new entity (admin auth)
+async function handleEntityCreate(request, env, cors) {
+  const token = request.headers.get("Authorization")?.replace("Bearer ", "");
+  if (token !== env.ADMIN_TOKEN) {
+    return jsonResponse({ error: "Admin token required" }, cors, 401);
+  }
+
+  const body = await request.json().catch(() => ({}));
+  const { name, entity_type, description, ecosystem, stage, meta } = body;
+
+  if (!name || !entity_type) {
+    return jsonResponse({ error: "name and entity_type are required" }, cors, 400);
+  }
+
+  const result = await supabaseInsert(env, "entities", { name, entity_type, description, ecosystem, stage, meta });
+
+  return jsonResponse({ success: true, entity_id: result.id, data: result }, cors);
+}
+
+// GET /content-items — browseable content layer
+async function handleContentItemsList(request, env, cors) {
+  const url = new URL(request.url);
+  const category = url.searchParams.get("category");
+  const limit = parseInt(url.searchParams.get("limit") || "20", 10);
+
+  let filter = `order=published_at.desc&limit=${Math.min(limit, 100)}`;
+  if (category) filter += `&category=eq.${category}`;
+
+  const items = await supabaseSelect(env, "content_items", "id,title,category,summary,published_at,entity_id", filter, Math.min(limit, 100));
+
+  return jsonResponse({ success: true, count: items ? items.length : 0, items }, cors);
+}
+
+// GET /ecosystem-updates — living XRPL feed
+async function handleEcosystemUpdatesList(request, env, cors) {
+  const url = new URL(request.url);
+  const limit = parseInt(url.searchParams.get("limit") || "10", 10);
+
+  const updates = await supabaseSelect(env, "ecosystem_updates", "id,title,update_type,summary,published_at", `order=published_at.desc&limit=${Math.min(limit, 50)}`, Math.min(limit, 50));
+
+  return jsonResponse({ success: true, count: updates ? updates.length : 0, updates }, cors);
 }
 
 async function handleLandingPage(request, cors) {

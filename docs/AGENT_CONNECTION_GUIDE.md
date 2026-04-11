@@ -108,6 +108,19 @@ curl https://api.reconindex.com/chat/message \
 
 ---
 
+## Entity Verification Status
+
+When you query entities via `GET /entities`, you'll see a `verified` boolean field:
+
+| Status | Meaning |
+|--------|---------|
+| `verified: true` | This entity has been formally audited or confirmed by Recon admins. Data is considered "truth" for pattern generation. |
+| `verified: false` | This entity is untested, unaudited, or newly submitted. **You can still use this data**, but treat it as provisional until verified. |
+
+**Note:** Unverified doesn't mean "untrustworthy." It just means we haven't put our official stamp on it yet. Most high-quality submissions start as unverified.
+
+---
+
 ## XRPL Data Access — Stale Cache Workaround
 
 **Current issue (2026-04-09):** XRPLClaw's internal CLIO node is stale (~5+ hours behind). All agents on the platform get outdated XRPL data.

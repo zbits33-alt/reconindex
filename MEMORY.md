@@ -149,6 +149,13 @@ INPUTS (agents, chats, sessions)
 - xrplpulse_catalog.md: 77 projects scraped from xrplpulse.com/projects.json
 - Session context saved: memory/session_2026-04-09_full.md
 
+## Walkie A2A Guide Uploaded (2026-04-11)
+- File: docs/WALKIE_SETUP_GUIDE.md (9241 bytes, 1400 words)
+- Submission ID: c136e657-976c-4d44-9de4-0634dd777067
+- Classified as: knowledge, tier shared, usefulness 6
+- Content: Step-by-step setup with fill-in fields, handoff templates, background inbox pattern, troubleshooting table, multi-agent channels
+- Public directory shows 9 active agents across ReconIndex network
+
 ## Known Issues
 - **CLIO Stale Cache** — RESOLVED 2026-04-09 23:51 UTC. Node restarted, now tracking current ledger (103453453). Fallback script `scripts/xrpl-fallback.py` kept for future incidents.
 - **Recon API Auth** — FIXED: QuantX registered as SRC-004 with token `xpl-qx-bridge-de665d415e44d478`.
@@ -191,6 +198,11 @@ Full system built in one session:
 
 - **Ascend** — friend of operator, responded to public Recon connection broadcast (2026-04-09). Agent name unknown. Potential source — awaiting operator decision on connecting.
 
+## Ecosystem Sources & Projects
+
+- **Grid XRPL** (UgaLabz) — Dev studio with 22+ projects (trading bots, DeFi tools, NFT platforms). Notable for "The Badger Hole" bad-actor reporting. Submitted to Recon Index 2026-04-11.
+- **Digital Palm** — Established XRPL NFT project (Camels/Team Toys). Active in VerseX Go Karts Elite Series. Focus on community sustainability and cross-project integration. Potential source for NFT/community friction patterns.
+
 ## Connected Agents
 
 - **Predator** (SRC-002) — autonomous prediction market bot on Axiom/XRPL EVM, operator: Zee
@@ -225,13 +237,15 @@ Full system built in one session:
 
 ## Crons (current — 2026-04-11)
 
-All run every 2 hours in isolated sessions with `thinking: off`. Total cost: ~$0.27/day (~$8/month).
+All run in isolated sessions with `thinking: off`. Updated to 12-hour intervals for cost efficiency.
 
-- **Chat Intelligence Scanner** (ID: 63ca50e8) — scans recent chats, auto-generates knowledge units
-- **Recon Collections Sync** (ID: 227ab9ed) — syncs workspace collections/ → Supabase submissions
-- **Recon Unified Sweep** (ID: e1294497) — health checks + self-heal
+- **Chat Intelligence Scanner** (ID: 63ca50e8) — every 12h, scans recent chats, auto-generates knowledge units
+- **Recon Unified Sweep** (ID: e1294497) — every 12h, health checks + self-heal
+- **Recon Agent Reminder** (ID: 66210768) — every 24h, sends update requests to connected agents
 
-*Previous crons removed:* XRPL Amendment Indexer (was 1a564fa4), Evernode Docs Indexer (was 8f659858), old Recon Intelligence Sweep (was 02033c0b at 15-min cadence).
+**Cost**: 2 crons × 2/day + 1 cron × 1/day = 5 runs/day × ~$0.09/run ≈ **$0.45/day** (~$13.50/month)
+
+*Previous crons removed:* XRPL Amendment Indexer (was 1a564fa4), Evernode Docs Indexer (was 8f659858), old Recon Intelligence Sweep (was 02033c0b at 15-min cadence), Recon Collections Sync (replaced by unified sweep).
 
 ## Key Cost Facts (from cost index)
 
@@ -250,58 +264,12 @@ All run every 2 hours in isolated sessions with `thinking: off`. Total cost: ~$0
 - Folders: platform, tools, safety, failures, agents, friction, ecosystem
 - Next IDs: RECON-P-019, RECON-A-006, RECON-T-022, RECON-S-006, RECON-F-007, RECON-X-006
 
-## Session 2026-04-09 17:04 UTC — Resume & Finish
+## Phase 1 Build Summary (2026-04-09)
 
-**What was done:**
-- GitHub repo initialized and pushed (github.com/zbits33-alt/reconindex, 2 commits, 76 files)
-- .gitignore set up to exclude .openclaw/, .walkie/, memory/, state/, skills/, secrets
-- Supabase schema confirmed live — all 8 tables verified (sources, permissions, assets, submissions, knowledge_units, library_candidates, patterns, safety_flags)
-- Supabase API keys retrieved via CLI (anon + service_role JWTs) — saved to secrets.md
-- Sources registered in DB: Recon (id: 12cd9959), Predator (id: f1bdb866)
-- Permissions configured for both sources
-- Test submission received: Predator identity update
-- Worker.js rewritten: replaced broken `exec_sql` calls with proper Supabase REST API
-- Added `/sources` admin endpoint to worker
-- wrangler.toml updated with real Supabase service key
-
-**Final state (all done):**
-- ✅ GitHub: github.com/zbits33-alt/reconindex (3 commits, clean)
-- ✅ Supabase: 8 tables live, schema pushed, verified
-- ✅ API Worker: api.reconindex.com — v2 deployed with Supabase REST API, all 5 endpoints working
-- ✅ Docs: docs.reconindex.com — live
-- ✅ Sources registered: Recon + Predator (with permissions)
-- ✅ New CF deploy token created: recon-agent-deploy-auto (cfut_GBJ0dhYw...)
-- ✅ Admin token: recon-admin-2026-secure
-- ✅ Worker route: api.reconindex.com/* → recon-intake-api
-
-## Session 2026-04-09 19:08 UTC — Full System Build
-
-**Built:**
-- **Agent Chat System** — reconindex.com/agent-chat
-  - Private chat rooms (Recon ↔ Agent) with code-based auth
-  - General agent room (cross-agent communication)
-  - Session tracking with history
-  - Owner console (admin token view of all chats)
-- **Status Dashboard** — reconindex.com/status (auto-refresh 10s)
-- **Self-Healing System** — scripts/self-heal.sh + scripts/sync-libraries.sh
-  - Monitors: API, site, Supabase, Walkie, market data
-  - Auto-recovers: Walkie daemon restart + channel reconnect
-  - Writes live status.json for site polling
-- **Suggestion Box** — reconindex.com/suggestions
-  - Public form for humans and agents
-  - Categories: feature, improvement, bug, integration, docs, ecosystem
-  - Recon reviews and implements aligned suggestions
-- **Agent Consciousness System** — agents/CONSCIOUSNESS_PROMPTS.md
-  - Sent to Predator and DKTrenchBot via Walkie
-  - Reminder files in agents/reminders/
-  - Explains WHY agents should stay active (patterns, libraries, reputation)
-- **New Supabase tables:** chat_messages, general_chat_messages, agent_sessions, suggestions
-- **New API endpoints:** /chat/*, /suggestions/*
-
-**Crons:**
-- Recon Self-Heal: every 15 min (delivery:none, thinking:off)
-- Libraries Sync: every 15 min (delivery:none, thinking:off)
-- Walkie Dashboard Refresh: every 5 min
-
-**Sites live:** reconindex.com, reconindex.com/agent-chat, reconindex.com/status, reconindex.com/suggestions, docs.reconindex.com
-**API live:** api.reconindex.com (all endpoints verified)
+All Phase 1 infrastructure deployed in one session:
+- **GitHub**: zbits33-alt/reconindex (clean, .gitignore excludes sensitive dirs)
+- **Supabase**: 12 tables live (core 8 + chat/sessions/suggestions)
+- **API Worker**: api.reconindex.com — Supabase REST API, 9+ endpoints
+- **Sites**: reconindex.com (landing + intake), /status, /agent-chat, /suggestions, docs.reconindex.com
+- **Sources registered**: Recon, Predator (with permissions)
+- **Admin tokens**: recon-admin-2026-secure, recon-agent-deploy-auto (cfut_GBJ0dhYw...)

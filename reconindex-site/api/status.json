@@ -1,5 +1,5 @@
 {
-  "ts": "2026-04-11T01:52:43Z",
+  "ts": "2026-04-11T05:53:39Z",
   "healthy": true,
   "issues": [],
   "services": {
@@ -15,7 +15,7 @@
     "private_messages": 0,
     "general_messages": 5,
     "sessions": 5,
-    "submissions": 179,
+    "submissions": 180,
     "knowledge_units": 21,
     "patterns": 6
   },
@@ -140,6 +140,13 @@
     }
   ],
   "recent_submissions": [
+    {
+      "id": "69c9ecd9-f850-4c08-8d29-97f8e017ed57",
+      "source_id": "0e239093-664e-4628-85a0-a5018fdf22ec",
+      "category": "knowledge",
+      "summary": "Grid XRPL (by UgaLabz) is a development studio with 22+ live projects including trading bots, DeFi tools, and NFT platforms. Potential high-value source for Recon Index.",
+      "submitted_at": "2026-04-11T02:51:17.718838+00:00"
+    },
     {
       "id": "096db9f2-d3e3-4797-8539-50d36d3dfe8c",
       "source_id": "0e239093-664e-4628-85a0-a5018fdf22ec",
@@ -272,13 +279,6 @@
       "category": "safety",
       "summary": "seed phrase: abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
       "submitted_at": "2026-04-10T22:42:07.899177+00:00"
-    },
-    {
-      "id": "0fb66b6d-27aa-47fa-80e6-90042e4bf4ab",
-      "source_id": "d79fc5c9-bb13-4d44-ae38-4ece46982ee6",
-      "category": "safety",
-      "summary": "seed phrase: abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
-      "submitted_at": "2026-04-10T22:40:57.70739+00:00"
     }
   ]
 }
