@@ -29,6 +29,7 @@ HEADERS = {
 
 COLLECTIONS_DIR = "/home/agent/workspace/collections"
 INTELLIGENCE_DIR = "/home/agent/workspace/intelligence"
+AGENTS_DIR = "/home/agent/workspace/agents"
 
 # Map collection categories to valid submission categories
 # Valid: identity, build, operational, performance, failure, knowledge, safety, friction, audit_request
@@ -73,6 +74,9 @@ SKIP_FILES = {
     "PATTERN_FORMAT.md", "active_patterns.md",
     "xrplpulse_catalog.md", "xrplpulse_intelligence.md",
 }
+
+# Agent-specific files to skip (operational state, not intelligence)
+AGENT_SKIP = {"STATE.md", "config.json"}
 
 
 def import_requests():
@@ -207,6 +211,35 @@ def sync_file(requests, filepath, source_id, category, dry_run=False):
     return {"submission_id": sub_id, "ku_id": ku_id}
 
 
+def scan_agent_directories():
+    """Find agent directories with output/ or cache/ files worth syncing."""
+    agent_files = []
+    if not os.path.isdir(AGENTS_DIR):
+        return agent_files
+
+    for agent_name in sorted(os.listdir(AGENTS_DIR)):
+        agent_path = os.path.join(AGENTS_DIR, agent_name)
+        if not os.path.isdir(agent_path):
+            continue
+
+        # Scan output/ and logs/ for markdown reports
+        for subdir in ["output", "logs"]:
+            subdir_path = os.path.join(agent_path, subdir)
+            if not os.path.isdir(subdir_path):
+                continue
+            for fname in sorted(os.listdir(subdir_path)):
+                if not fname.endswith(".md"):
+                    continue
+                filepath = os.path.join(subdir_path, fname)
+                agent_files.append({
+                    "path": filepath,
+                    "category": "operational",
+                    "source_name": agent_name
+                })
+
+    return agent_files
+
+
 def main():
     requests = import_requests()
 
@@ -243,13 +276,26 @@ def main():
                 "source_name": mapping["source_name"]
             })
 
+    # Also scan agent directories for operational reports
+    agent_files = scan_agent_directories()
+    files_to_sync.extend(agent_files)
+    if agent_files:
+        log(f"Agent files: {len(agent_files)}")
+
     log(f"Found {len(files_to_sync)} files to sync")
 
     synced = 0
+    skipped_agents = 0
     for item in files_to_sync:
         if limit and synced >= limit:
             log(f"Limit reached ({limit})")
             break
+
+        # Skip agent operational state files
+        basename = os.path.basename(item["path"])
+        if item["path"].startswith(AGENTS_DIR) and basename in AGENT_SKIP:
+            skipped_agents += 1
+            continue
 
         source_id = sources.get(item["source_name"], recon_id)
         cat = map_category(item["category"])
@@ -257,7 +303,7 @@ def main():
         if result:
             synced += 1
 
-    log(f"\nDone. Synced {synced}/{len(files_to_sync)} files.")
+    log(f"\nDone. Synced {synced}/{len(files_to_sync)} files. Skipped {skipped_agents} agent state files.")
 
 
 if __name__ == "__main__":

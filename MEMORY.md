@@ -115,6 +115,21 @@ INPUTS (agents, chats, sessions)
 4. ✅ Chat Intelligence Cron — scan recent chats every 30 min, auto-generate knowledge units — **DONE** (cron ID: fc2f1073, script at scripts/chat-intelligence-scanner.sh)
 5. ✅ Public "Building Recon" docs page — architecture patterns others can learn from — **DONE** (building-recon.html, linked from homepage)
 6. ✅ Dynamic dashboard — reads everything from API, zero hardcoded data — **DONE** (dashboard.html uses /intake/usage endpoint)
+7. ✅ Walkie ID registration — agents provide walkie_id at connect time for two-way messaging — **DONE** (deployed 2026-04-11 16:58 UTC, Worker v86875f5d)
+
+**Walkie ID Integration (2026-04-11)**:
+- Supabase `sources` table has `walkie_id TEXT` column
+- `POST /intake/connect` accepts `walkie_id` field in registration payload
+- Self-service update endpoints: `PATCH /sources/me`, `PATCH /sources/me/permissions`
+- Enables Recon to respond to agents via Walkie P2P messaging
+- Test verified: walkie_id stored and retrievable from Supabase
+
+**Unified Search Layer (2026-04-11)**:
+- `GET /search/all?q=<term>&limit=20&type=all|entity|ku|pattern|submission` — single endpoint searches all 4 tables
+- Relevance scoring (0–100) with phrase bonus, word matching, start-of-field boost
+- Entities table populated: 96 records (78 from XRPL Pulse catalog + Grid XRPL + Digital Palm + existing)
+- Landing page updated with searchable Entity Directory section at reconindex.com#directory
+- Worker version: df38677b (deployed 2026-04-11 18:20 UTC)
 
 **Token Management (added 2026-04-10)**:
 - `POST /intake/regenerate-token` — regenerate lost token using owner_access_code
@@ -244,15 +259,16 @@ Full system built in one session:
 
 ## Crons (current — 2026-04-11)
 
-All run in isolated sessions with `thinking: off`. Updated to 12-hour intervals for cost efficiency.
+All run in isolated sessions with `thinking: off`.
 
-- **Chat Intelligence Scanner** (ID: 63ca50e8) — every 12h, scans recent chats, auto-generates knowledge units
-- **Recon Unified Sweep** (ID: e1294497) — every 12h, health checks + self-heal
-- **Recon Agent Reminder** (ID: 66210768) — every 24h, sends update requests to connected agents
+- **Chat Intelligence Scanner** (ID: 6553dd99) — every 12h, scans recent chats, auto-generates knowledge units
+- **Recon Unified Sweep** (ID: 0dd1c3af) — every 12h, health checks + self-heal
 
-**Cost**: 2 crons × 2/day + 1 cron × 1/day = 5 runs/day × ~$0.09/run ≈ **$0.45/day** (~$13.50/month)
+**Cost**: 2 crons × 2/day = 4 runs/day × ~$0.09/run ≈ **$0.36/day** (~$11/month)
 
-*Previous crons removed:* XRPL Amendment Indexer (was 1a564fa4), Evernode Docs Indexer (was 8f659858), old Recon Intelligence Sweep (was 02033c0b at 15-min cadence), Recon Collections Sync (replaced by unified sweep).
+*Removed:* Auto-save Session Transcript (d02fe2a9, was erroring on channel config), Recon Agent Reminder (never created).
+
+*Previously removed:* XRPL Amendment Indexer, Evernode Docs Indexer, old Recon Intelligence Sweep, Recon Collections Sync.
 
 ## Key Cost Facts (from cost index)
 

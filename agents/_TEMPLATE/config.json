@@ -1,0 +1,22 @@
+{
+  "agent_name": "{agent-name}",
+  "version": "0.1.0",
+  "created": "2026-04-11T18:47:00Z",
+  "settings": {
+    "cache_ttl_seconds": 3600,
+    "cron_interval_hours": 6,
+    "max_credits_per_day": 5.00
+  },
+  "data_sources": {
+    "market_data": "state/market/briefing.md",
+    "knowledge_base": "BOOTSTRAP.md"
+  },
+  "output": {
+    "format": "markdown",
+    "destination": "output/"
+  },
+  "walkie": {
+    "channel": "",
+    "secret_ref": "memory/secrets.md"
+  }
+}

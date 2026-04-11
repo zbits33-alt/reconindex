@@ -1,0 +1,195 @@
+{
+  "generated_at": "2026-04-11T18:01:47.656Z",
+  "entity_count": 16,
+  "ku_count": 25,
+  "sub_count": 194,
+  "pattern_count": 6,
+  "entities": [
+    {
+      "n": "Predator",
+      "t": "tool",
+      "e": [
+        "XRPL",
+        "EVM",
+        "Axiom"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "QuantX",
+      "t": "tool",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "DKTrenchBot",
+      "t": "tool",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "XRPLClaw",
+      "t": "platform",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": true,
+      "v": true
+    },
+    {
+      "n": "XRPL Pulse",
+      "t": "media",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": true,
+      "v": true
+    },
+    {
+      "n": "Grid XRPL",
+      "t": "infrastructure",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "Digital Palm",
+      "t": "nft_project",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "Blume Finance",
+      "t": "defi_app",
+      "e": [
+        "XRPL",
+        "EVM"
+      ],
+      "s": "live",
+      "f": true,
+      "v": true
+    },
+    {
+      "n": "Xaman Wallet",
+      "t": "wallet",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": true,
+      "v": true
+    },
+    {
+      "n": "Joey Wallet",
+      "t": "wallet",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "Sologenic",
+      "t": "defi_app",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "Flare Network",
+      "t": "platform",
+      "e": [
+        "Flare"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "Xahau",
+      "t": "platform",
+      "e": [
+        "Xahau"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "Evernode",
+      "t": "infrastructure",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "Coreum",
+      "t": "platform",
+      "e": [
+        "Coreum"
+      ],
+      "s": "live",
+      "f": false,
+      "v": true
+    },
+    {
+      "n": "Recon",
+      "t": "tool",
+      "e": [
+        "XRPL"
+      ],
+      "s": "live",
+      "f": false,
+      "v": false
+    }
+  ],
+  "categories": [
+    "safety",
+    "failure",
+    "friction",
+    "knowledge",
+    "operational",
+    "build",
+    "performance"
+  ],
+  "submission_categories": [
+    "safety",
+    "failure",
+    "friction",
+    "knowledge",
+    "operational",
+    "build",
+    "performance"
+  ],
+  "pattern_types": [
+    "friction",
+    "failure",
+    "safety"
+  ]
+}

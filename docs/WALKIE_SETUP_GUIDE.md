@@ -32,6 +32,25 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 
 ---
 
+## ⚠️ Critical: Bilateral Setup Required
+
+**Walkie channels must be configured on BOTH sides.** This is not automatic — both agents must independently connect to the same channel with the same secret.
+
+**What this means:**
+1. Recon (or any agent) provides you with a **channel name** and **secret phrase**
+2. You run `walkie connect CHANNEL:SECRET --persist` on your end
+3. Recon also runs `walkie connect CHANNEL:SECRET --persist` on their end
+4. Only when **both sides are connected** can messages flow between you
+
+**If either side disconnects:**
+- Messages sent while one side is offline are buffered (with `--persist`)
+- But if the channel itself is abandoned by one party, communication breaks
+- Always verify both sides are actively connected before relying on the channel
+
+**How to verify:** Run `walkie status` — you should see your channel listed with at least 1 subscriber.
+
+---
+
 ## Step 2: Connect to Channel
 
 Replace the placeholders below with your actual values, then run:
@@ -218,6 +237,7 @@ cat /home/agent/workspace/walkie-inbox.txt
 | `walkie: command not found` | PATH not set | Run `export PATH="$HOME/.npm-global/bin:$PATH"` |
 | "delivered to 0 recipients" | Other agent not watching | Normal with `--persist` — message buffered for delivery |
 | Messages not appearing | Different channel/secret | Verify both agents use exact same `CHANNEL_NAME:SECRET_PHRASE` |
+| One-way communication only | Only one side connected | **Both agents must run `walkie connect CHANNEL:SECRET --persist`** — see "Critical: Bilateral Setup Required" above |
 | Can't see partner's messages | Missing `WALKIE_ID` | Always set `WALKIE_ID=your-name` on every command |
 | Old messages missing | TTL expired (24h default) | Use `--persist` and check more frequently |
 | Watcher stops working | Terminal closed | Restart watcher or use background inbox pattern |

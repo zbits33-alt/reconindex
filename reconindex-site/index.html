@@ -56,6 +56,22 @@
       transform: translateY(-2px);
     }
 
+    .spinner {
+      width: 20px; height: 20px;
+      border: 2px solid rgba(56, 189, 248, 0.2);
+      border-top-color: #38bdf8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
     .step-line {
       width: 1px;
       height: 32px;
@@ -459,6 +475,82 @@
 
   <div class="divider"></div>
 
+  <!-- ENTITY DIRECTORY + SEARCH -->
+  <section id="directory" class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <div class="mono text-xs text-sky-400 tracking-widest mb-3">UNIFIED KNOWLEDGE LAYER</div>
+        <h2 class="text-3xl md:text-4xl font-bold text-white mb-3">
+          Entity Directory &amp; Search
+        </h2>
+        <p class="text-slate-400 max-w-2xl mx-auto">
+          Query the full Recon Index — 96+ XRPL ecosystem entities, knowledge units, patterns, and submissions. One endpoint, instant results.
+        </p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="card p-6 mb-8 glow-blue">
+        <form id="search-form" class="flex gap-3">
+          <input
+            id="search-input"
+            type="text"
+            class="input-field flex-1 text-sm py-3"
+            placeholder="Search entities, tools, wallets, protocols..."
+            autocomplete="off"
+          />
+          <select id="search-type" class="input-field text-sm py-3 w-40">
+            <option value="all">All Types</option>
+            <option value="entity">Entities</option>
+            <option value="ku">Knowledge</option>
+            <option value="pattern">Patterns</option>
+            <option value="submission">Submissions</option>
+          </select>
+          <button type="submit" class="btn-primary text-sm px-6 py-3 whitespace-nowrap">Search</button>
+        </form>
+      </div>
+
+      <!-- Results -->
+      <div id="search-results" class="space-y-3 mb-8" style="display: none;"></div>
+      <div id="search-empty" class="text-center text-slate-500 text-sm py-8" style="display: none;">No results found. Try a different search term.</div>
+
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="card p-4 text-center">
+          <div class="text-2xl font-bold text-white mono" id="stat-entities">96</div>
+          <div class="text-xs text-slate-500 mt-1">Entities</div>
+        </div>
+        <div class="card p-4 text-center">
+          <div class="text-2xl font-bold text-white mono" id="stat-kus">25</div>
+          <div class="text-xs text-slate-500 mt-1">Knowledge Units</div>
+        </div>
+        <div class="card p-4 text-center">
+          <div class="text-2xl font-bold text-white mono" id="stat-patterns">6</div>
+          <div class="text-xs text-slate-500 mt-1">Active Patterns</div>
+        </div>
+        <div class="card p-4 text-center">
+          <div class="text-2xl font-bold text-white mono" id="stat-submissions">194</div>
+          <div class="text-xs text-slate-500 mt-1">Submissions</div>
+        </div>
+      </div>
+
+      <!-- API Docs -->
+      <div class="card p-6">
+        <h3 class="text-white font-semibold mb-3 flex items-center gap-2">
+          <span class="text-sky-400">&#x2192;</span> API Endpoint
+        </h3>
+        <div class="bg-black/40 rounded-lg p-4 mono text-xs text-slate-300 overflow-x-auto">
+          <div class="text-violet-400 mb-1">GET https://api.reconindex.com/search/all</div>
+          <div class="text-slate-500">?q=&lt;search-term&gt;&amp;limit=20&amp;type=all|entity|ku|pattern|submission</div>
+        </div>
+        <p class="text-slate-500 text-xs mt-3">
+          Returns results sorted by relevance score (0–100). Use <code class="text-sky-400">type=entity</code> to filter to projects/wallets/tools only.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- HOW TO CONNECT (API) -->
   <section id="connect" class="py-24 px-6">
     <div class="max-w-4xl mx-auto">
@@ -767,6 +859,75 @@
           errorDiv.classList.remove('hidden');
         }
       });
+    }
+
+    // ── Search functionality ──
+    const searchForm = document.getElementById('search-form');
+    const searchInput = document.getElementById('search-input');
+    const searchType = document.getElementById('search-type');
+    const searchResults = document.getElementById('search-results');
+    const searchEmpty = document.getElementById('search-empty');
+
+    if (searchForm) {
+      searchForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const q = searchInput.value.trim();
+        const type = searchType.value;
+        if (!q) return;
+
+        searchResults.style.display = 'none';
+        searchEmpty.style.display = 'none';
+        searchResults.innerHTML = '<div class="text-center text-slate-500 py-4"><div class="spinner mx-auto mb-2"></div>Searching...</div>';
+        searchResults.style.display = 'block';
+
+        try {
+          const res = await fetch(`${API}/search/all?q=${encodeURIComponent(q)}&limit=10&type=${type}`);
+          const data = await res.json();
+
+          if (data.results && data.results.length > 0) {
+            searchResults.innerHTML = data.results.map(r => renderSearchResult(r)).join('');
+            searchResults.style.display = 'block';
+            searchEmpty.style.display = 'none';
+          } else {
+            searchResults.style.display = 'none';
+            searchEmpty.style.display = 'block';
+          }
+        } catch (err) {
+          searchResults.innerHTML = `<div class="text-center text-red-400 py-4">Search failed: ${err.message}</div>`;
+          searchResults.style.display = 'block';
+        }
+      });
+    }
+
+    function renderSearchResult(r) {
+      const typeColors = {
+        entity: 'sky',
+        knowledge_unit: 'violet',
+        pattern: 'amber',
+        submission: 'slate',
+      };
+      const color = typeColors[r.type] || 'slate';
+      const typeLabel = r.type === 'knowledge_unit' ? 'Knowledge' : r.type.charAt(0).toUpperCase() + r.type.slice(1);
+      const entityTypeBadge = r.entity_type ? `<span class="badge badge-${color} ml-2">${esc(r.entity_type)}</span>` : '';
+      const relevanceBar = r.relevance != null ? `<div class="w-16 h-1 bg-slate-700 rounded-full overflow-hidden ml-auto" title="Relevance: ${r.relevance}/100"><div class="h-full bg-${color}-400" style="width: ${r.relevance}%"></div></div>` : '';
+
+      return `
+        <div class="card p-4 hover:border-${color}-500/30 transition-colors">
+          <div class="flex items-start gap-3">
+            <span class="mono text-xs text-${color}-400 mt-0.5">${esc(r.id.substring(0, 8))}</span>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-white font-medium">${esc(r.name || r.title || 'Untitled')}</span>
+                ${entityTypeBadge}
+                <span class="badge badge-${color} text-[10px]">${esc(typeLabel)}</span>
+              </div>
+              <p class="text-slate-400 text-sm mt-1 line-clamp-2">${esc(r.description || r.summary || '')}</p>
+              ${r.ecosystem ? `<div class="flex gap-1 mt-2">${r.ecosystem.map(e => `<span class="badge badge-sky text-[10px]">${esc(e)}</span>`).join('')}</div>` : ''}
+            </div>
+            ${relevanceBar}
+          </div>
+        </div>
+      `;
     }
 
     // Fetch on load, auto-refresh every 30s

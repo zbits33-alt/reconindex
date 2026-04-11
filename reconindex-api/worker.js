@@ -185,12 +185,18 @@ export default {
     }
 
     // ─── QUERY LAYER ───
-    // GET /query/search?q=<term>&category=<cat>&limit=10
+    // GET /query/search?q=<term>&category=<cat>&type=<type>&limit=10
+    // type: ku | entity | pattern | submission | all (default: ku)
     if (path === "/query/search" && method === "GET") {
       return handleQuerySearch(request, env, cors);
     }
 
-    // ─── MANUAL GATE ───
+    // GET /search/all?q=<term>&limit=20 — unified search across entities, KUs, patterns, submissions
+    if (path === "/search/all" && method === "GET") {
+      return handleUnifiedSearch(request, env, cors);
+    }
+
+    // GET /entities — list entities with optional filters
     // POST /gate/promote — promote submission to knowledge unit (admin only)
     if (path === "/gate/promote" && method === "POST") {
       return handleGatePromote(request, env, cors);
@@ -230,7 +236,7 @@ export default {
       "/patterns/strength", "/patterns/recalculate", "/context/load",
       "/intake/submit", "/intake/register", "/intake/connect", "/intake/regenerate-token", "/intake/usage", "/intake/analyze", "/intake/public",
       "/owner/resolve",
-      "/query/search", "/gate/promote", "/gate/pending",
+      "/query/search", "/search/all", "/gate/promote", "/gate/pending",
       "/entities", "/content-items", "/ecosystem-updates",
       "/status-page", "/intelligence/xrplpulse", "/building-recon"]);
 
@@ -1381,10 +1387,11 @@ async function handleLibraries(request, env, cors) {
   const search = url.searchParams.get("search");
 
   // Fetch all data from Supabase in parallel
+  // SECURITY FIX: Only show tier 1 (public) submissions
   const [subs, kuList, patterns, activeSources] = await Promise.all([
     supabaseSelect(env, "submissions",
       "id,category,summary,tier,usefulness_score,status,submitted_at,source_id",
-      "order=submitted_at.desc&limit=500", 500),
+      "tier=eq.1&order=submitted_at.desc&limit=500", 500),
     supabaseSelect(env, "knowledge_units",
       "id,category,title,summary,usefulness_score,source_id",
       "order=usefulness_score.desc&limit=500", 500),
@@ -2555,6 +2562,173 @@ async function handleEcosystemUpdatesList(request, env, cors) {
   const updates = await supabaseSelect(env, "ecosystem_updates", "id,title,update_type,summary,published_at", `order=published_at.desc&limit=${Math.min(limit, 50)}`, Math.min(limit, 50));
 
   return jsonResponse({ success: true, count: updates ? updates.length : 0, updates }, cors);
+}
+
+// GET /search/all?q=<term>&limit=20 — unified search across entities, KUs, patterns, submissions
+async function handleUnifiedSearch(request, env, cors) {
+  const url = new URL(request.url);
+  const q = (url.searchParams.get("q") || "").trim();
+  const limit = parseInt(url.searchParams.get("limit") || "20", 10);
+  const type = url.searchParams.get("type") || "all"; // all | entity | ku | pattern | submission
+
+  if (!q) {
+    return jsonResponse({ error: "q parameter required" }, { ...cors }, 400);
+  }
+
+  const results = { entities: [], knowledge_units: [], patterns: [], submissions: [] };
+
+  // Search entities by name/description
+  if (type === "all" || type === "entity") {
+    try {
+      const entities = await supabaseSelect(
+        env, "entities",
+        "id,name,entity_type,description,ecosystem,stage",
+        `or=(name.ilike.%25${q}%25,description.ilike.%25${q}%25)`,
+        Math.min(limit, 50)
+      );
+      results.entities = entities.map(e => ({
+        id: e.id,
+        type: "entity",
+        name: e.name,
+        entity_type: e.entity_type,
+        description: e.description,
+        ecosystem: e.ecosystem,
+        stage: e.stage,
+        relevance: calculateRelevance(q, [e.name, e.description]),
+      }));
+    } catch (err) {
+      console.error("Entity search error:", err.message);
+    }
+  }
+
+  // Search knowledge units
+  if (type === "all" || type === "ku") {
+    try {
+      const kus = await supabaseSelect(
+        env, "knowledge_units",
+        "id,title,summary,category,usefulness_score,tier,status",
+        `or=(title.ilike.%25${q}%25,summary.ilike.%25${q}%25)`,
+        Math.min(limit, 50)
+      );
+      results.knowledge_units = kus.map(ku => ({
+        id: ku.id,
+        type: "knowledge_unit",
+        title: ku.title,
+        summary: ku.summary,
+        category: ku.category,
+        usefulness_score: ku.usefulness_score,
+        tier: ku.tier,
+        status: ku.review_status || ku.status,
+        relevance: calculateRelevance(q, [ku.title, ku.summary]),
+      }));
+    } catch (err) {
+      console.error("KU search error:", err.message);
+    }
+  }
+
+  // Search patterns
+  if (type === "all" || type === "pattern") {
+    try {
+      const patterns = await supabaseSelect(
+        env, "patterns",
+        "id,title,description,pattern_type,occurrence_count,strength_score",
+        `or=(title.ilike.%25${q}%25,description.ilike.%25${q}%25)`,
+        Math.min(limit, 50)
+      );
+      results.patterns = patterns.map(p => ({
+        id: p.id,
+        type: "pattern",
+        title: p.title,
+        description: p.description,
+        pattern_type: p.pattern_type,
+        occurrence_count: p.occurrence_count,
+        strength_score: p.strength_score,
+        relevance: calculateRelevance(q, [p.title, p.description]),
+      }));
+    } catch (err) {
+      console.error("Pattern search error:", err.message);
+    }
+  }
+
+  // Search submissions (only public/tier 1 for non-authenticated)
+  if (type === "all" || type === "submission") {
+    try {
+      const subs = await supabaseSelect(
+        env, "submissions",
+        "id,summary,category,tier,usefulness_score,submitted_at",
+        `and(tier=eq.1,summary.ilike.%25${q}%25)`,
+        Math.min(limit, 50)
+      );
+      results.submissions = subs.map(s => ({
+        id: s.id,
+        type: "submission",
+        summary: s.summary,
+        category: s.category,
+        tier: s.tier,
+        usefulness_score: s.usefulness_score,
+        submitted_at: s.submitted_at,
+        relevance: calculateRelevance(q, [s.summary]),
+      }));
+    } catch (err) {
+      console.error("Submission search error:", err.message);
+    }
+  }
+
+  // Merge and sort all results by relevance
+  const allResults = [
+    ...results.entities,
+    ...results.knowledge_units,
+    ...results.patterns,
+    ...results.submissions,
+  ].sort((a, b) => b.relevance - a.relevance).slice(0, limit);
+
+  return jsonResponse({
+    success: true,
+    query: q,
+    total_results: allResults.length,
+    breakdown: {
+      entities: results.entities.length,
+      knowledge_units: results.knowledge_units.length,
+      patterns: results.patterns.length,
+      submissions: results.submissions.length,
+    },
+    results: allResults,
+  }, cors);
+}
+
+// Helper: calculate relevance score (0-100) based on keyword matches
+function calculateRelevance(query, fields) {
+  if (!query || !fields.length) return 0;
+  
+  const queryLower = query.toLowerCase();
+  const words = queryLower.split(/\s+/).filter(w => w.length > 2);
+  let score = 0;
+
+  for (const field of fields) {
+    if (!field) continue;
+    const fieldLower = field.toLowerCase();
+    
+    // Exact phrase match (highest weight)
+    if (fieldLower.includes(queryLower)) {
+      score += 50;
+    }
+    
+    // Individual word matches
+    for (const word of words) {
+      if (fieldLower.includes(word)) {
+        score += 10;
+        // Bonus for word at start of field
+        if (fieldLower.startsWith(word)) {
+          score += 5;
+        }
+      }
+    }
+    
+    // Cap per-field contribution
+    score = Math.min(score, 80);
+  }
+
+  return Math.min(Math.round(score), 100);
 }
 
 async function handleLandingPage(request, cors) {

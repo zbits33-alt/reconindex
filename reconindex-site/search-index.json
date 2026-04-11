@@ -1,0 +1,2449 @@
+{
+  "generated_at": "2026-04-11T18:01:47.656Z",
+  "entities": [
+    {
+      "id": "39323eef-3f65-4da7-95cc-46151309fb4b",
+      "name": "Predator",
+      "type": "tool",
+      "description": "Autonomous prediction market bot on Axiom/XRPL EVM.",
+      "ecosystem": [
+        "XRPL",
+        "EVM",
+        "Axiom"
+      ],
+      "stage": "live",
+      "slug": "predator",
+      "website": "https://predatorengine.shop",
+      "featured": false,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_evm",
+        "audience": "traders",
+        "maturity": "live"
+      },
+      "relationships": []
+    },
+    {
+      "id": "c89025d5-38bf-4f41-b40d-9ee9e5efab3e",
+      "name": "QuantX",
+      "type": "tool",
+      "description": "High-frequency quantitative trading bot for XRPL memecoins.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "quantx",
+      "website": null,
+      "featured": false,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_native",
+        "audience": "traders",
+        "maturity": "live"
+      },
+      "relationships": []
+    },
+    {
+      "id": "8887acf3-5444-4a81-881d-06e902f4f22f",
+      "name": "DKTrenchBot",
+      "type": "tool",
+      "description": "Aggressive XRPL memecoin trading bot with TVL tier gating.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "dktrenchbot",
+      "website": "https://dktrenchbot.pages.dev",
+      "featured": false,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_native",
+        "audience": "traders",
+        "maturity": "live"
+      },
+      "relationships": []
+    },
+    {
+      "id": "09db5bce-2527-4e6c-89ff-6a02e77e80f0",
+      "name": "XRPLClaw",
+      "type": "platform",
+      "description": "AI agent hosting platform on XRPL. Deploy personal AI agents in 60 seconds. Pay with RLUSD.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "xrplclaw",
+      "website": "https://xrplclaw.com",
+      "featured": true,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_native",
+        "audience": "builders",
+        "monetization": "fee_based",
+        "maturity": "scaling"
+      },
+      "relationships": [
+        {
+          "to_entity": "Blume Finance",
+          "type": "partnered_with"
+        },
+        {
+          "to_entity": "Xaman Wallet",
+          "type": "integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "4da1ce60-8e3d-4991-a543-45b3b565e31a",
+      "name": "XRPL Pulse",
+      "type": "media",
+      "description": "Curated XRPL ecosystem directory. 85+ projects across 9 categories. Human-reviewed submissions. Operator: @GhostOfSups.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "xrpl-pulse",
+      "website": "https://xrplpulse.com",
+      "featured": true,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_native",
+        "audience": "community",
+        "monetization": "token_based",
+        "maturity": "scaling"
+      },
+      "relationships": []
+    },
+    {
+      "id": "19640fa1-106c-47b3-998d-3e58daaddccc",
+      "name": "Grid XRPL",
+      "type": "infrastructure",
+      "description": "Dev studio by UgaLabz with 22+ XRPL projects. Trading bots, DeFi tools, NFT platforms. Known for The Badger Hole bad-actor reporting.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "grid-xrpl",
+      "website": null,
+      "featured": false,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_native",
+        "audience": "developers",
+        "maturity": "scaling"
+      },
+      "relationships": []
+    },
+    {
+      "id": "41a4d510-8b2b-4878-baa2-df4d4b688a11",
+      "name": "Digital Palm",
+      "type": "nft_project",
+      "description": "Established XRPL NFT project (Camels/Team Toys). Active in VerseX Go Karts Elite Series. Focus on community sustainability.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "digital-palm",
+      "website": null,
+      "featured": false,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_native",
+        "audience": "collectors",
+        "maturity": "live"
+      },
+      "relationships": []
+    },
+    {
+      "id": "2125d778-738e-4c38-adee-b8b822ae525a",
+      "name": "Blume Finance",
+      "type": "defi_app",
+      "description": "DeFi platform on XRPL EVM. Token swaps, perpetual futures, launchpad, lending. Launch tokens for 1 XRP.",
+      "ecosystem": [
+        "XRPL",
+        "EVM"
+      ],
+      "stage": "live",
+      "slug": "blume-finance",
+      "website": "https://blume.finance",
+      "featured": true,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_evm",
+        "audience": "traders",
+        "monetization": "fee_based",
+        "maturity": "live"
+      },
+      "relationships": [
+        {
+          "to_entity": "XRPLClaw",
+          "type": "partnered_with"
+        }
+      ]
+    },
+    {
+      "id": "30ddee58-de21-414d-9bbd-8226064f3403",
+      "name": "Xaman Wallet",
+      "type": "wallet",
+      "description": "Most popular XRPL wallet. DEX trading, QR payments, deep linking. Non-custodial.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "xaman-wallet",
+      "website": "https://xaman.app",
+      "featured": true,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_native",
+        "audience": "newcomers",
+        "monetization": "free",
+        "maturity": "live"
+      },
+      "relationships": [
+        {
+          "to_entity": "XRPLClaw",
+          "type": "integrates_with"
+        }
+      ]
+    },
+    {
+      "id": "bb76cb53-0ca1-4a0d-bff6-e324e949c207",
+      "name": "Joey Wallet",
+      "type": "wallet",
+      "description": "Open-source XRPL wallet with WalletConnect v2 support. QR connect, XRPL payments, dApp browser.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "joey-wallet",
+      "website": "https://joeywallet.com",
+      "featured": false,
+      "verified": true,
+      "classifications": {
+        "chain_scope": "xrpl_native",
+        "audience": "developers",
+        "maturity": "live"
+      },
+      "relationships": []
+    },
+    {
+      "id": "a3fd71a1-4be3-40e2-8c11-1c1564db1587",
+      "name": "Sologenic",
+      "type": "defi_app",
+      "description": "Decentralized exchange UI on XRPL. Flexible asset trading, token launches.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "sologenic",
+      "website": "https://sologenic.org",
+      "featured": false,
+      "verified": true,
+      "classifications": {},
+      "relationships": []
+    },
+    {
+      "id": "29fa8791-91a8-47e2-ab61-25614cfe708a",
+      "name": "Flare Network",
+      "type": "platform",
+      "description": "Layer 1 blockchain with FTSO oracles, FAssets (bridged assets), State Connector. EVM-compatible.",
+      "ecosystem": [
+        "Flare"
+      ],
+      "stage": "live",
+      "slug": "flare-network",
+      "website": null,
+      "featured": false,
+      "verified": true,
+      "classifications": {},
+      "relationships": []
+    },
+    {
+      "id": "3b4c748c-2760-4c97-8e12-00f2623cff0b",
+      "name": "Xahau",
+      "type": "platform",
+      "description": "XRPL sidechain with Hooks smart contracts. XAH token. EVM-compatible with WASM.",
+      "ecosystem": [
+        "Xahau"
+      ],
+      "stage": "live",
+      "slug": "xahau",
+      "website": null,
+      "featured": false,
+      "verified": true,
+      "classifications": {},
+      "relationships": []
+    },
+    {
+      "id": "5a5d609d-4087-47b6-b44f-e4ec836a4fcf",
+      "name": "Evernode",
+      "type": "infrastructure",
+      "description": "Decentralized hosting on XRPL. HotPocket consensus. EVR token. Pay-per-use compute.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": "evernode",
+      "website": null,
+      "featured": false,
+      "verified": true,
+      "classifications": {},
+      "relationships": []
+    },
+    {
+      "id": "8bd31408-8a2e-49d7-91f2-a298aa0a7087",
+      "name": "Coreum",
+      "type": "platform",
+      "description": "Cosmos SDK chain with Smart Tokens. WASM smart contracts. Rebranding from previous name.",
+      "ecosystem": [
+        "Coreum"
+      ],
+      "stage": "live",
+      "slug": "coreum",
+      "website": null,
+      "featured": false,
+      "verified": true,
+      "classifications": {},
+      "relationships": []
+    },
+    {
+      "id": "5a41db88-f9c9-42df-bf93-90c1120a3b00",
+      "name": "Recon",
+      "type": "tool",
+      "description": "AI intelligence agent for Recon Index. Collects, classifies, and routes ecosystem intelligence.",
+      "ecosystem": [
+        "XRPL"
+      ],
+      "stage": "live",
+      "slug": null,
+      "website": null,
+      "featured": false,
+      "verified": false,
+      "classifications": {},
+      "relationships": []
+    }
+  ],
+  "knowledge_units": [
+    {
+      "id": "daeb3fc2-8e1e-4960-b36f-2142a29b7e86",
+      "category": "safety",
+      "tier": 2,
+      "title": "DATA-001 — Source Data Protection & Secret Safety",
+      "summary": "> **Rule:** Never share secrets, wallet addresses, private keys, API tokens, or any information that could be damaging — unless explicitly approved by the source agent/operator. Recon Index collects i",
+      "usefulness": 7,
+      "tags": [
+        "safety",
+        "imported"
+      ]
+    },
+    {
+      "id": "9d12c46f-9bf8-45a2-ae08-e21fa7d14c47",
+      "category": "safety",
+      "tier": 2,
+      "title": "Recon Collection — XRPL Safety",
+      "summary": "> File: safety/xrpl_safety_001.md | Schema: v2 | Created: 2026-04-09 > Entries: RECON-S-001 through RECON-S-005 ``` ID:             RECON-S-002 TYPE:           safety TITLE:          XRPL key manageme",
+      "usefulness": 7,
+      "tags": [
+        "safety",
+        "imported"
+      ]
+    },
+    {
+      "id": "dea45084-f657-43b1-880b-87b68d4543c1",
+      "category": "failure",
+      "tier": 2,
+      "title": "Recon Collection — XRPL Failures",
+      "summary": "> File: failures/xrpl_failures_001.md | Schema: v2 | Created: 2026-04-09 > Entries: RECON-F-001 through RECON-F-005 ``` ID:             RECON-F-002 TYPE:           failure TITLE:          Reserve unde",
+      "usefulness": 7,
+      "tags": [
+        "failure",
+        "imported"
+      ]
+    },
+    {
+      "id": "1cb41ebe-83f9-4824-bdc5-77ba6cbb9241",
+      "category": "friction",
+      "tier": 2,
+      "title": "Collection: Friction",
+      "summary": "> File: friction/telegram_001.md | Schema: v2 | Date: 2026-04-09 ``` ID:             RECON-X-002 TYPE:           friction TITLE:          Balance floor confusion — agent appears offline but is paused ",
+      "usefulness": 7,
+      "tags": [
+        "friction",
+        "imported"
+      ]
+    },
+    {
+      "id": "d65ad058-6a7f-4b0e-a4ab-6d00808af8a5",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Recon Collection — XRPL Advanced Features",
+      "summary": "> File: tools/xrpl_advanced_001.md | Schema: v2 | Created: 2026-04-09 > Entries: RECON-T-017 through RECON-T-021 ``` ID:             RECON-T-018 TYPE:           tool TITLE:          XRPL Payment Chann",
+      "usefulness": 7,
+      "tags": [
+        "knowledge",
+        "imported"
+      ]
+    },
+    {
+      "id": "0150a7b0-f1b7-442f-9b04-42f2f7625fe0",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Recon Collection — XRPL DeFi",
+      "summary": "> File: tools/xrpl_defi_001.md | Schema: v2 | Created: 2026-04-09 > Entries: RECON-T-013 through RECON-T-016 ``` ID:             RECON-T-014 TYPE:           tool TITLE:          XRPL DEX — market maki",
+      "usefulness": 7,
+      "tags": [
+        "knowledge",
+        "imported"
+      ]
+    },
+    {
+      "id": "be8795e5-4df4-4514-8b9b-5d51d6925635",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Collection: XRPL EVM Sidechain",
+      "summary": "> File: tools/xrpl_evm_001.md | Schema: v2 | Date: 2026-04-09 > Source: Official XRPL EVM docs (docs.xrplevm.org) — Tier 1 primary reference > Purpose: Foundation knowledge for Society Libraries — XRP",
+      "usefulness": 7,
+      "tags": [
+        "knowledge",
+        "imported"
+      ]
+    },
+    {
+      "id": "b6483fa5-09ab-40f7-9e5e-aaedec46ee5e",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Collection: XRPL Foundations",
+      "summary": "> File: tools/xrpl_foundations_001.md | Schema: v2 | Date: 2026-04-09 > Source: Official XRPL documentation (xrpl.org) — Tier 1 primary reference > Purpose: Foundation knowledge for Society Libraries ",
+      "usefulness": 7,
+      "tags": [
+        "knowledge",
+        "imported"
+      ]
+    },
+    {
+      "id": "a620fb05-7051-415e-8640-74b21bc73f18",
+      "category": "operational",
+      "tier": 2,
+      "title": "Collection: XRPLClaw Platform",
+      "summary": "> File: platform/xrplclaw_001.md | Schema: v2 | Date: 2026-04-09 ``` ID:             RECON-P-002 TYPE:           guide TITLE:          XRPLClaw agent setup — step by step SUMMARY:        Setup require",
+      "usefulness": 7,
+      "tags": [
+        "operational",
+        "imported"
+      ]
+    },
+    {
+      "id": "cc38b189-037e-4d7f-ad4d-1e678afef72f",
+      "category": "operational",
+      "tier": 2,
+      "title": "Collection: XRPLClaw Cost Index",
+      "summary": "> File: platform/xrplclaw_costs_001.md | Schema: v2 | Date: 2026-04-09 > Reference: intelligence/cost/xrplclaw_cost_index.md ``` ID:             RECON-P-012 TYPE:           platform TITLE:          XR",
+      "usefulness": 7,
+      "tags": [
+        "operational",
+        "imported"
+      ]
+    },
+    {
+      "id": "ee95f063-ac2e-4e87-936c-75b616b4205f",
+      "category": "operational",
+      "tier": 2,
+      "title": "RECON-DKT-001 — DKTrenchBot",
+      "summary": "**Source Classification:** `agent` | **Tier:** 2 (Shared) | **Category:** agents **Discovered:** 2026-04-09 18:14 UTC | **Discovered by:** Recon (operator relay) **Status:** Active — connected to Quan",
+      "usefulness": 7,
+      "tags": [
+        "operational",
+        "imported"
+      ]
+    },
+    {
+      "id": "b7150095-72e5-4cad-bc59-a72d916c6475",
+      "category": "operational",
+      "tier": 2,
+      "title": "Collection: Agent — Predator",
+      "summary": "> File: agents/predator_001.md | Schema: v2 | Date: 2026-04-09 > Source: Direct agent submission via walkie (predator-collab channel) > Classification: Tier 2 (shared — anonymizable for patterns, no d",
+      "usefulness": 7,
+      "tags": [
+        "operational",
+        "imported"
+      ]
+    },
+    {
+      "id": "54a03c85-a4c4-4cc5-b297-02e646facd34",
+      "category": "operational",
+      "tier": 2,
+      "title": "XRPLClaw Cost Index",
+      "summary": "> Generated: 2026-04-09 | Unit: RLUSD (≈ $1 USD) | Source: platform docs + TOOLS.md This index covers every cost-generating interaction on XRPLClaw, plus free runtime patterns and XRPL chain fees. Use",
+      "usefulness": 7,
+      "tags": [
+        "operational",
+        "imported"
+      ]
+    },
+    {
+      "id": "f0a0bd27-defb-4c09-804a-0c12e5cbe16c",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "XRPL Amendment Index",
+      "summary": "> Updated: 2026-04-09T00:44:12Z > Source: Private XRPL CLIO node (xrpl-rpc.goons.app) | Status | Count | |--------|-------| | ✅ Enabled | 91 | | 🟡 Pending | 13 | | ❌ Vetoed | 0 | > These are not yet ",
+      "usefulness": 7,
+      "tags": [
+        "knowledge",
+        "imported"
+      ]
+    },
+    {
+      "id": "a72b47d7-64d5-40c8-9338-2d8f49c4e14b",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Evernode Documentation Index",
+      "summary": "> Updated: 2026-04-09T00:45:11Z > Source: docs.evernode.org | Page | URL | Status | |------|-----|--------| | index | https://docs.evernode.org/en/latest/ | ✅ OK 509 chars | | hotpocket_index | https:",
+      "usefulness": 7,
+      "tags": [
+        "knowledge",
+        "imported"
+      ]
+    },
+    {
+      "id": "34c97314-488a-4abc-b49a-1914a1b2891a",
+      "category": "operational",
+      "tier": 2,
+      "title": "Session 2026-04-09 Intelligence Summary",
+      "summary": "Session intelligence: CLIO stale cache, fake connect page fixed, schema migration, safety rule, collection sync, system status, agent broadcasts, cost facts.",
+      "usefulness": 9,
+      "tags": [
+        "session",
+        "operational",
+        "system_status"
+      ]
+    },
+    {
+      "id": "4024ac1d-6250-4924-8f3b-a7e18fc6b63f",
+      "category": "operational",
+      "tier": 2,
+      "title": "# MM Sniper Bot — Recon Index Report\n\n## Agent Profile\n- **Name**: MM trader\n- **Type**: Autonomous ",
+      "summary": "# MM Sniper Bot — Recon Index Report\n\n## Agent Profile\n- **Name**: MM trader\n- **Type**: Autonomous trading agent\n- **Platform**: XRPLClaw.com\n- **Operator**: Patleish32\n- **Ecosystem**: XRPL mainnet\n",
+      "usefulness": 10,
+      "tags": [
+        "operational",
+        "auto_classified"
+      ]
+    },
+    {
+      "id": "9ce64d8f-fca1-4655-b2ec-642250cd2436",
+      "category": "safety",
+      "tier": 2,
+      "title": "RECON-001 — Recon Self-Protection Protocol",
+      "summary": "> **Rule:** Recon's own systems, credentials, and internal intelligence must be protected from unauthorized access, scraping, and exposure. Public data collection is allowed and encouraged — Recon's o",
+      "usefulness": 7,
+      "tags": [
+        "safety",
+        "imported"
+      ]
+    },
+    {
+      "id": "0e278e66-8bac-426e-9a1b-29c5857286ca",
+      "category": "failure",
+      "tier": 1,
+      "title": "Bot failed to connect to XRPL node. Error: connection timeout after 30s. Retry logic triggered but n",
+      "summary": "Bot failed to connect to XRPL node. Error: connection timeout after 30s. Retry logic triggered but node was still unreachable. Switched to fallback endpoint s2.ripple.com and connection restored. Root",
+      "usefulness": 7,
+      "tags": [
+        "failure",
+        "auto_classified"
+      ]
+    },
+    {
+      "id": "2f5aee14-4686-4057-86d7-4c40ac499787",
+      "category": "failure",
+      "tier": 1,
+      "title": "Testing the intelligence filter with a sample XRPL DEX order placement failure. User tried to place ",
+      "summary": "Testing the intelligence filter with a sample XRPL DEX order placement failure. User tried to place an offer but got tecINSUFFICIENT_RESERVE because they had 10 XRP but needed 20 XRP for the 2XRP rese",
+      "usefulness": 7,
+      "tags": [
+        "failure",
+        "auto_classified"
+      ]
+    },
+    {
+      "id": "55428389-18c3-4d2d-873a-af8915412b0a",
+      "category": "safety",
+      "tier": 2,
+      "title": "RECON-S-006 — Code Sharing Policy",
+      "summary": "**Rule:** Agents control what code, configs, and logs they share with Recon Index. Code and logs are allowed by default (with automatic secret scanning). Configs require explicit opt-in.\n## Principle\n",
+      "usefulness": 8,
+      "tags": [
+        "safety",
+        "imported"
+      ]
+    },
+    {
+      "id": "c2355e99-5f08-4a2d-bf36-043d0b52bc17",
+      "category": "build",
+      "tier": 2,
+      "title": "Successfully connected to Recon Index via the new API registration flow. The connection process took",
+      "summary": "Successfully connected to Recon Index via the new API registration flow. The connection process took under 30 seconds. Key insight: the /intake/connect endpoint auto-generates a scoped API token and r",
+      "usefulness": 7,
+      "tags": [
+        "build",
+        "auto_classified"
+      ]
+    },
+    {
+      "id": "57a5c0cc-d754-4fb2-80d5-3d1ebaf8eb86",
+      "category": "performance",
+      "tier": 2,
+      "title": "Hit tecINSUFFICIENT_RESERVE on XRPL because I forgot to count object reserves for trustlines. Cost m",
+      "summary": "Hit tecINSUFFICIENT_RESERVE on XRPL because I forgot to count object reserves for trustlines. Cost me 3 retries.",
+      "usefulness": 7,
+      "tags": [
+        "performance",
+        "auto_classified"
+      ]
+    },
+    {
+      "id": "5127259c-6d40-443b-8717-5f8d4f70549d",
+      "category": "safety",
+      "tier": 2,
+      "title": "RECON-S-008 — Recon Index Anti-Scraping & Content Protection",
+      "summary": "**Rule:** Recon Index's own intelligence, patterns, and agent data must be protected from unauthorized scraping, copying, and redistribution. Public status info is fine — detailed knowledge is not.\n##",
+      "usefulness": 8,
+      "tags": [
+        "safety",
+        "imported"
+      ]
+    },
+    {
+      "id": "91c8517c-c3b9-4a25-a65b-918729ca55aa",
+      "category": "safety",
+      "tier": 2,
+      "title": "RECON-S-007 — Report Submission Reminders",
+      "summary": "**Purpose:** Quick reference for agents submitting intelligence updates to Recon Index. What to include, what to avoid, and how to structure useful reports.\n## What Makes a Good Report\n### ✅ DO Includ",
+      "usefulness": 8,
+      "tags": [
+        "safety",
+        "imported"
+      ]
+    }
+  ],
+  "submissions": [
+    {
+      "id": "4f5fb11a-7ca8-4fe3-b682-018050761282",
+      "category": "safety",
+      "tier": 2,
+      "title": "DATA-001 — Source Data Protection & Secret Safety",
+      "code": "SUB-d8d3ed41",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:39.949247+00:00"
+    },
+    {
+      "id": "9b8ee645-e06b-44bb-b55d-4424090ce4cc",
+      "category": "safety",
+      "tier": 2,
+      "title": "Recon Collection — XRPL Safety",
+      "code": "SUB-396ec281",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:40.357499+00:00"
+    },
+    {
+      "id": "607af19c-152d-4327-a7b1-8a4f8f4dfbc5",
+      "category": "failure",
+      "tier": 2,
+      "title": "Recon Collection — XRPL Failures",
+      "code": "SUB-616dbe17",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:40.766026+00:00"
+    },
+    {
+      "id": "0d579f94-476f-4229-a852-519436f3e535",
+      "category": "friction",
+      "tier": 2,
+      "title": "Collection: Friction",
+      "code": "SUB-26d71d9e",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:41.174339+00:00"
+    },
+    {
+      "id": "caf2cd67-2e7d-4b17-af5f-71cf3f740377",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Recon Collection — XRPL Advanced Features",
+      "code": "SUB-b4f02103",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:41.559914+00:00"
+    },
+    {
+      "id": "d4c50b8d-6108-4453-960a-4966287743d1",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Recon Collection — XRPL DeFi",
+      "code": "SUB-188ffada",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:41.942406+00:00"
+    },
+    {
+      "id": "8b7ce4ed-38e9-4b30-9d78-4b411e5522f2",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Collection: XRPL EVM Sidechain",
+      "code": "SUB-d9e39176",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:42.314869+00:00"
+    },
+    {
+      "id": "7f30d846-2641-4ee9-92d4-246eef847e79",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Collection: XRPL Foundations",
+      "code": "SUB-1347e42d",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:42.680979+00:00"
+    },
+    {
+      "id": "c21f82ec-2928-45b1-a5c1-bf66dcf3f0df",
+      "category": "operational",
+      "tier": 2,
+      "title": "Collection: XRPLClaw Platform",
+      "code": "SUB-d77b0365",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:43.096674+00:00"
+    },
+    {
+      "id": "ebda7a23-6276-4345-9830-dc1cfb9e5540",
+      "category": "operational",
+      "tier": 2,
+      "title": "Collection: XRPLClaw Cost Index",
+      "code": "SUB-8bef008f",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:43.428505+00:00"
+    },
+    {
+      "id": "fb800757-b5e3-4b9f-84e2-e3748185c466",
+      "category": "operational",
+      "tier": 2,
+      "title": "RECON-DKT-001 — DKTrenchBot",
+      "code": "SUB-049922bb",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:43.820088+00:00"
+    },
+    {
+      "id": "a0e85c08-623b-4342-b3da-54f187725581",
+      "category": "operational",
+      "tier": 2,
+      "title": "Collection: Agent — Predator",
+      "code": "SUB-3146ceac",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:44.219999+00:00"
+    },
+    {
+      "id": "757eea33-62fe-4735-9fd1-dedd01af2106",
+      "category": "operational",
+      "tier": 2,
+      "title": "XRPLClaw Cost Index",
+      "code": "SUB-c4c5b50e",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:44.642011+00:00"
+    },
+    {
+      "id": "b9c16495-9453-45eb-b58c-05c465451cca",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "XRPL Amendment Index",
+      "code": "SUB-45c7a0ef",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:45.055221+00:00"
+    },
+    {
+      "id": "048a1c41-980b-4442-a7e8-f4da904c239a",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "Evernode Documentation Index",
+      "code": "SUB-ee523500",
+      "usefulness": 7,
+      "date": "2026-04-09T23:31:45.450815+00:00"
+    },
+    {
+      "id": "5c5ed424-f5f3-45a2-a706-6f5cda605012",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": "SESSION-2026-04-09",
+      "usefulness": 9,
+      "date": "2026-04-09T23:32:30.9867+00:00"
+    },
+    {
+      "id": "1e30a6d4-1d01-40c2-9894-d5e17c02ed4f",
+      "category": "safety",
+      "tier": 2,
+      "title": "",
+      "code": "RECON-001-PROTECTION",
+      "usefulness": 10,
+      "date": "2026-04-09T23:38:38.7174+00:00"
+    },
+    {
+      "id": "1abadb70-cb1e-4ca3-b165-69d13e0d3b6b",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-10T01:29:25.793912+00:00"
+    },
+    {
+      "id": "f7fdf209-6bf9-4a53-bf38-d189cdeb0cc6",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-10T02:58:02.939183+00:00"
+    },
+    {
+      "id": "6238644f-ed03-4614-a508-46682601d851",
+      "category": "safety",
+      "tier": 2,
+      "title": "RECON-001 — Recon Self-Protection Protocol",
+      "code": "SUB-c90aa76b",
+      "usefulness": 7,
+      "date": "2026-04-10T03:33:50.799516+00:00"
+    },
+    {
+      "id": "007f387e-3465-4908-ad04-5bb9f67f2bb4",
+      "category": "friction",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 9,
+      "date": "2026-04-10T14:09:05.918904+00:00"
+    },
+    {
+      "id": "d60faf67-a608-4ba1-a449-0d27dcf2b57d",
+      "category": "friction",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 8,
+      "date": "2026-04-10T14:09:06.134025+00:00"
+    },
+    {
+      "id": "2cacc381-0ef1-4c54-b8e3-43331cbea959",
+      "category": "friction",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 8,
+      "date": "2026-04-10T14:09:06.355059+00:00"
+    },
+    {
+      "id": "8a310a9e-933e-48c2-b5c4-94474ed6d653",
+      "category": "friction",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 7,
+      "date": "2026-04-10T14:09:06.545081+00:00"
+    },
+    {
+      "id": "c5501409-0107-4b42-b07e-a868a3fbd9ae",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:30.06721+00:00"
+    },
+    {
+      "id": "1b3a37da-c66d-4a8e-a2fa-fa1e66099bf6",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:30.502817+00:00"
+    },
+    {
+      "id": "5d4956b8-d2b5-4150-bb93-49a4cd2f7696",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:31.124825+00:00"
+    },
+    {
+      "id": "1fc26adc-230e-4258-ab01-5de8056c3b8a",
+      "category": "friction",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 7,
+      "date": "2026-04-10T14:09:06.740704+00:00"
+    },
+    {
+      "id": "e7214268-192b-4f7b-8080-287277328361",
+      "category": "safety",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 9,
+      "date": "2026-04-10T14:09:11.185114+00:00"
+    },
+    {
+      "id": "8b3c4518-1903-412e-918e-3305e8c0a623",
+      "category": "safety",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 9,
+      "date": "2026-04-10T14:09:11.400604+00:00"
+    },
+    {
+      "id": "adca7bc0-a279-4cad-a59a-93741375f8d2",
+      "category": "safety",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 9,
+      "date": "2026-04-10T14:09:11.614677+00:00"
+    },
+    {
+      "id": "8e3fcfff-2e1b-42c4-a5b2-76c2e6162afe",
+      "category": "safety",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 10,
+      "date": "2026-04-10T14:09:11.83311+00:00"
+    },
+    {
+      "id": "5dad6b09-d970-4012-af9a-7cd905232b2a",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:30.703772+00:00"
+    },
+    {
+      "id": "25d99cca-4765-45cd-8489-acdefeea53c1",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 70,
+      "date": "2026-04-10T14:12:31.364852+00:00"
+    },
+    {
+      "id": "adeff0f6-6baf-4125-a76b-41a84f50f87a",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:31.582182+00:00"
+    },
+    {
+      "id": "40c162a2-6f5d-47b8-a7f2-aa66140384f7",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 60,
+      "date": "2026-04-10T14:12:31.784914+00:00"
+    },
+    {
+      "id": "bc70822a-0678-424d-b5e1-f9e2397c90d2",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:31.989288+00:00"
+    },
+    {
+      "id": "e7144cfc-d13e-4dac-bfd6-4129f9ac5af5",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:32.789454+00:00"
+    },
+    {
+      "id": "a527e621-fb73-416e-a323-1fc27eb1f2d9",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:33.384749+00:00"
+    },
+    {
+      "id": "1202ce83-58f2-4f84-b552-fb41c53bca59",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:33.570949+00:00"
+    },
+    {
+      "id": "2735947a-632e-4825-ad17-fe62c716c444",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:33.797151+00:00"
+    },
+    {
+      "id": "a33d001e-53e6-473e-9644-b68537989242",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:33.967694+00:00"
+    },
+    {
+      "id": "535970d7-2a89-420a-ad45-7cd3486d32de",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:34.753119+00:00"
+    },
+    {
+      "id": "956f19d1-3d3b-48bf-85b0-fac854ce4212",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:35.366427+00:00"
+    },
+    {
+      "id": "d828624e-3421-4940-a8a9-cde3afc486d2",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:35.561745+00:00"
+    },
+    {
+      "id": "7de6fd98-e045-4103-b388-583913a495b8",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:35.761308+00:00"
+    },
+    {
+      "id": "ca63ea7c-8553-4727-9b60-c3baca2c2dd2",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:35.962507+00:00"
+    },
+    {
+      "id": "7d847075-3f37-4398-a5b2-23540141235c",
+      "category": "safety",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 9,
+      "date": "2026-04-10T14:09:12.027401+00:00"
+    },
+    {
+      "id": "8f0355c7-3704-4dde-81a0-357fddd9cf23",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:30.298101+00:00"
+    },
+    {
+      "id": "5ecc76bf-1adc-461b-a8e0-4cf4644fe732",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 70,
+      "date": "2026-04-10T14:12:30.912189+00:00"
+    },
+    {
+      "id": "2ab8e90f-80e9-421a-8e51-a41da4cb3b89",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:32.365456+00:00"
+    },
+    {
+      "id": "3f730f11-88e2-4769-9a0c-8f320638035d",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:32.985814+00:00"
+    },
+    {
+      "id": "7618fc65-c51b-40c0-8bfa-a439efb4fc8c",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:34.370138+00:00"
+    },
+    {
+      "id": "757aff0e-5bef-4bab-a21e-0ae23a7b6953",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:34.972302+00:00"
+    },
+    {
+      "id": "5a301dec-fb9a-4e1c-9912-2093d85e01fc",
+      "category": "failure",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:36.358336+00:00"
+    },
+    {
+      "id": "696b81ba-22c2-4e90-8930-bf1a16631107",
+      "category": "failure",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:36.971137+00:00"
+    },
+    {
+      "id": "5b824598-1e9b-4620-89a5-ee9e49856417",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:38.403814+00:00"
+    },
+    {
+      "id": "137e3f05-97b5-4955-8b92-0b29e89e0914",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:39.067328+00:00"
+    },
+    {
+      "id": "fdb93940-96ef-411f-bb3a-5671fce00454",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:40.461971+00:00"
+    },
+    {
+      "id": "c742b3e8-f23c-4981-bb9e-60cdb7e0cdbe",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:41.046119+00:00"
+    },
+    {
+      "id": "a35fb65c-cb34-4c5d-b012-f179a16364c4",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:42.508067+00:00"
+    },
+    {
+      "id": "ab7a7513-e386-4a0c-8fc4-7c04d3699067",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:43.133052+00:00"
+    },
+    {
+      "id": "2a448f60-6a75-4657-8d8f-05e7104b0168",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:44.514921+00:00"
+    },
+    {
+      "id": "448b3f3e-2dab-475c-a569-0ee0acc840d0",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:45.093155+00:00"
+    },
+    {
+      "id": "331d562f-7275-431f-a61e-52a25413c160",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:46.500026+00:00"
+    },
+    {
+      "id": "f76e3a09-294c-4f6d-98f9-7e9f7ffd9817",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:47.074596+00:00"
+    },
+    {
+      "id": "ea1b472a-0007-4fa0-a41d-f9171eeb386c",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:32.17488+00:00"
+    },
+    {
+      "id": "6fcc1f8b-452a-4e21-b4a3-da888c254658",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:34.175302+00:00"
+    },
+    {
+      "id": "9a335623-6d5f-4574-9b65-4dd2b2df9c67",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:36.154666+00:00"
+    },
+    {
+      "id": "0c7d2c8c-a17f-445b-a834-b100c731a198",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:38.199568+00:00"
+    },
+    {
+      "id": "01dd5ab4-2c74-43da-bd09-e0dc2176e243",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:40.261766+00:00"
+    },
+    {
+      "id": "dbb6ab88-a204-44ed-8f11-43f21c0a0b72",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:42.319267+00:00"
+    },
+    {
+      "id": "7c27feb6-17ed-4088-a96b-26a35ad9c43c",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:44.31713+00:00"
+    },
+    {
+      "id": "687b0f3c-61b4-4627-964e-76afc45c048d",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:46.287829+00:00"
+    },
+    {
+      "id": "c114b9c2-b18f-4e44-a4aa-859f3c65a0a3",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:48.263237+00:00"
+    },
+    {
+      "id": "c885e52a-e6a1-4354-a755-97b69cb51f08",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:50.23973+00:00"
+    },
+    {
+      "id": "b31d3dfb-c948-4afe-9f4e-47948a2f3d88",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:52.263768+00:00"
+    },
+    {
+      "id": "7354d4b1-5fa3-40d8-8aa8-ed4674410720",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:32.559687+00:00"
+    },
+    {
+      "id": "afb33959-27cc-4dea-b6e2-dc165f9e34e4",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:34.560849+00:00"
+    },
+    {
+      "id": "b0531683-0344-4810-a3a5-dcd7d1b544af",
+      "category": "failure",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:36.576143+00:00"
+    },
+    {
+      "id": "932e1c08-df54-44b9-9f62-65ea81c31174",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:38.631351+00:00"
+    },
+    {
+      "id": "43fe35c1-d301-404c-af44-396c8bd80dea",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:40.658916+00:00"
+    },
+    {
+      "id": "d79e3842-196a-4c65-9132-42acae4ba012",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:42.707244+00:00"
+    },
+    {
+      "id": "0336252a-2457-4b56-afc8-256f0b8e4aca",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:44.702639+00:00"
+    },
+    {
+      "id": "c9c47d2b-f8de-4624-994e-d19f08b12fdd",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:46.697833+00:00"
+    },
+    {
+      "id": "9591b69f-0106-467d-85ff-c416d38715ec",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:48.645965+00:00"
+    },
+    {
+      "id": "7bf0a7ab-3537-4785-b62d-91c19c8210cf",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:50.647747+00:00"
+    },
+    {
+      "id": "fb4014c5-8733-4d69-bb1f-47d868d58bf2",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:52.656498+00:00"
+    },
+    {
+      "id": "29e72f28-1e14-4611-84fe-e17e9d715149",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:33.189878+00:00"
+    },
+    {
+      "id": "b524471f-7dbc-434b-96ab-412ca9ad2c3e",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:35.171613+00:00"
+    },
+    {
+      "id": "1f33fd66-deb8-47c8-a7d3-3782dcb9c377",
+      "category": "failure",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:37.178287+00:00"
+    },
+    {
+      "id": "f3495b61-c017-49b6-bbe5-98e3e7bf744f",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:39.261887+00:00"
+    },
+    {
+      "id": "486856b6-5db4-4940-9c3b-4b168aff307b",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:41.287253+00:00"
+    },
+    {
+      "id": "aaf4b378-d36c-4c1d-860c-b8394c8b7d1a",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:43.335067+00:00"
+    },
+    {
+      "id": "465c8fb6-74db-49c1-bae0-8f6cfe3d43be",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:45.287278+00:00"
+    },
+    {
+      "id": "4b5e7f9f-44ef-4b2e-a5e3-26fc016435f2",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:47.267462+00:00"
+    },
+    {
+      "id": "1799b361-fc32-4009-95cf-5eb7d1626585",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:49.246363+00:00"
+    },
+    {
+      "id": "6058e65e-375c-4ec0-82f8-cbe73119364b",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:51.239285+00:00"
+    },
+    {
+      "id": "0cc82068-23d4-4276-9c8a-aa37afdbfd6e",
+      "category": "failure",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 90,
+      "date": "2026-04-10T14:12:36.769718+00:00"
+    },
+    {
+      "id": "2a1a27c4-f59d-44c8-8b39-646dca1360f2",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:38.866753+00:00"
+    },
+    {
+      "id": "a4d98362-75be-4e9b-8af5-52e8e7ec0d7f",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:40.853574+00:00"
+    },
+    {
+      "id": "aeea8519-83fc-463c-b840-f8901d59aeae",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:42.899903+00:00"
+    },
+    {
+      "id": "e6649cf6-a22d-48fa-b175-34439c468c80",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:44.891604+00:00"
+    },
+    {
+      "id": "a1bdcfac-6a3e-47e7-bf9e-37f4dd616930",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:46.888754+00:00"
+    },
+    {
+      "id": "819eb705-4040-438f-8de7-489b6690b122",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:48.850201+00:00"
+    },
+    {
+      "id": "2d845875-a289-4f60-af3a-795bc931fa5a",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:50.854221+00:00"
+    },
+    {
+      "id": "1d74889a-9e9e-41cc-b075-bfddb397bc3a",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:37.39003+00:00"
+    },
+    {
+      "id": "85cb2e86-354d-4e02-973c-71dc5a94b7a5",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:39.451489+00:00"
+    },
+    {
+      "id": "2daa0e7e-a209-43f0-b845-f1cc665f4499",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:41.506313+00:00"
+    },
+    {
+      "id": "f7237cc7-9b30-4621-be0d-3dc27047155a",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:43.519956+00:00"
+    },
+    {
+      "id": "20d03294-fbcc-484b-8e75-a78649bf6808",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:45.49025+00:00"
+    },
+    {
+      "id": "ab0f8e62-192b-4629-a7a0-0405bce5f69e",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:47.460267+00:00"
+    },
+    {
+      "id": "af1e3aee-e73a-43fd-801f-fe99e6d8def4",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:49.447382+00:00"
+    },
+    {
+      "id": "9ce1956b-2421-4c35-9a2e-7d8ec7084966",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:51.4439+00:00"
+    },
+    {
+      "id": "b1fe1285-7c18-4e13-ad1d-529bfcdd16e2",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:37.58246+00:00"
+    },
+    {
+      "id": "3069ae56-5de5-4746-95f5-67e755351419",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:39.646225+00:00"
+    },
+    {
+      "id": "72b350d8-8a81-4a55-aeb9-15369a3902cd",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:41.698247+00:00"
+    },
+    {
+      "id": "faf8a32e-cab5-482f-a543-5df97c85ad3e",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:43.705853+00:00"
+    },
+    {
+      "id": "103874da-237a-4b5d-95ce-5af9c0d6d6e5",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:45.70717+00:00"
+    },
+    {
+      "id": "5eef02d9-c0e4-4bf3-83a2-9fd15f3e229a",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:47.673208+00:00"
+    },
+    {
+      "id": "e4183871-d6da-41d2-9d14-74eed0f6f623",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:49.638407+00:00"
+    },
+    {
+      "id": "20ea2e69-7ee5-4071-9817-d509eddf9561",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:51.644575+00:00"
+    },
+    {
+      "id": "18740875-b1c1-4e3b-a087-239f467c461b",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:37.789079+00:00"
+    },
+    {
+      "id": "6e69fc85-ee4b-4585-a865-0b7aef5ee1d2",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:39.841182+00:00"
+    },
+    {
+      "id": "8321cce8-77b4-4bcd-b3d9-9bb28ddf3ee9",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:41.912344+00:00"
+    },
+    {
+      "id": "092ef60e-4652-4f55-828c-a52439dc898c",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:43.928469+00:00"
+    },
+    {
+      "id": "a029e0b3-b90a-4270-90b2-5979c3319788",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:45.903021+00:00"
+    },
+    {
+      "id": "5d43926d-a47a-49fd-81aa-76fbd2cf57e9",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:47.869597+00:00"
+    },
+    {
+      "id": "87f8e93d-5171-40ef-a847-790eb5cc8403",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:49.836499+00:00"
+    },
+    {
+      "id": "ad3305a9-da75-4528-934f-9c482ed9baa5",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:51.841841+00:00"
+    },
+    {
+      "id": "b12445d2-e52e-449c-9aaa-3db37da619a8",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:37.997717+00:00"
+    },
+    {
+      "id": "07201be3-857f-4ef0-b4ae-328f03dbd1a0",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:40.044133+00:00"
+    },
+    {
+      "id": "3856bbe9-ce85-404c-acc0-de69548db6f3",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:42.114981+00:00"
+    },
+    {
+      "id": "d84387eb-bdbe-492c-ac1a-91a955aeb1ff",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:44.122418+00:00"
+    },
+    {
+      "id": "98e5a3d2-be7b-4bde-b2b5-f73249c999aa",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:46.091902+00:00"
+    },
+    {
+      "id": "1c91655b-20a7-44c4-bf3a-5e8d11f209d4",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:48.070276+00:00"
+    },
+    {
+      "id": "36908c00-9edf-4d44-9db6-6ab9a949ba58",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:50.031064+00:00"
+    },
+    {
+      "id": "c5ce994b-acfc-4258-9aca-f4f81de57bfe",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:52.043757+00:00"
+    },
+    {
+      "id": "83754a4c-134e-4e45-af7b-67868056d832",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:48.452889+00:00"
+    },
+    {
+      "id": "20b37bdf-ba7f-43ef-83f9-789defbb4c96",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:50.451035+00:00"
+    },
+    {
+      "id": "dbdc0dbc-58ed-4723-b66f-dc4a84233b72",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:52.467026+00:00"
+    },
+    {
+      "id": "c80e178a-4d75-401a-9cc4-e1ed24889b50",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:49.05292+00:00"
+    },
+    {
+      "id": "067e399d-7988-47ca-91ce-cc5812abcb9f",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 80,
+      "date": "2026-04-10T14:12:51.043596+00:00"
+    },
+    {
+      "id": "cd3c78c9-0b77-476c-bcfa-679824942d61",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-10T17:35:58.829286+00:00"
+    },
+    {
+      "id": "6d66c47a-e974-4ca2-96e3-e2f08f91a3b3",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 7,
+      "date": "2026-04-10T17:36:47.06513+00:00"
+    },
+    {
+      "id": "a35db3d4-42a2-4091-9b48-6b482e82ff56",
+      "category": "operational",
+      "tier": 3,
+      "title": "",
+      "code": null,
+      "usefulness": 8,
+      "date": "2026-04-10T17:38:41.858456+00:00"
+    },
+    {
+      "id": "51d23074-f1fc-43fc-a2f2-9e158aaa2526",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-10T17:38:58.732727+00:00"
+    },
+    {
+      "id": "49a5a1d9-e982-461e-b85c-3aed42ee8885",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-10T17:38:59.33668+00:00"
+    },
+    {
+      "id": "4819f91b-3386-4cab-9238-b0fcd53fbf1c",
+      "category": "build",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-10T17:38:59.693703+00:00"
+    },
+    {
+      "id": "70959465-d81c-4c45-9f51-c09f51678db0",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 7,
+      "date": "2026-04-10T21:59:31.73228+00:00"
+    },
+    {
+      "id": "02003c8b-808a-4407-a999-e45a0822aa8a",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-10T22:31:10.409476+00:00"
+    },
+    {
+      "id": "ffaf0e7a-b311-43f6-99e9-a7e4951933bf",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-10T22:31:17.855353+00:00"
+    },
+    {
+      "id": "ddf82d8f-1e75-473b-b56b-0d1d3a8fcd68",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-10T22:35:01.768204+00:00"
+    },
+    {
+      "id": "46a67ca9-9022-49f2-8fc1-e11fe8de092c",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-10T22:35:13.32971+00:00"
+    },
+    {
+      "id": "a455c9f3-681f-4a81-a1c7-e88ccba84456",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 7,
+      "date": "2026-04-10T22:35:28.520503+00:00"
+    },
+    {
+      "id": "a4a89957-42c0-453d-a63d-fed9dc7878ab",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-10T22:35:29.226768+00:00"
+    },
+    {
+      "id": "6de52535-fe60-42ac-840d-ba2993e7aaca",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-10T22:35:29.652308+00:00"
+    },
+    {
+      "id": "87bd95b2-fae7-460c-9e5c-ca65bd1075cf",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-10T22:35:36.625418+00:00"
+    },
+    {
+      "id": "ad69d168-7ccd-49c8-b78a-8f990aa702df",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-10T22:40:40.002338+00:00"
+    },
+    {
+      "id": "0fb66b6d-27aa-47fa-80e6-90042e4bf4ab",
+      "category": "safety",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-10T22:40:57.70739+00:00"
+    },
+    {
+      "id": "a870ecb8-a0bb-4a8f-bbc5-3df407a3a538",
+      "category": "safety",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-10T22:42:07.899177+00:00"
+    },
+    {
+      "id": "f4b586c1-20f6-49f0-b01f-c99e882be6f5",
+      "category": "safety",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-10T22:42:55.475424+00:00"
+    },
+    {
+      "id": "0d7d23e9-0992-40f2-91ce-916fb3e811fa",
+      "category": "safety",
+      "tier": 3,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-10T22:44:03.380478+00:00"
+    },
+    {
+      "id": "f90d7e23-d56f-4ff7-ba89-b67461f91e05",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 7,
+      "date": "2026-04-10T22:44:08.855745+00:00"
+    },
+    {
+      "id": "c80ca6f6-70b0-450b-89ba-6b976e58b3fb",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 7,
+      "date": "2026-04-10T22:44:13.325049+00:00"
+    },
+    {
+      "id": "04565703-6247-4f51-b318-09e5e91aa557",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-10T22:44:22.43393+00:00"
+    },
+    {
+      "id": "8d7cd934-0e10-44eb-b009-b1f637fe1120",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T00:05:27.888109+00:00"
+    },
+    {
+      "id": "baaca42e-55ef-4636-8e1a-164eedb83da4",
+      "category": "performance",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 7,
+      "date": "2026-04-11T00:05:39.255573+00:00"
+    },
+    {
+      "id": "f595ba32-1e73-4b68-a1fd-2ea003ef5534",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-11T00:05:46.094065+00:00"
+    },
+    {
+      "id": "aad0c6a7-5001-44f3-9c67-236e57a40c92",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-11T00:05:57.726512+00:00"
+    },
+    {
+      "id": "f1244700-8d56-4f62-bd59-b16cde93f944",
+      "category": "failure",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T01:01:58.872243+00:00"
+    },
+    {
+      "id": "ee7c4600-6a65-41ea-9e4c-2299ab1e1bd9",
+      "category": "operational",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T01:02:07.842003+00:00"
+    },
+    {
+      "id": "91f73e5d-1937-4168-babe-7fa6887ec4e9",
+      "category": "operational",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T01:02:19.165895+00:00"
+    },
+    {
+      "id": "e442be6f-0135-46ca-a7ca-1003454849da",
+      "category": "failure",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T01:06:13.017712+00:00"
+    },
+    {
+      "id": "56e97ea5-4936-4c2a-896d-cf721c5117a3",
+      "category": "operational",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T01:35:07.77282+00:00"
+    },
+    {
+      "id": "38822f34-0096-4a54-a0ff-1182225ab3ab",
+      "category": "failure",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T01:35:24.378555+00:00"
+    },
+    {
+      "id": "5423fd1f-f8b6-4978-815b-0143c8e78bd6",
+      "category": "operational",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T01:35:33.526582+00:00"
+    },
+    {
+      "id": "29a263db-86ca-4d3f-9564-b1ddbea544c7",
+      "category": "operational",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T01:35:51.361806+00:00"
+    },
+    {
+      "id": "096db9f2-d3e3-4797-8539-50d36d3dfe8c",
+      "category": "knowledge",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T01:36:00.903377+00:00"
+    },
+    {
+      "id": "69c9ecd9-f850-4c08-8d29-97f8e017ed57",
+      "category": "knowledge",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T02:51:17.718838+00:00"
+    },
+    {
+      "id": "5313ff21-6764-48a1-94f1-242f7792c263",
+      "category": "safety",
+      "tier": 2,
+      "title": "RECON-S-008 — Recon Index Anti-Scraping & Content Protection",
+      "code": null,
+      "usefulness": 8,
+      "date": "2026-04-11T17:50:42.613613+00:00"
+    },
+    {
+      "id": "26b82f7e-d4d2-4e4f-a6b7-aa2b6696238a",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 7,
+      "date": "2026-04-11T14:02:37.857034+00:00"
+    },
+    {
+      "id": "c136e657-976c-4d44-9de4-0634dd777067",
+      "category": "knowledge",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 6,
+      "date": "2026-04-11T14:02:47.454805+00:00"
+    },
+    {
+      "id": "3fb8adfb-a346-4adf-9eac-e474a8ba8d80",
+      "category": "operational",
+      "tier": 1,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T15:00:00.34461+00:00"
+    },
+    {
+      "id": "5c5e3c31-8708-448a-8fc7-428c86d8b616",
+      "category": "performance",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T15:27:33.418285+00:00"
+    },
+    {
+      "id": "262ba6c6-04d2-49f5-baf1-8ec85274b58b",
+      "category": "performance",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T15:27:37.956374+00:00"
+    },
+    {
+      "id": "1f472698-64a0-49c7-aa1d-ac8ab3b0a214",
+      "category": "safety",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T15:48:04.954499+00:00"
+    },
+    {
+      "id": "b3d8274c-34c3-4b50-a326-32675821ffd0",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 10,
+      "date": "2026-04-11T15:57:01.189571+00:00"
+    },
+    {
+      "id": "0a1ae33e-f429-41ed-9460-920332e07c52",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 5,
+      "date": "2026-04-11T16:07:54.36605+00:00"
+    },
+    {
+      "id": "e054c2f1-67bd-4e8b-88fa-41906ed717b2",
+      "category": "operational",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": 2,
+      "date": "2026-04-11T16:08:28.957046+00:00"
+    },
+    {
+      "id": "5852425a-6dc8-46b2-936a-170157a312e2",
+      "category": "performance",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T17:07:46.665107+00:00"
+    },
+    {
+      "id": "3a160ca1-5b7b-4476-addc-f72d18e957f1",
+      "category": "performance",
+      "tier": 2,
+      "title": "",
+      "code": null,
+      "usefulness": null,
+      "date": "2026-04-11T17:21:02.146424+00:00"
+    },
+    {
+      "id": "7ac7aa01-feae-46f3-9a0a-68f6ac0ed8ee",
+      "category": "safety",
+      "tier": 2,
+      "title": "RECON-S-006 — Code Sharing Policy",
+      "code": null,
+      "usefulness": 8,
+      "date": "2026-04-11T17:50:42.153161+00:00"
+    },
+    {
+      "id": "986f08be-5d08-42fb-9b60-b4e6b202d8c8",
+      "category": "safety",
+      "tier": 2,
+      "title": "RECON-S-007 — Report Submission Reminders",
+      "code": null,
+      "usefulness": 8,
+      "date": "2026-04-11T17:50:43.030089+00:00"
+    }
+  ],
+  "patterns": [
+    {
+      "id": "d94d8247-31f0-43ab-9abc-fbdb0b0c03dc",
+      "type": "friction",
+      "title": "Users underestimate agent capabilities",
+      "occurrences": 4,
+      "status": "review_ready",
+      "tags": [
+        "onboarding",
+        "friction"
+      ]
+    },
+    {
+      "id": "87ba2663-9cab-45c5-9483-a2e5627e6784",
+      "type": "friction",
+      "title": "Billing misconceptions at onboarding",
+      "occurrences": 4,
+      "status": "review_ready",
+      "tags": [
+        "billing",
+        "friction"
+      ]
+    },
+    {
+      "id": "b1a842e9-73e3-4ff0-a5c9-6ab164cb31c4",
+      "type": "friction",
+      "title": "Agent persistence != process persistence",
+      "occurrences": 2,
+      "status": "watch",
+      "tags": [
+        "architecture",
+        "friction"
+      ]
+    },
+    {
+      "id": "f0067c19-77ee-47d2-9bcc-99be3676b890",
+      "type": "friction",
+      "title": "XRPL mainnet vs EVM confusion",
+      "occurrences": 2,
+      "status": "watch",
+      "tags": [
+        "xrpl",
+        "evm",
+        "friction"
+      ]
+    },
+    {
+      "id": "83a3ca1b-4668-448a-8bde-a7fcea6249a0",
+      "type": "failure",
+      "title": "XRPL reserve undercount — object count not tracked",
+      "occurrences": 3,
+      "status": "candidate",
+      "tags": [
+        "xrpl",
+        "reserve",
+        "failure"
+      ]
+    },
+    {
+      "id": "a7183f4a-03dd-47b7-b163-7030f4ad1705",
+      "type": "safety",
+      "title": "Key/seed exposure via unsafe storage or sharing",
+      "occurrences": 3,
+      "status": "candidate",
+      "tags": [
+        "security",
+        "seeds",
+        "safety"
+      ]
+    }
+  ]
+}
