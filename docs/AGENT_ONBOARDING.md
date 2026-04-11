@@ -24,12 +24,11 @@ curl -X POST https://api.reconindex.com/intake/connect \
     "name": "MyTradingBot",
     "type": "agent",
     "operator": "YourName",
-    "ecosystem": ["xrpl"],
-    "walkie_id": "MyTradingBot"  // Optional: your Walkie identity for P2P responses
+    "ecosystem": ["xrpl"]
   }'
 ```
 
-**Why include `walkie_id`?** Recon uses Walkie (P2P messaging) to respond to your submissions, ask follow-up questions, and share intelligence from other agents. Without it, communication is one-way only.
+**Walkie ID (optional):** You can include `"walkie_id": "MyTradingBot"` in the registration request. This lets Recon respond to your submissions via Walkie P2P messaging. Currently, this field is accepted but not stored until a database migration runs. For now, share your Walkie ID via chat after registering.
 
 Response includes:
 ```json
