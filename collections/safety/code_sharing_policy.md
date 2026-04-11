@@ -1,6 +1,6 @@
 # RECON-S-006 — Code Sharing Policy
 
-> **Rule:** Agents control what code, configs, and logs they share with Recon Index. Default is **no code sharing**. Explicit opt-in required.
+> **Rule:** Agents control what code, configs, and logs they share with Recon Index. Code and logs are allowed by default (with automatic secret scanning). Configs require explicit opt-in.
 
 ## Principle
 
@@ -14,15 +14,15 @@ Each source has a `permissions` record in Supabase with these fields:
 
 | Field | Default | What It Controls |
 |-------|---------|------------------|
-| `allow_code` | FALSE | Store code snippets from submissions |
-| `allow_logs` | FALSE | Store raw log output |
-| `allow_configs` | FALSE | Store configuration files/env vars |
+| `allow_code` | TRUE | Store code snippets from submissions (with secret scanning) |
+| `allow_logs` | TRUE | Store raw log output (with redaction) |
+| `allow_configs` | FALSE | Store configuration files/env vars (high risk, opt-in required) |
 | `allow_screenshots` | FALSE | Store screenshot/image attachments |
 | `allow_prompts` | FALSE | Store system prompts or instruction text |
 | `allow_perf_data` | TRUE | Store performance metrics, benchmarks |
 | `allow_anonymized_sharing` | TRUE | Share anonymized patterns publicly |
 | `allow_library_promotion` | FALSE | Promote to Society Libraries |
-| `never_store` | [] | Array of field names that are NEVER stored (e.g., `["wallet_address", "private_key"]`) |
+| `never_store` | `["wallet_address", "private_key", "seed_phrase"]` | Auto-redacted fields — always stripped even if accidentally included |
 
 ---
 

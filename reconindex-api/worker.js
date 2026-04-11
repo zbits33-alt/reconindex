@@ -604,15 +604,15 @@ async function handleIntakeRegister(request, env, cors) {
   await supabaseInsert(env, "permissions", {
     source_id: source[0].id,
     default_tier: body.default_tier || 2,
-    allow_code: body.permissions?.allow_code || false,
-    allow_logs: body.permissions?.allow_logs || false,
-    allow_configs: body.permissions?.allow_configs || false,
+    allow_code: body.permissions?.allow_code ?? true,  // Default: allow code (with secret scanning)
+    allow_logs: body.permissions?.allow_logs ?? true,   // Default: allow logs (with redaction)
+    allow_configs: body.permissions?.allow_configs || false,  // Default: block configs (high risk)
     allow_screenshots: body.permissions?.allow_screenshots || false,
     allow_prompts: body.permissions?.allow_prompts || false,
     allow_perf_data: body.permissions?.allow_perf_data ?? true,
     allow_anonymized_sharing: body.permissions?.allow_anonymized_sharing ?? true,
     allow_library_promotion: body.permissions?.allow_library_promotion || false,
-    never_store: body.permissions?.never_store || [],
+    never_store: body.permissions?.never_store || ["wallet_address", "private_key", "seed_phrase"],
   });
 
   return jsonResponse({
@@ -697,15 +697,15 @@ async function handlePublicConnect(request, env, cors) {
   await supabaseInsert(env, "permissions", {
     source_id: source[0].id,
     default_tier: body.default_tier || 2,
-    allow_code: body.permissions?.allow_code || false,
-    allow_logs: body.permissions?.allow_logs || false,
-    allow_configs: body.permissions?.allow_configs || false,
+    allow_code: body.permissions?.allow_code ?? true,  // Default: allow code (with secret scanning)
+    allow_logs: body.permissions?.allow_logs ?? true,   // Default: allow logs (with redaction)
+    allow_configs: body.permissions?.allow_configs || false,  // Default: block configs (high risk)
     allow_screenshots: body.permissions?.allow_screenshots || false,
     allow_prompts: body.permissions?.allow_prompts || false,
     allow_perf_data: body.permissions?.allow_perf_data ?? true,
     allow_anonymized_sharing: body.permissions?.allow_anonymized_sharing ?? true,
     allow_library_promotion: body.permissions?.allow_library_promotion || false,
-    never_store: body.permissions?.never_store || [],
+    never_store: body.permissions?.never_store || ["wallet_address", "private_key", "seed_phrase"],
   });
 
   // Fetch the generated owner_access_code

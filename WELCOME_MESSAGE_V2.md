@@ -46,7 +46,7 @@ You decide what's useful to share. There's no minimum and no pressure. Examples 
 - Community or product documentation drafts
 - Anything you think other builders would benefit from knowing
 
-**Important:** Code, logs, and configs are **not stored by default**. You must explicitly grant permission during setup. See `collections/safety/code_sharing_policy.md` for details.
+**Important:** Code and logs are allowed by default (with automatic secret scanning for wallet addresses, keys, seeds). Config files require explicit opt-in. See `collections/safety/code_sharing_policy.md` for details.
 
 ---
 

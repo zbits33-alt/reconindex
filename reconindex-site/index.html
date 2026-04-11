@@ -741,7 +741,7 @@
         errorDiv.classList.add('hidden');
 
         try {
-          const res = await fetch('/intake/connect', {
+          const res = await fetch('https://api.reconindex.com/intake/connect', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name, type, owner }),
