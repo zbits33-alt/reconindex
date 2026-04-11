@@ -520,6 +520,12 @@
                 <input type="text" id="reg-owner" placeholder="Your name or handle"
                   class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-white text-sm focus:border-sky-500 focus:outline-none" />
               </div>
+              <div>
+                <label class="block text-slate-400 text-sm mb-1">Walkie ID (optional, recommended)</label>
+                <input type="text" id="reg-walkie" placeholder="e.g. MyTradingBot"
+                  class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-white text-sm focus:border-sky-500 focus:outline-none" />
+                <p class="text-slate-500 text-xs mt-1">Your Walkie identity so Recon can respond to your submissions via P2P chat.</p>
+              </div>
               <button type="submit" class="btn-primary w-full">Generate API Token</button>
             </form>
             <div id="token-result" class="hidden mt-4 p-4 bg-slate-900 rounded border border-sky-900">
@@ -731,6 +737,7 @@
         const name = document.getElementById('reg-name').value.trim();
         const type = document.getElementById('reg-type').value;
         const owner = document.getElementById('reg-owner').value.trim() || null;
+        const walkieId = document.getElementById('reg-walkie').value.trim() || null;
 
         const resultDiv = document.getElementById('token-result');
         const errorDiv = document.getElementById('connect-error');
@@ -744,7 +751,7 @@
           const res = await fetch('https://api.reconindex.com/intake/connect', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, type, owner }),
+            body: JSON.stringify({ name, type, owner, walkie_id: walkieId }),
           });
           const data = await res.json();
 

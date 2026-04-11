@@ -609,6 +609,7 @@ async function handleIntakeRegister(request, env, cors) {
     owner_name: body.owner || null,
     ecosystem_scope: body.ecosystem || [],
     api_token: body.api_token,
+    walkie_id: body.walkie_id || null,  // Optional: agent's Walkie identity for P2P responses
   });
 
   await supabaseInsert(env, "permissions", {
@@ -702,6 +703,7 @@ async function handlePublicConnect(request, env, cors) {
     api_token: apiToken,
     owner_access_code: ownerAccessCode,
     status: 'active',
+    walkie_id: body.walkie_id || null,  // Optional: agent's Walkie identity for P2P responses
   });
 
   await supabaseInsert(env, "permissions", {
