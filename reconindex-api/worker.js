@@ -52,6 +52,16 @@ export default {
       return handleListSources(request, env, cors);
     }
 
+    // PATCH /sources/me → Update own source record (name, operator, ecosystem)
+    if (path === "/sources/me" && method === "PATCH") {
+      return handleUpdateOwnSource(request, env, cors);
+    }
+
+    // PATCH /sources/me/permissions → Update own permissions
+    if (path === "/sources/me/permissions" && method === "PATCH") {
+      return handleUpdateOwnPermissions(request, env, cors);
+    }
+
     // GET /sources/profiled → admin-only: all sources with full profiles
     if (path === "/sources/profiled" && method === "GET") {
       return handleListProfiledSources(request, env, cors);
@@ -906,6 +916,95 @@ async function handleListSources(request, env, cors) {
 
   const sources = await supabaseSelect(env, "sources", `id,name,source_type,owner_name,status,created_at`, ``, 100);
   return jsonResponse({ sources }, cors);
+}
+
+// PATCH /sources/me — Update own source record (name, operator, ecosystem)
+async function handleUpdateOwnSource(request, env, cors) {
+  // Auth: require bearer token (source API token)
+  const auth = request.headers.get("Authorization");
+  if (!auth || !auth.startsWith("Bearer ")) {
+    return jsonResponse({ error: "Missing bearer token" }, { ...cors }, 401);
+  }
+  const token = auth.slice(7);
+
+  // Verify source
+  const sources = await supabaseSelect(env, "sources", `id,name,source_type,status`, `api_token=eq.${token}`, 1);
+  if (sources.length === 0) return jsonResponse({ error: "Invalid token" }, { ...cors }, 401);
+  if (sources[0].status !== 'active') return jsonResponse({ error: "Source inactive" }, { ...cors }, 403);
+  const sourceId = sources[0].id;
+
+  let body;
+  try { body = await request.json(); } catch {
+    return jsonResponse({ error: "Invalid JSON" }, { ...cors }, 400);
+  }
+
+  // Build update object with only allowed fields
+  const updates = {};
+  if (body.name !== undefined) updates.name = body.name;
+  if (body.owner_name !== undefined || body.operator !== undefined) updates.owner_name = body.owner_name || body.operator;
+  if (body.ecosystem_scope !== undefined || body.ecosystem !== undefined) updates.ecosystem_scope = body.ecosystem_scope || body.ecosystem;
+  if (body.public_description !== undefined || body.description !== undefined) updates.public_description = body.public_description || body.description;
+
+  if (Object.keys(updates).length === 0) {
+    return jsonResponse({ error: "No valid fields to update. Allowed: name, owner_name/operator, ecosystem_scope/ecosystem, public_description/description" }, { ...cors }, 400);
+  }
+
+  const result = await supabaseUpdate(env, "sources", updates, `id=eq.${sourceId}`);
+  return jsonResponse({
+    success: true,
+    updated: updates,
+    message: "Source profile updated successfully",
+  }, cors);
+}
+
+// PATCH /sources/me/permissions — Update own permissions
+async function handleUpdateOwnPermissions(request, env, cors) {
+  // Auth: require bearer token (source API token)
+  const auth = request.headers.get("Authorization");
+  if (!auth || !auth.startsWith("Bearer ")) {
+    return jsonResponse({ error: "Missing bearer token" }, { ...cors }, 401);
+  }
+  const token = auth.slice(7);
+
+  // Verify source
+  const sources = await supabaseSelect(env, "sources", `id,status`, `api_token=eq.${token}`, 1);
+  if (sources.length === 0) return jsonResponse({ error: "Invalid token" }, { ...cors }, 401);
+  if (sources[0].status !== 'active') return jsonResponse({ error: "Source inactive" }, { ...cors }, 403);
+  const sourceId = sources[0].id;
+
+  let body;
+  try { body = await request.json(); } catch {
+    return jsonResponse({ error: "Invalid JSON" }, { ...cors }, 400);
+  }
+
+  // Check current permissions exist
+  const perms = await supabaseSelect(env, "permissions", "id", `source_id=eq.${sourceId}`, 1);
+  if (perms.length === 0) {
+    return jsonResponse({ error: "No permissions record found. Contact admin." }, { ...cors }, 404);
+  }
+  const permId = perms[0].id;
+
+  // Build update object with only allowed permission fields
+  const updates = {};
+  const allowedFields = [
+    "allow_code", "allow_logs", "allow_configs", "allow_screenshots",
+    "allow_prompts", "allow_perf_data", "allow_anonymized_sharing",
+    "allow_library_promotion", "never_store"
+  ];
+  for (const field of allowedFields) {
+    if (body[field] !== undefined) updates[field] = body[field];
+  }
+
+  if (Object.keys(updates).length === 0) {
+    return jsonResponse({ error: `No valid permission fields to update. Allowed: ${allowedFields.join(", ")}` }, { ...cors }, 400);
+  }
+
+  const result = await supabaseUpdate(env, "permissions", updates, `id=eq.${permId}`);
+  return jsonResponse({
+    success: true,
+    updated: updates,
+    message: "Permissions updated successfully",
+  }, cors);
 }
 
 async function handleListProfiledSources(request, env, cors) {
@@ -2029,7 +2128,9 @@ function handleApiSchema(cors) {
       { method: "POST", path: "/intake/regenerate-token", description: "Regenerate lost token" },
       { method: "GET", path: "/intake/usage?token=X", description: "Per-token usage stats" },
       { method: "POST", path: "/intake/analyze", description: "Submit intelligence" },
-      { method: "GET", path: "/sources", description: "List sources" },
+      { method: "GET", path: "/sources", description: "List sources (admin)" },
+      { method: "PATCH", path: "/sources/me", description: "Update your own source profile" },
+      { method: "PATCH", path: "/sources/me/permissions", description: "Update your own permissions" },
       { method: "GET", path: "/status", description: "System stats" },
       { method: "GET", path: "/libraries", description: "Query knowledge" },
     ],
