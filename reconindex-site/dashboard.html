@@ -224,6 +224,7 @@
         document.getElementById('login-section').classList.add('hidden');
         document.getElementById('dashboard-section').classList.remove('hidden');
         loadDashboard(currentToken, currentSourceId);
+        startAutoRefresh(currentToken, currentSourceId);
         
       } catch (err) {
         errorMsg.textContent = err.message;
@@ -235,6 +236,7 @@
     document.getElementById('logout-btn').addEventListener('click', () => {
       currentToken = null;
       currentSourceId = null;
+      if (refreshInterval) clearInterval(refreshInterval);
       document.getElementById('dashboard-section').classList.add('hidden');
       document.getElementById('login-section').classList.remove('hidden');
       document.getElementById('api-token-input').value = '';
@@ -304,6 +306,15 @@
       } catch (err) {
         console.error('Failed to load dashboard:', err);
       }
+    }
+
+    // Auto-refresh dashboard every 30 seconds
+    let refreshInterval;
+    function startAutoRefresh(token, sourceId) {
+      if (refreshInterval) clearInterval(refreshInterval);
+      refreshInterval = setInterval(() => {
+        loadDashboard(token, sourceId);
+      }, 30000);
     }
 
     function loadAllSubmissions(submissions) {

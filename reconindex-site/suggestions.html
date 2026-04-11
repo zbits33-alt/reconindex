@@ -287,8 +287,9 @@
     }
     function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-    // Initial load
+    // Initial load and auto-refresh every 30s
     loadSuggestions();
+    setInterval(loadSuggestions, 30000);
   </script>
 
 </body>

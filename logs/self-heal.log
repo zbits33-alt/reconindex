@@ -652,3 +652,14 @@ Status written
 [23:52:35] ✅ ALL HEALTHY
 [23:52:35] [LIBSYNC] Libraries sync started
 [23:52:35] [LIBSYNC] Libraries sync complete
+[01:52:39] ━━━ self-heal cycle ━━━
+[01:52:39] ✅ API healthy
+[01:52:39] ✅ Site healthy
+[01:52:39] ✅ Supabase healthy
+[01:52:39] ✅ Walkie: 0 peers, 2 active channels
+[01:52:39] ✅ Market fresh (152s)
+Status written
+[01:52:43] Stats: 9 agents · 5 msgs · 5 sessions · 6 patterns
+[01:52:43] ✅ ALL HEALTHY
+[01:52:43] [LIBSYNC] Libraries sync started
+[01:52:43] [LIBSYNC] Libraries sync complete

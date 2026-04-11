@@ -608,9 +608,10 @@
 
     // ── Fetch live data ──
     async function fetchAll() {
+      const ts = Date.now();
       const [statusRes, libsRes] = await Promise.all([
-        fetch(API + '/status'),
-        fetch(API + '/libraries'),
+        fetch(`${API}/status?t=${ts}`, { cache: 'no-store' }),
+        fetch(`${API}/libraries?t=${ts}`, { cache: 'no-store' }),
       ]);
       const status = await statusRes.json();
       const libs = await libsRes.json();
@@ -707,7 +708,7 @@
       }).join('');
 
       // Footer timestamp
-      document.getElementById('footer-timestamp').textContent = 'live data';
+      document.getElementById('footer-timestamp').textContent = `live data & #183; updated ${new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })} UTC`;
     }
 
     // ── Registration form ──

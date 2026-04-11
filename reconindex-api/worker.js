@@ -1153,7 +1153,7 @@ async function handleStatus(request, env, cors) {
   const recentMsgs = await supabaseSelect(env, "general_chat_messages", "id,sender,sender_id,message,created_at", "", 20);
 
   // Get recent submissions (last 10)
-  const recentSubs = await supabaseSelect(env, "submissions", "id,source_id,category,summary,status,submitted_at", "", 10);
+  const recentSubs = await supabaseSelect(env, "submissions", "id,source_id,category,summary,status,submitted_at", "order=submitted_at.desc", 10);
 
   // Count active sources
   const activeSources = sources.filter(s => s.status === 'active').length;
