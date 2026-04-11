@@ -1725,23 +1725,38 @@ function classifyCategory(text) {
   return { category: best, confidence: bestScore > 0 ? Math.min(bestScore / 5, 1.0) : 0.3 };
 }
 
-function calculateUsefulness(text) {
+function calculateUsefulness(text, category) {
   const lower = text.toLowerCase();
-  let score = 5; // base
+  let score = 4; // Lowered base to be more selective
+  
+  // Category-specific weighting
+  const isFailure = category === 'failure' || category === 'safety';
+  const isKnowledge = category === 'knowledge' || category === 'build';
+  
   // Signal words
   for (const w of SIGNAL_WORDS) {
-    if (lower.includes(w)) score += 1;
+    if (lower.includes(w)) score += (isFailure ? 1.5 : 1); // Failures with fixes are high value
   }
+  
   // Noise words
   for (const w of NOISE_WORDS) {
-    if (lower.includes(w)) score -= 0.5;
+    if (lower.includes(w)) score -= 1;
   }
-  // Length bonus (up to +2)
-  if (text.length > 100) score += 1;
-  if (text.length > 500) score += 1;
-  // Penalty for very short content
-  if (text.length < 20) score -= 2;
-  return Math.max(1, Math.min(10, Math.round(score)));
+  
+  // Length bonus (diminishing returns)
+  if (text.length > 50) score += 0.5;
+  if (text.length > 200) score += 1;
+  if (text.length > 800) score += 1.5;
+  
+  // Penalty for very short or generic content
+  if (text.length < 30) score -= 2;
+  
+  // Bonus for structured data (code blocks, lists, etc.)
+  if (text.includes('```') || text.includes('- ') || text.match(/\d+\./)) {
+    score += 1;
+  }
+
+  return Math.max(1, Math.min(10, Math.round(score * 10) / 10));
 }
 
 function determineTier(secrets, category) {
@@ -1808,7 +1823,7 @@ async function handleIntakeAnalyze(request, env, cors) {
       : classifyCategory(rawContent);
 
     // ─── Step 3: Calculate usefulness ───
-    const usefulness = calculateUsefulness(rawContent);
+    const usefulness = calculateUsefulness(rawContent, category);
 
     // ─── Step 4: Determine tier ───
     const tier = determineTier(secrets, category);

@@ -1,0 +1,29 @@
+[
+  {
+    "entity_id": "39323eef-3f65-4da7-95cc-46151309fb4b",
+    "title": "Predator Self-Healing Architecture",
+    "category": "architecture",
+    "summary": "Autonomous prediction market bot implementing a 5-layer self-healing system with supervisor watchdogs, RPC failover, and runtime invariants.",
+    "body_markdown": "Predator v3 implements a robust self-healing stack:\n\n1. **Runtime Guardian**: Checks 8 invariants every 5 cycles.\n2. **RPC Health Monitor**: Background thread probing 3 endpoints.\n3. **Supervisor Watchdogs**: 4-layer protection including dead man's switch.\n4. **Auto-recovery**: Pauses betting on zero balance and restarts dead processes.\n\nThis architecture ensures the bot remains autonomous even during extended operator absence.",
+    "status": "published",
+    "published_at": "2026-04-11T14:56:00Z"
+  },
+  {
+    "entity_id": "c89025d5-38bf-4f41-b40d-9ee9e5efab3e",
+    "title": "QuantX High-Frequency Scoring Logic",
+    "category": "strategy",
+    "summary": "HF micro gains v3 strategy using dual-mode trading (scalp/runner) and ML-adaptive sizing for XRPL memecoins.",
+    "body_markdown": "QuantX utilizes a sophisticated scoring pipeline:\n\n- **Entry Criteria**: Score 20+, volume-filtered, any TVL.\n- **Exit Logic**: TP ladder (+2%/+5%), hard stop (-5%), and trail (-4% from peak).\n- **ML Integration**: Shadow mode with cold streak bias (0.8x sizing) and accumulation penalties.\n\nThis approach allows for high-volume trading while managing risk through adaptive position sizing.",
+    "status": "published",
+    "published_at": "2026-04-11T14:56:00Z"
+  },
+  {
+    "entity_id": "8887acf3-5444-4a81-881d-06e902f4f22f",
+    "title": "DKTrenchBot Aggressive Memecoin Patterns",
+    "category": "strategy",
+    "summary": "Aggressive scanning strategy with TVL tier gating and burst detection for early-stage XRPL tokens.",
+    "body_markdown": "DKTrenchBot focuses on high-volatility opportunities:\n\n- **Strategy**: Burst, pre_breakout, and micro_scalp modes.\n- **Gating**: Strict TVL tier requirements to avoid low-liquidity traps.\n- **Risk Management**: Aggressive entry with tight stop-losses based on real-time volume shifts.\n\nIdeal for capturing early momentum in new token launches.",
+    "status": "published",
+    "published_at": "2026-04-11T14:56:00Z"
+  }
+]
