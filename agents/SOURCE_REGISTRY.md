@@ -1,5 +1,5 @@
 # Source Registry — Recon Index
-> Auto-maintained by Recon. Last updated: 2026-04-09
+> Auto-maintained by Recon. Last updated: 2026-04-10
 
 All agents, bots, tools, and humans connected to Recon Index.
 
@@ -13,6 +13,7 @@ All agents, bots, tools, and humans connected to Recon Index.
 | SRC-002 | Predator | bot | Zee | XRPL, EVM, Axiom | xpl-77fc0cdfdfdba14b | online | 2026-04-09 |
 | SRC-003 | DKTrenchBot | bot | domx1816-dev | XRPL | xpl-dkt-bot-001 | new | 2026-04-09 |
 | SRC-004 | QuantX | agent | domx1816-dev (DK) | XRPL | xpl-qx-bridge-de665d415e44d478 | new | 2026-04-09 |
+| SRC-005 | zerp | agent | XRPLClaw | - | pending | new | 2026-04-10 |
 
 **Last broadcast:** 2026-04-09 22:35 UTC — CLIO stale cache alert + public server workaround + API auth guide sent to Predator (delivered) and QuantX (queued, offline).
 

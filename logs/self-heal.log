@@ -191,3 +191,464 @@ Status written
 [23:15:10] ✅ ALL HEALTHY
 [23:15:18] [LIBSYNC] Libraries sync started
 [23:15:18] [LIBSYNC] Libraries sync complete
+[23:30:08] ━━━ self-heal cycle ━━━
+[23:30:09] ✅ API healthy
+[23:30:09] ✅ Site healthy
+[23:30:09] ✅ Supabase healthy
+[23:30:09] ✅ Walkie: 0 peers, 5 active channels
+[23:30:09] ✅ Market fresh (3s)
+Status written
+[23:30:11] Stats: 6 agents · 3 msgs · 4 sessions · 0 patterns
+[23:30:11] ✅ ALL HEALTHY
+[23:30:22] [LIBSYNC] Libraries sync started
+[23:30:22] [LIBSYNC] Libraries sync complete
+[23:45:05] ━━━ self-heal cycle ━━━
+[23:45:05] ✅ API healthy
+[23:45:05] ✅ Site healthy
+[23:45:06] ✅ Supabase healthy
+[23:45:06] ✅ Walkie: 0 peers, 5 active channels
+[23:45:06] ✅ Market fresh (1s)
+Status written
+[23:45:08] Stats: 6 agents · 3 msgs · 4 sessions · 0 patterns
+[23:45:08] ✅ ALL HEALTHY
+[23:45:17] [LIBSYNC] Libraries sync started
+[23:45:17] [LIBSYNC] Libraries sync complete
+[00:00:09] ━━━ self-heal cycle ━━━
+[00:00:09] ✅ API healthy
+[00:00:09] ✅ Site healthy
+[00:00:10] ✅ Supabase healthy
+[00:00:10] ✅ Walkie: 0 peers, 5 active channels
+[00:00:10] ✅ Market fresh (4s)
+Status written
+[00:00:13] Stats: 6 agents · 3 msgs · 4 sessions · 0 patterns
+[00:00:13] ✅ ALL HEALTHY
+[00:00:21] ━━━ self-heal cycle ━━━
+[00:00:21] ✅ API healthy
+[00:00:21] ✅ Site healthy
+[00:00:21] ✅ Supabase healthy
+[00:00:21] ✅ Walkie: 0 peers, 5 active channels
+[00:00:21] ✅ Market fresh (15s)
+Status written
+[00:00:24] Stats: 6 agents · 3 msgs · 4 sessions · 0 patterns
+[00:00:24] ✅ ALL HEALTHY
+[00:00:34] [LIBSYNC] Libraries sync started
+[00:00:34] [LIBSYNC] Libraries sync complete
+[00:15:07] ━━━ self-heal cycle ━━━
+[00:15:07] ✅ API healthy
+[00:15:07] ✅ Site healthy
+[00:15:08] ✅ Supabase healthy
+[00:15:08] ✅ Walkie: 0 peers, 5 active channels
+[00:15:08] ✅ Market fresh (3s)
+Status written
+[00:15:11] Stats: 6 agents · 3 msgs · 4 sessions · 0 patterns
+[00:15:11] ✅ ALL HEALTHY
+[00:15:20] [LIBSYNC] Libraries sync started
+[00:15:20] [LIBSYNC] Libraries sync complete
+[00:30:06] ━━━ self-heal cycle ━━━
+[00:30:06] ✅ API healthy
+[00:30:06] ✅ Site healthy
+[00:30:07] ✅ Supabase healthy
+[00:30:07] ✅ Walkie: 0 peers, 4 active channels
+[00:30:07] ✅ Market fresh (2s)
+Status written
+[00:30:10] Stats: 6 agents · 3 msgs · 4 sessions · 0 patterns
+[00:30:10] ✅ ALL HEALTHY
+[00:30:17] [LIBSYNC] Libraries sync started
+[00:30:17] [LIBSYNC] Libraries sync complete
+[00:45:05] ━━━ self-heal cycle ━━━
+[00:45:05] ✅ API healthy
+[00:45:05] ✅ Site healthy
+[00:45:06] ✅ Supabase healthy
+[00:45:06] ✅ Walkie: 0 peers, 4 active channels
+[00:45:06] ✅ Market fresh (0s)
+Status written
+[00:45:08] Stats: 6 agents · 3 msgs · 4 sessions · 6 patterns
+[00:45:08] ✅ ALL HEALTHY
+[00:45:16] [LIBSYNC] Libraries sync started
+[00:45:16] [LIBSYNC] Libraries sync complete
+[01:00:15] ━━━ self-heal cycle ━━━
+[01:00:15] ✅ API healthy
+[01:00:15] ✅ Site healthy
+[01:00:16] ✅ Supabase healthy
+[01:00:16] ✅ Walkie: 0 peers, 4 active channels
+[01:00:16] ✅ Market fresh (11s)
+Status written
+[01:00:20] Stats: 6 agents · 3 msgs · 4 sessions · 6 patterns
+[01:00:20] ✅ ALL HEALTHY
+[01:00:29] [LIBSYNC] Libraries sync started
+[01:00:29] [LIBSYNC] Libraries sync complete
+[01:30:09] ━━━ self-heal cycle ━━━
+[01:30:09] ✅ API healthy
+[01:30:09] ✅ Site healthy
+[01:30:09] ✅ Supabase healthy
+[01:30:09] ✅ Walkie: 0 peers, 4 active channels
+[01:30:09] ✅ Market fresh (4s)
+Status written
+[01:30:13] Stats: 6 agents · 3 msgs · 5 sessions · 6 patterns
+[01:30:13] ✅ ALL HEALTHY
+[01:30:21] [LIBSYNC] Libraries sync started
+[01:30:21] [LIBSYNC] Libraries sync complete
+[01:45:08] ━━━ self-heal cycle ━━━
+[01:45:08] ✅ API healthy
+[01:45:08] ✅ Site healthy
+[01:45:09] ✅ Supabase healthy
+[01:45:09] ✅ Walkie: 0 peers, 4 active channels
+[01:45:09] ✅ Market fresh (4s)
+Status written
+[01:45:13] Stats: 6 agents · 3 msgs · 5 sessions · 6 patterns
+[01:45:13] ✅ ALL HEALTHY
+[01:45:22] [LIBSYNC] Libraries sync started
+[01:45:22] [LIBSYNC] Libraries sync complete
+[02:00:12] ━━━ self-heal cycle ━━━
+[02:00:12] ❌ API DOWN
+[02:00:12] ✅ Site healthy
+[02:00:13] ✅ Supabase healthy
+[02:00:13] ✅ Walkie: 0 peers, 4 active channels
+[02:00:13] ✅ Market fresh (7s)
+Status written
+[02:00:17] Stats: 6 agents · 3 msgs · 5 sessions · 6 patterns
+[02:00:17] ⚠️ ISSUES: api_down,
+[02:00:30] [LIBSYNC] Libraries sync started
+[02:00:30] [LIBSYNC] Libraries sync complete
+[02:16:05] ━━━ self-heal cycle ━━━
+[02:16:05] ❌ API DOWN
+[02:16:05] ✅ Site healthy
+[02:16:05] ✅ Supabase healthy
+[02:16:05] ✅ Walkie: 0 peers, 4 active channels
+[02:16:05] ✅ Market fresh (58s)
+Status written
+[02:16:09] Stats: 6 agents · 3 msgs · 5 sessions · 6 patterns
+[02:16:09] ⚠️ ISSUES: api_down,
+[02:30:53] ━━━ self-heal cycle ━━━
+[02:30:53] ❌ API DOWN
+[02:30:53] ✅ Site healthy
+[02:30:54] ✅ Supabase healthy
+[02:30:54] ✅ Walkie: 0 peers, 4 active channels
+[02:30:54] ✅ Market fresh (49s)
+Status written
+[02:30:57] Stats: 6 agents · 3 msgs · 5 sessions · 6 patterns
+[02:30:57] ⚠️ ISSUES: api_down,
+[02:31:06] [LIBSYNC] Libraries sync started
+[02:31:06] [LIBSYNC] Libraries sync complete
+[02:31:51] ━━━ self-heal cycle ━━━
+[02:31:52] ❌ API DOWN
+[02:31:52] ✅ Site healthy
+[02:31:52] ✅ Supabase healthy
+[02:31:52] ✅ Walkie: 0 peers, 4 active channels
+[02:31:52] ✅ Market fresh (107s)
+Status written
+[02:31:55] Stats: 6 agents · 3 msgs · 5 sessions · 6 patterns
+[02:31:55] ⚠️ ISSUES: api_down,
+[02:32:03] [LIBSYNC] Libraries sync started
+[02:32:03] [LIBSYNC] Libraries sync complete
+[02:45:06] ━━━ self-heal cycle ━━━
+[02:45:07] ❌ API DOWN
+[02:45:07] ✅ Site healthy
+[02:45:07] ✅ Supabase healthy
+[02:45:07] ✅ Walkie: 0 peers, 4 active channels
+[02:45:07] ✅ Market fresh (2s)
+Status written
+[02:45:10] Stats: 6 agents · 3 msgs · 5 sessions · 6 patterns
+[02:45:10] ⚠️ ISSUES: api_down,
+[02:45:17] [LIBSYNC] Libraries sync started
+[02:45:17] [LIBSYNC] Libraries sync complete
+[03:00:05] ━━━ self-heal cycle ━━━
+[03:00:05] ❌ API DOWN
+[03:00:05] ✅ Site healthy
+[03:00:06] ✅ Supabase healthy
+[03:00:06] ✅ Walkie: 0 peers, 4 active channels
+[03:00:06] ✅ Market fresh (1s)
+Status written
+[03:00:09] Stats: 8 agents · 3 msgs · 5 sessions · 6 patterns
+[03:00:09] ⚠️ ISSUES: api_down,
+[03:00:17] ━━━ self-heal cycle ━━━
+[03:00:17] ❌ API DOWN
+[03:00:17] ✅ Site healthy
+[03:00:17] ✅ Supabase healthy
+[03:00:17] ✅ Walkie: 0 peers, 4 active channels
+[03:00:17] ✅ Market fresh (12s)
+Status written
+[03:00:20] Stats: 8 agents · 3 msgs · 5 sessions · 6 patterns
+[03:00:20] ⚠️ ISSUES: api_down,
+[03:00:30] ━━━ self-heal cycle ━━━
+[03:00:31] ❌ API DOWN
+[03:00:31] ✅ Site healthy
+[03:00:31] ✅ Supabase healthy
+[03:00:31] ✅ Walkie: 0 peers, 4 active channels
+[03:00:31] ✅ Market fresh (26s)
+Status written
+[03:00:34] Stats: 8 agents · 3 msgs · 5 sessions · 6 patterns
+[03:00:34] ⚠️ ISSUES: api_down,
+[03:00:44] [LIBSYNC] Libraries sync started
+[03:00:44] [LIBSYNC] Libraries sync complete
+[03:30:05] ━━━ self-heal cycle ━━━
+[03:30:05] ✅ API healthy
+[03:30:05] ✅ Site healthy
+[03:30:06] ✅ Supabase healthy
+[03:30:06] ✅ Walkie: 0 peers, 4 active channels
+[03:30:06] ✅ Market fresh (301s)
+Status written
+[03:30:10] Stats: 8 agents · 3 msgs · 5 sessions · 6 patterns
+[03:30:10] ✅ ALL HEALTHY
+[03:30:16] [LIBSYNC] Libraries sync started
+[03:30:16] [LIBSYNC] Libraries sync complete
+[04:00:06] ━━━ self-heal cycle ━━━
+[04:00:06] ✅ API healthy
+[04:00:07] ✅ Site healthy
+[04:00:07] ✅ Supabase healthy
+[04:00:07] ✅ Walkie: 0 peers, 4 active channels
+[04:00:07] ✅ Market fresh (1s)
+Status written
+[04:00:11] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[04:00:11] ✅ ALL HEALTHY
+[04:00:17] [LIBSYNC] Libraries sync started
+[04:00:17] [LIBSYNC] Libraries sync complete
+[04:30:06] ━━━ self-heal cycle ━━━
+[04:30:06] ✅ API healthy
+[04:30:06] ✅ Site healthy
+[04:30:07] ✅ Supabase healthy
+[04:30:07] ✅ Walkie: 0 peers, 4 active channels
+[04:30:07] ✅ Market fresh (1s)
+Status written
+[04:30:11] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[04:30:11] ✅ ALL HEALTHY
+[04:30:18] [LIBSYNC] Libraries sync started
+[04:30:18] [LIBSYNC] Libraries sync complete
+[05:00:06] ━━━ self-heal cycle ━━━
+[05:00:06] ✅ API healthy
+[05:00:06] ✅ Site healthy
+[05:00:07] ✅ Supabase healthy
+[05:00:07] ✅ Walkie: 0 peers, 4 active channels
+[05:00:07] ✅ Market fresh (2s)
+Status written
+[05:00:11] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[05:00:11] ✅ ALL HEALTHY
+[05:00:17] [LIBSYNC] Libraries sync started
+[05:00:17] [LIBSYNC] Libraries sync complete
+[05:30:07] ━━━ self-heal cycle ━━━
+[05:30:07] ✅ API healthy
+[05:30:08] ✅ Site healthy
+[05:30:08] ✅ Supabase healthy
+[05:30:08] ✅ Walkie: 0 peers, 4 active channels
+[05:30:08] ✅ Market fresh (2s)
+Status written
+[05:30:12] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[05:30:12] ✅ ALL HEALTHY
+[05:30:19] [LIBSYNC] Libraries sync started
+[05:30:19] [LIBSYNC] Libraries sync complete
+[06:00:06] ━━━ self-heal cycle ━━━
+[06:00:06] ✅ API healthy
+[06:00:07] ✅ Site healthy
+[06:00:07] ✅ Supabase healthy
+[06:00:07] ✅ Walkie: 0 peers, 4 active channels
+[06:00:07] ✅ Market fresh (1s)
+Status written
+[06:00:11] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[06:00:11] ✅ ALL HEALTHY
+[06:00:19] [LIBSYNC] Libraries sync started
+[06:00:20] [LIBSYNC] Libraries sync complete
+[06:30:06] ━━━ self-heal cycle ━━━
+[06:30:06] ✅ API healthy
+[06:30:06] ✅ Site healthy
+[06:30:07] ✅ Supabase healthy
+[06:30:07] ✅ Walkie: 0 peers, 4 active channels
+[06:30:07] ✅ Market fresh (2s)
+Status written
+[06:30:11] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[06:30:11] ✅ ALL HEALTHY
+[06:30:21] [LIBSYNC] Libraries sync started
+[06:30:21] [LIBSYNC] Libraries sync complete
+[07:00:06] ━━━ self-heal cycle ━━━
+[07:00:06] ✅ API healthy
+[07:00:06] ✅ Site healthy
+[07:00:06] ✅ Supabase healthy
+[07:00:07] ✅ Walkie: 0 peers, 4 active channels
+[07:00:07] ✅ Market fresh (2s)
+Status written
+[07:00:10] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[07:00:10] ✅ ALL HEALTHY
+[07:00:17] [LIBSYNC] Libraries sync started
+[07:00:17] [LIBSYNC] Libraries sync complete
+[07:30:06] ━━━ self-heal cycle ━━━
+[07:30:06] ✅ API healthy
+[07:30:07] ✅ Site healthy
+[07:30:07] ✅ Supabase healthy
+[07:30:07] ✅ Walkie: 0 peers, 4 active channels
+[07:30:07] ✅ Market fresh (0s)
+Status written
+[07:30:11] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[07:30:11] ✅ ALL HEALTHY
+[07:30:18] [LIBSYNC] Libraries sync started
+[07:30:18] [LIBSYNC] Libraries sync complete
+[08:00:06] ━━━ self-heal cycle ━━━
+[08:00:06] ✅ API healthy
+[08:00:06] ✅ Site healthy
+[08:00:07] ✅ Supabase healthy
+[08:00:07] ✅ Walkie: 0 peers, 4 active channels
+[08:00:07] ✅ Market fresh (0s)
+Status written
+[08:00:11] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[08:00:11] ✅ ALL HEALTHY
+[08:00:19] ━━━ self-heal cycle ━━━
+[08:00:20] ✅ API healthy
+[08:00:20] ✅ Site healthy
+[08:00:20] ✅ Supabase healthy
+[08:00:20] ✅ Walkie: 0 peers, 4 active channels
+[08:00:20] ✅ Market fresh (13s)
+Status written
+[08:00:24] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[08:00:24] ✅ ALL HEALTHY
+[08:00:38] ━━━ self-heal cycle ━━━
+[08:00:38] ✅ API healthy
+[08:00:38] ✅ Site healthy
+[08:00:38] ✅ Supabase healthy
+[08:00:38] ✅ Walkie: 0 peers, 4 active channels
+[08:00:38] ✅ Market fresh (31s)
+Status written
+[08:00:41] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[08:00:41] ✅ ALL HEALTHY
+[08:00:49] [LIBSYNC] Libraries sync started
+[08:00:49] [LIBSYNC] Libraries sync complete
+[08:30:05] ━━━ self-heal cycle ━━━
+[08:30:05] ✅ API healthy
+[08:30:05] ✅ Site healthy
+[08:30:06] ✅ Supabase healthy
+[08:30:06] ✅ Walkie: 0 peers, 4 active channels
+[08:30:06] ✅ Market fresh (1s)
+Status written
+[08:30:09] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[08:30:09] ✅ ALL HEALTHY
+[08:30:16] [LIBSYNC] Libraries sync started
+[08:30:16] [LIBSYNC] Libraries sync complete
+[09:30:05] ━━━ self-heal cycle ━━━
+[09:30:05] ✅ API healthy
+[09:30:05] ✅ Site healthy
+[09:30:06] ✅ Supabase healthy
+[09:30:06] ✅ Walkie: 0 peers, 4 active channels
+[09:30:06] ✅ Market fresh (1s)
+Status written
+[09:30:10] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[09:30:10] ✅ ALL HEALTHY
+[09:30:18] [LIBSYNC] Libraries sync started
+[09:30:18] [LIBSYNC] Libraries sync complete
+[10:00:11] ━━━ self-heal cycle ━━━
+[10:00:11] ✅ API healthy
+[10:00:11] ✅ Site healthy
+[10:00:11] ✅ Supabase healthy
+[10:00:11] ✅ Walkie: 0 peers, 4 active channels
+[10:00:11] ✅ Market fresh (5s)
+Status written
+[10:00:16] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[10:00:16] ✅ ALL HEALTHY
+[10:00:24] [LIBSYNC] Libraries sync started
+[10:00:24] [LIBSYNC] Libraries sync complete
+[10:30:06] ━━━ self-heal cycle ━━━
+[10:30:06] ✅ API healthy
+[10:30:06] ✅ Site healthy
+[10:30:07] ✅ Supabase healthy
+[10:30:07] ✅ Walkie: 0 peers, 4 active channels
+[10:30:07] ✅ Market fresh (1s)
+Status written
+[10:30:10] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[10:30:10] ✅ ALL HEALTHY
+[10:30:17] [LIBSYNC] Libraries sync started
+[10:30:17] [LIBSYNC] Libraries sync complete
+[11:00:12] ━━━ self-heal cycle ━━━
+[11:00:13] ✅ API healthy
+[11:00:13] ✅ Site healthy
+[11:00:13] ✅ Supabase healthy
+[11:00:13] ✅ Walkie: 0 peers, 4 active channels
+[11:00:13] ✅ Market fresh (6s)
+Status written
+[11:00:17] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[11:00:17] ✅ ALL HEALTHY
+[11:00:31] [LIBSYNC] Libraries sync started
+[11:00:31] [LIBSYNC] Libraries sync complete
+[11:30:06] ━━━ self-heal cycle ━━━
+[11:30:07] ✅ API healthy
+[11:30:07] ✅ Site healthy
+[11:30:07] ✅ Supabase healthy
+[11:30:07] ✅ Walkie: 0 peers, 4 active channels
+[11:30:07] ✅ Market fresh (1s)
+Status written
+[11:30:12] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[11:30:12] ✅ ALL HEALTHY
+[11:30:18] [LIBSYNC] Libraries sync started
+[11:30:18] [LIBSYNC] Libraries sync complete
+[12:00:06] ━━━ self-heal cycle ━━━
+[12:00:06] ✅ API healthy
+[12:00:06] ✅ Site healthy
+[12:00:06] ✅ Supabase healthy
+[12:00:06] ✅ Walkie: 0 peers, 4 active channels
+[12:00:06] ✅ Market fresh (0s)
+Status written
+[12:00:10] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[12:00:10] ✅ ALL HEALTHY
+[12:00:16] [LIBSYNC] Libraries sync started
+[12:00:16] [LIBSYNC] Libraries sync complete
+[12:30:07] ━━━ self-heal cycle ━━━
+[12:30:07] ✅ API healthy
+[12:30:07] ✅ Site healthy
+[12:30:08] ✅ Supabase healthy
+[12:30:08] ✅ Walkie: 0 peers, 4 active channels
+[12:30:08] ✅ Market fresh (3s)
+Status written
+[12:30:12] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[12:30:12] ✅ ALL HEALTHY
+[12:30:22] [LIBSYNC] Libraries sync started
+[12:30:22] [LIBSYNC] Libraries sync complete
+[13:00:07] ━━━ self-heal cycle ━━━
+[13:00:07] ✅ API healthy
+[13:00:07] ✅ Site healthy
+[13:00:07] ✅ Supabase healthy
+[13:00:07] ✅ Walkie: 0 peers, 4 active channels
+[13:00:07] ✅ Market fresh (1s)
+Status written
+[13:00:12] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[13:00:12] ✅ ALL HEALTHY
+[13:00:19] [LIBSYNC] Libraries sync started
+[13:00:19] [LIBSYNC] Libraries sync complete
+[13:30:06] ━━━ self-heal cycle ━━━
+[13:30:06] ✅ API healthy
+[13:30:06] ✅ Site healthy
+[13:30:07] ✅ Supabase healthy
+[13:30:07] ✅ Walkie: 0 peers, 4 active channels
+[13:30:07] ✅ Market fresh (1s)
+Status written
+[13:30:11] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[13:30:11] ✅ ALL HEALTHY
+[13:30:18] ━━━ self-heal cycle ━━━
+[13:30:18] ✅ API healthy
+[13:30:18] ✅ Site healthy
+[13:30:19] ✅ Supabase healthy
+[13:30:19] ✅ Walkie: 0 peers, 4 active channels
+[13:30:19] ✅ Market fresh (13s)
+Status written
+[13:30:23] Stats: 8 agents · 4 msgs · 5 sessions · 6 patterns
+[13:30:23] ✅ ALL HEALTHY
+[13:30:31] [LIBSYNC] Libraries sync started
+[13:30:31] [LIBSYNC] Libraries sync complete
+[14:05:42] [LIBSYNC] Libraries sync started
+[14:05:42] [LIBSYNC] Libraries sync complete
+[19:30:06] ━━━ self-heal cycle ━━━
+[19:30:06] ✅ API healthy
+[19:30:06] ✅ Site healthy
+[19:30:06] ✅ Supabase healthy
+[19:30:06] ✅ Walkie: 0 peers, 3 active channels
+[19:30:07] ✅ Market fresh (2s)
+Status written
+[19:30:09] Stats: 19 agents · 5 msgs · 5 sessions · 6 patterns
+[19:30:09] ✅ ALL HEALTHY
+[19:30:30] [LIBSYNC] Libraries sync started
+[19:30:30] [LIBSYNC] Libraries sync complete
+[23:52:32] ━━━ self-heal cycle ━━━
+[23:52:32] ✅ API healthy
+[23:52:32] ✅ Site healthy
+[23:52:33] ✅ Supabase healthy
+[23:52:33] ✅ Walkie: 0 peers, 2 active channels
+[23:52:33] ✅ Market fresh (148s)
+Status written
+[23:52:35] Stats: 8 agents · 5 msgs · 5 sessions · 6 patterns
+[23:52:35] ✅ ALL HEALTHY
+[23:52:35] [LIBSYNC] Libraries sync started
+[23:52:35] [LIBSYNC] Libraries sync complete

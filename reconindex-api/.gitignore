@@ -1,0 +1,11 @@
+node_modules/
+.env
+*.secret
+secrets.md
+memory/
+state/
+skills/
+supabase/.temp/
+backup-*.json
+*.log
+.DS_Store

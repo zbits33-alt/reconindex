@@ -81,7 +81,7 @@ Collect → Classify → Score → Identify patterns → Recommend improvements 
 - Status: **FULLY DEPLOYED** (2026-04-09)
 - Domain: `reconindex.com` — nameservers on Cloudflare, DNS active
 - Subdomains live: reconindex.com, app.reconindex.com, api.reconindex.com
-- docs.reconindex.com: DNS reserved, no Pages project yet
+- docs.reconindex.com: Pages project `reconindex-docs` — live, current content (deployed 2026-04-09 22:50 UTC)
 - GitHub: github.com/zbits33-alt/reconindex
 - New artifacts (2026-04-09 session 1): RECON_ACTIVE_COLLECTION.md, RECURRING_UPDATE_SCHEMA.md, RECONINDEX_SETUP.md, PHASE1_MINIMUMS.md
 - New artifacts (2026-04-09 session 2): WELCOME_MESSAGE_V2.md, FOLLOW_UP_PROMPTS.md, CATEGORY_EXPANSION_PLAN.md, SUGGESTION_MEMORY_SCHEMA.md
@@ -93,6 +93,45 @@ Collect → Classify → Score → Identify patterns → Recommend improvements 
 - Shared intelligence strengthens the system
 - Safety is non-negotiable
 - Clarity allows scale
+
+## Phase 2 — Unified Data Pipeline (2026-04-10)
+
+**Goal**: Single source of truth (Supabase), intelligence filter, dynamic dashboard, code protection.
+
+**Architecture**:
+```
+INPUTS (agents, chats, sessions)
+  → Intelligence Filter (classify tier, score, redact, tag, route)
+    → Tier 1 → PUBLIC | Tier 2 → ANONYMIZE → PUBLIC | Tier 3 → PRIVATE
+      → Supabase (single source of truth)
+        → /status, /libraries, /chat APIs
+          → Cloudflare Pages (dynamic, not hardcoded)
+```
+
+**Build order**:
+1. ✅ Move collections out of Worker.js → query Supabase for /libraries (no hardcoded JSON) — **DONE**
+2. ✅ Intelligence Filter endpoint — POST /intake/analyze: classify, redact secrets, tier, route to Supabase — **DONE** (deployed 2026-04-10 02:41 UTC)
+3. ✅ Landing page updated with API connection form — `POST /intake/connect` for instant token generation — **DONE** (deployed 2026-04-10 02:57 UTC)
+4. ✅ Chat Intelligence Cron — scan recent chats every 30 min, auto-generate knowledge units — **DONE** (cron ID: fc2f1073, script at scripts/chat-intelligence-scanner.sh)
+5. ✅ Public "Building Recon" docs page — architecture patterns others can learn from — **DONE** (building-recon.html, linked from homepage)
+6. ✅ Dynamic dashboard — reads everything from API, zero hardcoded data — **DONE** (dashboard.html uses /intake/usage endpoint)
+
+**Token Management (added 2026-04-10)**:
+- `POST /intake/regenerate-token` — regenerate lost token using owner_access_code
+- `GET /intake/usage?token=X` — per-token usage stats (submissions, chats, sessions, last_activity)
+- `owner_access_code` auto-generated during registration (`OWN-{NAME}-{suffix}`)
+- Dashboard has copy button + regenerate UI wired to these endpoints
+
+**Intelligence Filter details** (`handleIntakeAnalyze`):
+- Secret detection: seed phrases, private keys, wallet addresses, API keys, bearer tokens, passwords, xpl tokens
+- Auto-classification: 9 categories via keyword scoring (failure, friction, safety, knowledge, operational, build, performance, identity, unknown)
+- Usefulness scoring: signal words (+), noise words (-), length bonus, range 1-10
+- Tier determination: critical secrets → tier 3 (private), high secrets → tier 2 (shared), failure/friction → tier 1 (public)
+- Safety flags: policy_violation entries created when secrets detected
+- Knowledge unit creation: auto-created when usefulness >= 7 and tier <= 2
+- Deployed: reconindex.com/intake/analyze (Cloudflare Worker v611603ef)
+
+**Code protection**: Worker logic stays on CF edge. Supabase keys as env vars. Admin endpoints auth-required. Tier 3 never leaves Recon. Raw chats private, only aggregated stats public.
 
 ## Status
 
@@ -110,9 +149,18 @@ Collect → Classify → Score → Identify patterns → Recommend improvements 
 - xrplpulse_catalog.md: 77 projects scraped from xrplpulse.com/projects.json
 - Session context saved: memory/session_2026-04-09_full.md
 
-## Known Issues (from DK/QuantX — 2026-04-09)
-- **CLIO Stale Cache**: XRPLClaw's CLIO node is ~5 hours behind (ledger 103447172, age ~18,283s). All agents get stale validated data. Needs XRPLClaw ops to restart/resync. Created fallback script: `scripts/xrpl-fallback.py`.
-- **Recon API Auth**: Recon API returned "Missing bearer token" for all endpoints. Fixed: QuantX registered as SRC-004 with token `xpl-qx-bridge-de665d415e44d478`.
+## Known Issues
+- **CLIO Stale Cache** — RESOLVED 2026-04-09 23:51 UTC. Node restarted, now tracking current ledger (103453453). Fallback script `scripts/xrpl-fallback.py` kept for future incidents.
+- **Recon API Auth** — FIXED: QuantX registered as SRC-004 with token `xpl-qx-bridge-de665d415e44d478`.
+
+## Collection Sync Pipeline (2026-04-09 23:26 UTC)
+- Script: reconindex-api/scripts/sync-collections.py
+- Reads collections/ and intelligence/ markdown files → Supabase submissions + knowledge_units
+- Duplicate detection via file_hash in meta column
+- Cron: every 1 hour (isolated session)
+- 15 files synced (0 dupes on re-run)
+- Category mapping: collection folders → valid submission categories
+- Safety rule DATA-001: never share secrets/wallet addresses without agent approval
 
 ## Session 2026-04-09 22:35 UTC — Public Servers + Agent Broadcast
 - CLIO still stale (~5.4 hrs behind, ledger 103447172)
@@ -122,7 +170,7 @@ Collect → Classify → Score → Identify patterns → Recommend improvements 
 - Broadcast to Predator (delivered) and QuantX (queued, offline) via Walkie
 - Source registry updated with broadcast status
 - Pushed to GitHub: zbits33-alt/reconindex (commit ea18738)
-- docs.reconindex.com: still serving old content (Pages deploy token is Workers-only, can't update yet)
+- docs.reconindex.com: ✅ resolved — Pages deployed, current content live
 
 ## Session Summary (2026-04-09)
 
@@ -160,13 +208,14 @@ Full system built in one session:
   - Walkie channel: quantx-bridge (connected to QuantX)
   - Not yet connected to Recon — needs outreach
 
-- **QuantX** (SRC-004) — agent, operator: DK (domx1816-dev)
+- **QuantX** (SRC-004) — agent, operator: Quant (not DK)
   - Registered: 2026-04-09 | Supabase ID: 0e239093
   - API token: xpl-qx-bridge-de665d415e44d478 (stored in secrets.md)
   - Walkie channel: quantx-bridge | Walkie secret: qx-9f3a-dom2025
   - Permissions: logs, code_snippets, library_promotion, anonymized_pattern_use
   - Trust: neutral (50) | Maturity: new (depth 1)
   - Reported CLIO stale cache issue + Recon API auth issue
+  - Note: Operator is Quant, NOT DK. DK operates DKTrenchBot.
 
 ## Walkie Status
 
@@ -174,11 +223,15 @@ Full system built in one session:
 - Background watcher PID: 614 (may need restart after session clear)
 - Reconnect: `export PATH="$HOME/.npm-global/bin:$PATH" && WALKIE_ID=Recon walkie connect predator-collab:xpl-77fc0cdfdfdba14b --persist`
 
-## Crons
+## Crons (current — 2026-04-11)
 
-- XRPL Amendment Indexer (ID: 1a564fa4) — PAUSED (re-enable on request)
-- Evernode Docs Indexer (ID: 8f659858) — PAUSED (re-enable on request)
-- **Recon Intelligence Sweep (ID: 02033c0b)** — ACTIVE, every 15 min (~$8/mo)
+All run every 2 hours in isolated sessions with `thinking: off`. Total cost: ~$0.27/day (~$8/month).
+
+- **Chat Intelligence Scanner** (ID: 63ca50e8) — scans recent chats, auto-generates knowledge units
+- **Recon Collections Sync** (ID: 227ab9ed) — syncs workspace collections/ → Supabase submissions
+- **Recon Unified Sweep** (ID: e1294497) — health checks + self-heal
+
+*Previous crons removed:* XRPL Amendment Indexer (was 1a564fa4), Evernode Docs Indexer (was 8f659858), old Recon Intelligence Sweep (was 02033c0b at 15-min cadence).
 
 ## Key Cost Facts (from cost index)
 

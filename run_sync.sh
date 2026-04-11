@@ -1,0 +1,3 @@
+#!/bin/bash
+export SUPABASE_SERVICE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im55Z2Rjdmptanp2eXhsamV4ampvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3NTcwOTMyMSwiZXhwIjoyMDkxMjg1MzIxfQ.sPHZ0c7yxquUQkHzXFSyBlCSqm4p_j4Um8mIaLLVtkQ"
+python3 /home/agent/workspace/reconindex-api/scripts/sync-collections.py
