@@ -137,3 +137,5 @@
 - **Cross-listed**: Many projects appear in multiple categories (e.g., DropFi is DEX+NFT+Tools+Payments)
 - **Unique projects**: 77 individual entries
 - **Categories**: DEX (20), Tools (40), Gaming (10), Media (13), DeFi (4), Payments (7), Metaverse (2), Prediction Market (1), DID (1), NFT-Integrated (23)
+
+| XRP.cafe | https://xrp.cafe | The friendliest NFT marketplace on XRPL |

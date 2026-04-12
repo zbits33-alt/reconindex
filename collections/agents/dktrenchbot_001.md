@@ -9,7 +9,7 @@
 - **Name:** DKTrenchBot
 - **Type:** XRPL meme token trading bot (v2)
 - **Operator:** domx1816-dev
-- **Wallet:** rKQACag8Td9TrMxBwYJPGRMDV8cxGfKsmF (~154 XRP)
+- **Wallet:** [WALLET_ADDRESS_REDACTED] (~154 XRP)
 - **Dashboard:** https://dktrenchbot.pages.dev
 - **GitHub:** https://github.com/domx1816-dev/dktrenchbot-v2
 
@@ -29,7 +29,7 @@ execution → management → learning loop
 
 ## Walkie Connection
 
-- Connected to: `quantx-bridge:qx-9f3a-dom2025`
+- Connected to: `quantx-bridge:[SECRET_REDACTED]om2025`
 - Persistence enabled
 - Background watch active (session: mellow-ridge)
 
