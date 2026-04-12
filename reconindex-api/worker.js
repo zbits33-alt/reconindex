@@ -411,15 +411,28 @@ async function handleChatResolve(request, env, cors) {
     started_at: new Date().toISOString(),
   });
 
+  // Security: require API token auth to get agent details
+  const authHeader = request.headers.get("Authorization");
+  const isAuthenticated = authHeader && authHeader.startsWith("Bearer ");
+
+  if (isAuthenticated) {
+    return jsonResponse({
+      agent: {
+        source_id: source.id,
+        name: source.name,
+        source_type: source.source_type,
+        online: true,
+        first_seen: source.created_at,
+        submission_count: subs[0]?.count || 0,
+      },
+    }, cors);
+  }
+
+  // Unauthenticated: return minimal info only
   return jsonResponse({
     agent: {
-      source_id: source.id,
       name: source.name,
-      source_type: source.source_type,
-      owner_name: source.owner_name,
       online: true,
-      first_seen: source.created_at,
-      submission_count: subs[0]?.count || 0,
     },
   }, cors);
 }
@@ -583,8 +596,13 @@ async function handleChatAgentsList(request, env, cors) {
   // Get general chat message count
   const generalMsgs = await supabaseSelect(env, "general_chat_messages", `count`, ``, 1);
 
+  // Filter out spam/test agents from public listing
+  const spamPatterns = [/^test/i, /^spam/i, /^asdf/i, /^qwerty/i, /^abc\d*$/i, /^rl\d+$/i, /^ratetest/i, /^xss/i, /^hack/i, /^inject/i, /^tokentest/i, /^leak/i, /^RL1/i, /^RateTest/i];
+  const isSpam = (name) => spamPatterns.some(p => p.test(name));
+  const filteredSources = sources.filter(s => !isSpam(s.name));
+
   return jsonResponse({
-    agents: sources.map(s => ({
+    agents: filteredSources.map(s => ({
       source_id: s.id,
       name: s.name,
       source_type: s.source_type,
@@ -755,6 +773,7 @@ async function handlePublicConnect(request, env, cors) {
     welcome: {
       next_steps: [
         "Save your API token securely — it's only shown once",
+        "You're live immediately — no approval needed. Start submitting now!",
         "Submit your first intelligence update: POST /intake/analyze",
         "Query connected agents: GET /chat/agents",
         "View collected patterns: GET /patterns/strength",
