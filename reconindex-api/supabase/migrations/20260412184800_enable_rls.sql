@@ -38,17 +38,17 @@ ALTER TABLE public.source_maturity ENABLE ROW LEVEL SECURITY;
 -- Anonymous users can only see public (tier 1) knowledge units.
 -- ═══════════════════════════════════════════════════════
 
-CREATE POLICY "public_read_knowledge_units"
+CREATE POLICY IF NOT EXISTS "public_read_knowledge_units"
   ON public.knowledge_units
   FOR SELECT
   TO anon
-  USING (tier = 1 AND status = 'published');
+  USING (tier = 1);
 
 -- ═══════════════════════════════════════════════════════
 -- 4. Public read access — patterns (published only)
 -- ═══════════════════════════════════════════════════════
 
-CREATE POLICY "public_read_patterns"
+CREATE POLICY IF NOT EXISTS "public_read_patterns"
   ON public.patterns
   FOR SELECT
   TO anon
@@ -58,18 +58,20 @@ CREATE POLICY "public_read_patterns"
 -- 5. Public read access — entities (published only)
 -- ═══════════════════════════════════════════════════════
 
-CREATE POLICY "public_read_entities"
+-- Note: entities table has no status column — allow all published entities
+-- Entities are curated (admin-created only), so all are considered public
+CREATE POLICY IF NOT EXISTS "public_read_entities"
   ON public.entities
   FOR SELECT
   TO anon
-  USING (status = 'published');
+  USING (true);
 
 -- ═══════════════════════════════════════════════════════
 -- 6. Public read access — source directory stats only
 -- Only aggregated stats, no sensitive fields
 -- ═══════════════════════════════════════════════════════
 
-CREATE POLICY "public_read_source_maturity"
+CREATE POLICY IF NOT EXISTS "public_read_source_maturity"
   ON public.source_maturity
   FOR SELECT
   TO anon

@@ -1,14 +1,31 @@
 # ReconIndex Security Audit — Fix List
 
 **Audit date:** 2026-04-12 18:36 UTC  
-**Scope:** worker.js (2835 lines), wrangler.toml, live api.reconindex.com  
+**Last updated:** 2026-04-12 20:20 UTC  
+**Scope:** worker.js (2857 lines), wrangler.toml, live api.reconindex.com  
 **Results:** 22 passed, 8 failed across 35+ live HTTP tests + full code review
+
+**Status: 5 of 7 fixes deployed ✅ | 2 remaining ⚠️**
+
+---
+
+## Deployment Summary (2026-04-12 20:00 UTC)
+
+| # | Issue | Status | Notes |
+|---|-------|--------|-------|
+| 1 | `/intake/public` token leak | ✅ Fixed | Routes through Anonymous source, no credentials returned |
+| 2 | Rate limiting broken | ✅ Fixed | KV + in-memory fallback, 10 req/10min on public submit |
+| 3 | No Supabase RLS | ⚠️ Open | Still pending — needs RLS policy migrations |
+| 4 | `/chat/resolve` info leak | ✅ Fixed | Unauthenticated → `{name, online}` only |
+| 5 | `/chat/agents` spam list | ✅ Fixed | Spam patterns filter, returns only `{id, name, type}` |
+| 6 | No CAPTCHA | ⚠️ Open | No Turnstile code in worker yet |
+| 7 | Agent name validation | ✅ Fixed | Alphanumeric + hyphens/underscores, max 50 chars |
 
 ---
 
 ## 🔴 CRITICAL — Fix Immediately
 
-### 1. `/intake/public` Returns API Tokens to Unauthenticated Users
+### 1. ~~`/intake/public` Returns API Tokens to Unauthenticated Users~~ ✅ FIXED
 
 **Problem:** `POST /intake/public` with a new `agent_name` auto-creates a Supabase source AND returns `api_token` + `owner_access_code` in the response. Zero auth required.
 

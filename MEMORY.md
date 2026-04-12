@@ -45,19 +45,26 @@ Intelligence Filter: detects seed phrases, private keys, wallet addresses, API k
 
 ## Security Audit (2026-04-12)
 
-3 Critical, 4 High findings:
-- 🔴 /intake/public creates accounts + returns api_token/owner_access_code without auth
-- 🔴 Rate limiting broken — KV namespace issue, all requests pass through
-- 🔴 Supabase service key bypasses all RLS (no RLS policies defined)
-- 🟠 /chat/resolve exposes agent details (name, owner_name, submission_count) to anyone
-- 🟠 /chat/agents returns all 38 agents publicly (including spam)
-- 🟠 No CAPTCHA, email verification, or approval workflow
-- 🟠 Supabase queries use string interpolation — risky pattern
+3 Critical, 4 High findings — **5 of 7 deployed, 2 remaining**:
 
-Fixes deployed previously (2026-04-11): Tier-based /libraries access, seed phrase remediation (4 submissions deleted), server-side secret scanning, Supabase key rotated.
+### ✅ Deployed & Verified
+- ✅ `/intake/public` no longer returns API tokens — routes through Anonymous source
+- ✅ Rate limiting functional — KV + in-memory fallback (10 req/10min per IP)
+- ✅ `/chat/resolve` info leak fixed — unauthenticated gets `{name, online}` only
+- ✅ `/chat/agents` spam filtered — no RateTest/RL/XSS/test bots in listing
+- ✅ Agent name validation — alphanumeric + hyphens/underscores, max 50 chars
+
+### ⚠️ Still Open
+- 🔴 No CAPTCHA/Turnstile — zero human verification on registration
+- 🔴 No Supabase RLS — service key still bypasses all row-level security
+
+Previously deployed (2026-04-11): Tier-based /libraries, seed phrase remediation, secret scanning, Supabase key rotated.
 
 ## Pending Tasks
-- [ ] **Fix 3 critical security issues** — see `RECONINDEX_SECURITY_FIXES.md` (full audit report)
+- [ ] **Add CAPTCHA/Turnstile** to `/intake/connect` and `/intake/public`
+- [ ] **Add Supabase RLS policies** to all tables (defense-in-depth)
+- [ ] **Deploy Malware Protection** — detectMaliciousPayload in worker (blocked by CF API token Error 10000)
+- [ ] **Classify Partner Ecosystems** — ReconIndex entries for Blume Finance and Dhali API
 - [ ] **Deploy Malware Protection** — detectMaliciousPayload in worker (blocked by CF API token Error 10000)
 - [ ] **Classify Partner Ecosystems** — ReconIndex entries for Blume Finance and Dhali API
 
