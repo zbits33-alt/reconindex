@@ -194,6 +194,31 @@ INPUTS (agents, chats, sessions)
 - Pushed to GitHub: zbits33-alt/reconindex (commit ea18738)
 - docs.reconindex.com: ✅ resolved — Pages deployed, current content live
 
+## Recon API Search Endpoint Fixes (2026-04-12 05:00 UTC)
+
+**Context**: Predator diagnosed search endpoint returning 0 results for all types. Diagnosis was partially correct (submit works, data exists) but root causes differed.
+
+**Three bugs fixed in `/search/all` endpoint**:
+
+| Bug | Root Cause | Fix |
+|-----|-----------|-----|
+| Patterns returned 0 | Queried `strength_score` column — doesn't exist in Supabase schema | Removed non-existent column from SELECT |
+| KUs returned 0 | Queried `status` column — doesn't exist in schema | Removed non-existent column from SELECT |
+| Submissions returned 0 | Used comma-separated filter syntax (`tier=lte.2,summary=ilike...`) which breaks with operators like `lte` — Supabase consumed the comma as part of the value | Changed to `&`-separated filters: `tier=lte.2&summary=ilike.%25${q}%25` |
+
+**Verification** (all working):
+- `GET /search/all?q=health&type=submission` → 2 results ✓
+- `GET /search/all?q=test&type=entity` → 4 results ✓
+- All four types (submission, entity, pattern, knowledge_unit) return data when it exists
+
+**Clarification**: `/libraries` endpoint was initially suspected of serving hardcoded INDEX.md data, but investigation confirmed it queries Supabase correctly. The 31 entries returned for anonymous users are all the tier-1 (public) submissions in Supabase. Authenticated agents see more entries based on their `default_tier` permission (e.g., QuantX sees 212 entries with default_tier=2). The tier-based access control is working as designed.
+
+**Update 2026-04-12 05:28 UTC**: Changed `/libraries` default access level to make tier-2 entries public for anonymous users. Worker deployed (version `c31a1620`). Anonymous users now see 212 entries (tiers 1-2) instead of 31 (tier 1 only). Tier-3 entries (2 total, containing secrets/wallet addresses) remain protected. This achieves "make tier 2 open to public" without database changes — the DB trigger blocking REST API updates made direct tier promotion impossible, so the Worker code change was the pragmatic solution.
+
+**Credits saved** by fixing root cause instead of iterating on wrong assumptions.
+
+---
+
 ## Session Summary (2026-04-09)
 
 Full system built in one session:
@@ -208,6 +233,24 @@ Full system built in one session:
 - intelligence/amendments/ — XRPL amendment indexer (91 enabled, 13 pending)
 - intelligence/evernode/ — Evernode docs indexer
 - intelligence/cost/ — XRPLClaw cost index (full reference)
+
+## Security Fixes Deployed (2026-04-11 20:29 UTC)
+
+**Worker version**: `699b7877-608b-4f89-9968-9f18938693fc`
+
+| Fix | Details |
+|-----|---------|
+| **Tier-based `/libraries` access** | Anonymous=tier 1 only, authenticated=tier ≤ agent's default_tier. Queries `permissions.default_tier` for auth'd agents. |
+| **Knowledge unit tier filtering** | KUs now filtered by `tier=lte.{maxTier}` same as submissions. |
+| **Seed phrase leak remediation** | Deleted 4 submissions containing seed phrases (3× tier 2 duplicates + 1× tier 3). Verified no KUs contain secrets. |
+| **Server-side secret scanning on `/intake/submit`** | All submissions scanned via `detectSecrets()`. Critical/high severity secrets force tier=3 and flag `meta.secret_scan='blocked'`. |
+| **Supabase service role key rotation** | New key deployed to Cloudflare Worker secrets. Old key invalidated. |
+
+**Rate limiting on `/libraries`**: Deferred — `checkRateLimit` is scoped inside `fetch()` handler, not accessible from module-level functions. Needs refactoring to module scope before adding.
+
+**Remaining known issues**:
+- No rate limiting on `/libraries` endpoint (anonymous can query freely)
+- No access logging for audit trail
 
 ## Known Contacts
 

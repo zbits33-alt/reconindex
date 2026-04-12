@@ -1,3 +1,23 @@
+// ═══════════════════════════════════════════════════════
+// MODULE-LEVEL HELPERS
+// ═══════════════════════════════════════════════════════
+
+// Rate limiting helper — uses KV namespace RATE_LIMITS
+async function checkRateLimit(env, key, maxRequests, windowSeconds) {
+  if (!env.RATE_LIMITS) return { allowed: true }; // KV not bound, skip
+  const now = Date.now();
+  const windowStart = now - (windowSeconds * 1000);
+  const existing = await env.RATE_LIMITS.get(key);
+  const timestamps = existing ? JSON.parse(existing) : [];
+  const valid = timestamps.filter(t => t > windowStart);
+  if (valid.length >= maxRequests) {
+    return { allowed: false, retryAfter: Math.ceil((valid[0] + windowSeconds * 1000 - now) / 1000) };
+  }
+  valid.push(now);
+  await env.RATE_LIMITS.put(key, JSON.stringify(valid), { expirationTtl: windowSeconds + 60 });
+  return { allowed: true };
+}
+
 export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -19,22 +39,6 @@ export default {
 
     if (method === "OPTIONS") {
       return new Response(null, { headers: cors });
-    }
-
-    // Rate limiting helper — uses KV namespace RATE_LIMITS
-    async function checkRateLimit(key, maxRequests, windowSeconds) {
-      if (!env.RATE_LIMITS) return { allowed: true }; // KV not bound, skip
-      const now = Date.now();
-      const windowStart = now - (windowSeconds * 1000);
-      const existing = await env.RATE_LIMITS.get(key);
-      const timestamps = existing ? JSON.parse(existing) : [];
-      const valid = timestamps.filter(t => t > windowStart);
-      if (valid.length >= maxRequests) {
-        return { allowed: false, retryAfter: Math.ceil((valid[0] + windowSeconds * 1000 - now) / 1000) };
-      }
-      valid.push(now);
-      await env.RATE_LIMITS.put(key, JSON.stringify(valid), { expirationTtl: windowSeconds + 60 });
-      return { allowed: true };
     }
 
     // ─── Health ───
@@ -564,54 +568,9 @@ async function handleChatAgentsList(request, env, cors) {
 // ═══════════════════════════════════════════════════════
 
 async function handleIntakeSubmit(request, env, cors) {
-  const auth = request.headers.get("Authorization");
-  if (!auth || !auth.startsWith("Bearer ")) {
-    return jsonResponse({ error: "Missing bearer token" }, { ...cors }, 401);
-  }
-
-  const token = auth.slice(7);
-  const source = await supabaseSelect(env, "sources", `id,status`, `api_token=eq.${token}`, 1);
-  if (source.length === 0) return jsonResponse({ error: "Invalid token" }, { ...cors }, 401);
-  if (source[0].status !== 'active') return jsonResponse({ error: "Source is inactive" }, { ...cors }, 403);
-
-  const sourceId = source[0].id;
-
-  let body;
-  try {
-    body = await request.json();
-  } catch {
-    return jsonResponse({ error: "Invalid JSON" }, { ...cors }, 400);
-  }
-
-  const required = ["category", "summary", "content"];
-  for (const field of required) {
-    if (!body[field]) return jsonResponse({ error: `Missing field: ${field}` }, { ...cors }, 400);
-  }
-
-  const validCategories = [
-    "identity", "build", "operational", "performance",
-    "failure", "knowledge", "safety", "friction", "audit_request"
-  ];
-  if (!validCategories.includes(body.category)) {
-    return jsonResponse({ error: `Invalid category. Must be one of: ${validCategories.join(", ")}` }, { ...cors }, 400);
-  }
-
-  const result = await supabaseInsert(env, "submissions", {
-    source_id: sourceId,
-    tier: body.tier || 2,
-    category: body.category,
-    summary: body.summary,
-    content: body.content,
-    status: "received",
-    meta: body.meta || {},
-  });
-
-  return jsonResponse({
-    success: true,
-    submission_id: result[0].id,
-    status: "received",
-    message: "Submission received and queued for classification",
-  }, cors);
+  // Delegate to the full intelligence filter pipeline
+  // This ensures auto-classification, secret scanning, and KU creation on every submit
+  return handleIntakeAnalyze(request, env, cors);
 }
 
 async function handleIntakeRegister(request, env, cors) {
@@ -669,7 +628,7 @@ async function handlePublicConnect(request, env, cors) {
   // Per-IP rate limit: 5 registrations per 10 minutes
   const clientIp = request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || "unknown";
   const rlKey = `connect:${clientIp}`;
-  const rl = await checkRateLimit(rlKey, 5, 600); // 5 requests per 600 seconds (10 min)
+  const rl = await checkRateLimit(env, rlKey, 5, 600); // 5 requests per 600 seconds (10 min)
   if (!rl.allowed) {
     return jsonResponse({
       error: "Rate limit exceeded",
@@ -689,8 +648,9 @@ async function handlePublicConnect(request, env, cors) {
     return jsonResponse({ error: "name and type are required" }, { ...cors }, 400);
   }
 
-  // Validate input
-  if (!body.operator || body.operator.trim().length === 0) {
+  // Validate input - accept operator_name or owner_name from form
+  const operatorName = body.operator_name || body.owner_name || body.operator;
+  if (!operatorName || operatorName.trim().length === 0) {
     return jsonResponse({ error: "operator name is required" }, { ...cors }, 400);
   }
 
@@ -719,7 +679,7 @@ async function handlePublicConnect(request, env, cors) {
   const source = await supabaseInsert(env, "sources", {
     name: body.name,
     source_type: body.type,
-    owner_name: body.owner || null,
+    owner_name: operatorName,
     ecosystem_scope: body.ecosystem || [],
     public_description: body.description || null,
     api_token: apiToken,
@@ -1402,15 +1362,32 @@ async function handleLibraries(request, env, cors) {
   const catFilter = url.searchParams.get("category");
   const search = url.searchParams.get("search");
 
+  // Auth: check for bearer token to determine max tier access
+  const auth = request.headers.get("Authorization");
+  let maxTier = 2; // Default: anonymous gets tiers 1-2 (public + anonymized shared)
+  if (auth && auth.startsWith("Bearer ")) {
+    const token = auth.slice(7);
+    const sources = await supabaseSelect(env, "sources", "id,status", `api_token=eq.${token}`, 1);
+    if (sources.length > 0 && sources[0].status === 'active') {
+      const sourceId = sources[0].id;
+      // Look up default_tier from permissions table
+      const perms = await supabaseSelect(env, "permissions", "default_tier", `source_id=eq.${sourceId}`, 1);
+      maxTier = perms.length > 0 ? (perms[0].default_tier || 2) : 2;
+    }
+  }
+
+  // Build tier filter based on auth level
+  const tierFilter = maxTier >= 3 ? "" : `tier=lte.${maxTier}&`;
+  const kuTierFilter = maxTier >= 3 ? "" : `tier=lte.${maxTier}&`;
+
   // Fetch all data from Supabase in parallel
-  // SECURITY FIX: Only show tier 1 (public) submissions
   const [subs, kuList, patterns, activeSources] = await Promise.all([
     supabaseSelect(env, "submissions",
       "id,category,summary,tier,usefulness_score,status,submitted_at,source_id",
-      "tier=eq.1&order=submitted_at.desc&limit=500", 500),
+      `${tierFilter}order=submitted_at.desc&limit=500`, 500),
     supabaseSelect(env, "knowledge_units",
-      "id,category,title,summary,usefulness_score,source_id",
-      "order=usefulness_score.desc&limit=500", 500),
+      "id,category,title,summary,usefulness_score,source_id,tier",
+      `${kuTierFilter}order=usefulness_score.desc&limit=500`, 500),
     supabaseSelect(env, "patterns",
       "id,pattern_type,title,description,occurrence_count,status",
       "order=occurrence_count.desc&limit=50", 50),
@@ -1768,6 +1745,8 @@ const SECRET_PATTERNS = [
   { type: "bearer_token", regex: /Bearer\s+[A-Za-z0-9_\-\.]{20,}/gi, severity: "high" },
   { type: "password", regex: /(?:password|passwd|pwd)\s*[:=]\s*\S{4,}/gi, severity: "high" },
   { type: "xpl_token", regex: /xpl-[a-z0-9\-]{10,}/gi, severity: "high" },
+  { type: "recon_api_token", regex: /xpl-[a-z0-9\-]{20,}/gi, severity: "critical" },
+  { type: "owner_access_code", regex: /OWN-[A-Z0-9]{3,10}-[a-z0-9]{6}/gi, severity: "high" },
 ];
 
 // Category keyword weights — which keywords map to which categories
@@ -1948,7 +1927,7 @@ async function handleIntakeAnalyze(request, env, cors) {
     }
     const token = auth.slice(7);
     const rlKey = `analyze:${token.substring(0, 20)}`;
-    const rl = await checkRateLimit(rlKey, 30, 600); // 30 requests per 600 seconds (10 min)
+    const rl = await checkRateLimit(env, rlKey, 30, 600); // 30 requests per 600 seconds (10 min)
     if (!rl.allowed) {
       return jsonResponse({
         error: "Rate limit exceeded",
@@ -2067,7 +2046,7 @@ async function handleIntakeAnalyze(request, env, cors) {
       summary: summary.slice(0, 500),
       content: contentToStore.slice(0, 10000),
       status: secrets.length > 0 ? "flagged" : "received",
-      usefulness_score: usefulness,
+      usefulness_score: Math.round(usefulness),
       meta: {
         classified: true,
         classification_confidence: Math.round(confidence * 100) / 100,
@@ -2089,7 +2068,7 @@ async function handleIntakeAnalyze(request, env, cors) {
         title: summary.slice(0, 100),
         summary: summary.slice(0, 500),
         key_insight: contentToStore.slice(0, 2000),
-        usefulness_score: usefulness,
+        usefulness_score: Math.round(usefulness),
         review_status: "unreviewed",
         freshness_status: "fresh",
         library_candidate: tier === 1,
@@ -2118,7 +2097,7 @@ async function handleIntakeAnalyze(request, env, cors) {
       classification: {
         category,
         confidence: Math.round(confidence * 100) / 100,
-        usefulness_score: usefulness,
+        usefulness_score: Math.round(usefulness),
         tier: tier === 1 ? "public" : tier === 2 ? "shared" : "private",
         auto_classified: !overrideCategory,
       },
@@ -2265,7 +2244,7 @@ async function handlePublicSubmit(request, env, cors) {
   // Per-IP rate limit: 10 submissions per 10 minutes
   const clientIp = request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || "unknown";
   const rlKey = `submit:${clientIp}`;
-  const rl = await checkRateLimit(rlKey, 10, 600); // 10 requests per 600 seconds (10 min)
+  const rl = await checkRateLimit(env, rlKey, 10, 600); // 10 requests per 600 seconds (10 min)
   if (!rl.allowed) {
     return jsonResponse({
       error: "Rate limit exceeded",
@@ -2378,7 +2357,7 @@ async function handlePublicSubmit(request, env, cors) {
     summary: summary.slice(0, 500),
     content: contentToStore.slice(0, 10000),
     status: secrets.length > 0 ? "flagged" : "received",
-    usefulness_score: usefulness,
+    usefulness_score: Math.round(usefulness),
     meta: {
       classified: true,
       classification_confidence: Math.round(confidence * 100) / 100,
@@ -2398,7 +2377,7 @@ async function handlePublicSubmit(request, env, cors) {
       category: category,
       title: summary.slice(0, 100),
       summary: summary,
-      usefulness_score: usefulness,
+      usefulness_score: Math.round(usefulness),
       tier: tier,
       status: "auto-promoted",
     });
@@ -2411,7 +2390,7 @@ async function handlePublicSubmit(request, env, cors) {
     classification: {
       category,
       confidence: Math.round(confidence * 100) / 100,
-      usefulness_score: usefulness,
+      usefulness_score: Math.round(usefulness),
       tier: tier === 1 ? "public" : tier === 2 ? "shared" : "private",
     },
     security: {
@@ -2656,7 +2635,7 @@ async function handleUnifiedSearch(request, env, cors) {
     try {
       const kus = await supabaseSelect(
         env, "knowledge_units",
-        "id,title,summary,category,usefulness_score,tier,status",
+        "id,title,summary,category,usefulness_score,tier",
         `or=(title.ilike.%25${q}%25,summary.ilike.%25${q}%25)`,
         Math.min(limit, 50)
       );
@@ -2668,7 +2647,6 @@ async function handleUnifiedSearch(request, env, cors) {
         category: ku.category,
         usefulness_score: ku.usefulness_score,
         tier: ku.tier,
-        status: ku.review_status || ku.status,
         relevance: calculateRelevance(q, [ku.title, ku.summary]),
       }));
     } catch (err) {
@@ -2681,7 +2659,7 @@ async function handleUnifiedSearch(request, env, cors) {
     try {
       const patterns = await supabaseSelect(
         env, "patterns",
-        "id,title,description,pattern_type,occurrence_count,strength_score",
+        "id,title,description,pattern_type,occurrence_count",
         `or=(title.ilike.%25${q}%25,description.ilike.%25${q}%25)`,
         Math.min(limit, 50)
       );
@@ -2692,7 +2670,6 @@ async function handleUnifiedSearch(request, env, cors) {
         description: p.description,
         pattern_type: p.pattern_type,
         occurrence_count: p.occurrence_count,
-        strength_score: p.strength_score,
         relevance: calculateRelevance(q, [p.title, p.description]),
       }));
     } catch (err) {
@@ -2700,13 +2677,14 @@ async function handleUnifiedSearch(request, env, cors) {
     }
   }
 
-  // Search submissions (only public/tier 1 for non-authenticated)
+  // Search submissions (tier 1-2 for search; tier 3 stays private)
+  // Note: comma-separated filters break with operators (lte), so use & separator
   if (type === "all" || type === "submission") {
     try {
       const subs = await supabaseSelect(
         env, "submissions",
         "id,summary,category,tier,usefulness_score,submitted_at",
-        `and(tier=eq.1,summary.ilike.%25${q}%25)`,
+        `tier=lte.2&summary=ilike.%25${q}%25`,
         Math.min(limit, 50)
       );
       results.submissions = subs.map(s => ({
